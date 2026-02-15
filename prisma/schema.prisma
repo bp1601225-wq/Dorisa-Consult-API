@@ -11,8 +11,81 @@ datasource db {
   provider = "postgresql"
 }
 
-model TestRoute {
-  id        Int      @id @default(autoincrement())
-  name      String
+
+
+model Role {
+  id    String @id @default(uuid())
+  name  String
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  users  User[]
+  tickets Ticket[]
+}
+
+model User {
+  id         String   @id @default(uuid())
+  firstName  String
+  middleName String?
+  lastName   String
+  email     String   @unique
+  phone      String   @unique
+  roleId     String
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  role      Role     @relation(fields: [roleId], references: [id])
+  tickets   Ticket[] @relation("ClientTickets")
+  invoices  Invoice[] @relation("ClientInvoices")
+  payments  Payment[] @relation("ClientPayments")
+}
+
+model Ticket {
+  id        String   @id @default(uuid())
+  clientId  String
+  firstName String
+  middleName String?
+  lastName  String
+  phone     String   @unique
+  roleId    String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  client User @relation("ClientTickets", fields: [clientId], references: [id])
+  role   Role @relation(fields: [roleId], references: [id])
+  invoices Invoice[]
+}
+
+model Invoice {
+  id         String   @id @default(uuid())
+  ticketId   String
+  clientId   String
+  amount     Float
+  currency   String
+  status     String
+  dueDate    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  ticket    Ticket  @relation(fields: [ticketId], references: [id])
+  client    User    @relation("ClientInvoices", fields: [clientId], references: [id])
+  payments  Payment[]
+}
+
+model Payment {
+  id         String   @id @default(uuid())
+  invoiceId  String
+  clientId   String
+  amount     Float
+  currency   String
+  status     String
+  dueDate    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id])
+  client  User    @relation("ClientPayments", fields: [clientId], references: [id])
 }

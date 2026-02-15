@@ -120,10 +120,60 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.TestRouteScalarFieldEnum = {
+exports.Prisma.RoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  middleName: 'middleName',
+  lastName: 'lastName',
+  phone: 'phone',
+  roleId: 'roleId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TicketScalarFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
+  firstName: 'firstName',
+  middleName: 'middleName',
+  lastName: 'lastName',
+  phone: 'phone',
+  roleId: 'roleId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.InvoiceScalarFieldEnum = {
+  id: 'id',
+  ticketId: 'ticketId',
+  clientId: 'clientId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  dueDate: 'dueDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  invoiceId: 'invoiceId',
+  clientId: 'clientId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  dueDate: 'dueDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -136,9 +186,18 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  TestRoute: 'TestRoute'
+  Role: 'Role',
+  User: 'User',
+  Ticket: 'Ticket',
+  Invoice: 'Invoice',
+  Payment: 'Payment'
 };
 
 /**

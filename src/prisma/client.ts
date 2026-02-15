@@ -9,4 +9,3 @@ if (!databaseUrl) {
 export const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: databaseUrl }),
 });
-

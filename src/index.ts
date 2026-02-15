@@ -1,13 +1,17 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import testRoutesRouter from "./controllers/testRoutesController";
+import testRoutesRouter from "./routes/testRoutesRouter";
 import { prisma } from "./prisma/client";
+import { globalErrorHandler } from "./middleware/errorhandler";
+import rolesRouter from "./routes/rolesRoutes";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+const baseRoutes = "Consulting";
 
 app.get("/", (_req, res) => {
   res.json({
@@ -26,21 +30,16 @@ app.get("/greet/:name", (req, res) => {
   res.json({ message: `Hello, ${req.params.name}!` });
 });
 
+// ✅ Register roles routes
+app.use(`/${baseRoutes}`, rolesRouter);
+
+// ✅ 404 must be after routes
 app.use((_req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
-app.use(
-  (
-    error: unknown,
-    _req: express.Request,
-    res: express.Response,
-    _next: express.NextFunction
-  ) => {
-    console.error("Server error", error);
-    res.status(500).json({ error: "Unexpected error", detail: (error as Error).message });
-  }
-);
+// ✅ Error handler LAST
+app.use(globalErrorHandler);
 
 const port = Number(process.env.PORT) || 4000;
 
