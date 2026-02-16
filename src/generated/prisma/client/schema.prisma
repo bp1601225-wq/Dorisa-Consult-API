@@ -77,16 +77,23 @@ model Ticket {
   invoices Invoice[]
 }
 
+enum InvoiceStatus {
+  PENDING
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
 model Invoice {
-  id        String   @id @default(uuid())
+  id        String        @id @default(uuid())
   ticket_id String
   client_id String
   amount    Float
   currency  String
-  status    String
+  status    InvoiceStatus
   dueDate   DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
   ticket   Ticket    @relation(fields: [ticket_id], references: [id])
   client   User      @relation("ClientInvoices", fields: [client_id], references: [id])

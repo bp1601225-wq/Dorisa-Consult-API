@@ -206,7 +206,12 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.InvoiceStatus = exports.$Enums.InvoiceStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  OVERDUE: 'OVERDUE',
+  CANCELLED: 'CANCELLED'
+};
 
 exports.Prisma.ModelName = {
   Role: 'Role',

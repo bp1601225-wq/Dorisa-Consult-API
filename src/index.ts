@@ -24,7 +24,6 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-app.use("/test-routes", testRoutesRouter);
 
 app.get("/greet/:name", (req, res) => {
   res.json({ message: `Hello, ${req.params.name}!` });

@@ -50,6 +50,25 @@ export type Invoice = $Result.DefaultSelection<Prisma.$InvoicePayload>
 export type Payment = $Result.DefaultSelection<Prisma.$PaymentPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const InvoiceStatus: {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  OVERDUE: 'OVERDUE',
+  CANCELLED: 'CANCELLED'
+};
+
+export type InvoiceStatus = (typeof InvoiceStatus)[keyof typeof InvoiceStatus]
+
+}
+
+export type InvoiceStatus = $Enums.InvoiceStatus
+
+export const InvoiceStatus: typeof $Enums.InvoiceStatus
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -7230,7 +7249,7 @@ export namespace Prisma {
     client_id: string | null
     amount: number | null
     currency: string | null
-    status: string | null
+    status: $Enums.InvoiceStatus | null
     dueDate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7242,7 +7261,7 @@ export namespace Prisma {
     client_id: string | null
     amount: number | null
     currency: string | null
-    status: string | null
+    status: $Enums.InvoiceStatus | null
     dueDate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -7399,7 +7418,7 @@ export namespace Prisma {
     client_id: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date
     createdAt: Date
     updatedAt: Date
@@ -7509,7 +7528,7 @@ export namespace Prisma {
       client_id: string
       amount: number
       currency: string
-      status: string
+      status: $Enums.InvoiceStatus
       dueDate: Date
       createdAt: Date
       updatedAt: Date
@@ -7944,7 +7963,7 @@ export namespace Prisma {
     readonly client_id: FieldRef<"Invoice", 'String'>
     readonly amount: FieldRef<"Invoice", 'Float'>
     readonly currency: FieldRef<"Invoice", 'String'>
-    readonly status: FieldRef<"Invoice", 'String'>
+    readonly status: FieldRef<"Invoice", 'InvoiceStatus'>
     readonly dueDate: FieldRef<"Invoice", 'DateTime'>
     readonly createdAt: FieldRef<"Invoice", 'DateTime'>
     readonly updatedAt: FieldRef<"Invoice", 'DateTime'>
@@ -9724,6 +9743,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'InvoiceStatus'
+   */
+  export type EnumInvoiceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InvoiceStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'InvoiceStatus[]'
+   */
+  export type ListEnumInvoiceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InvoiceStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -10088,7 +10121,7 @@ export namespace Prisma {
     client_id?: StringFilter<"Invoice"> | string
     amount?: FloatFilter<"Invoice"> | number
     currency?: StringFilter<"Invoice"> | string
-    status?: StringFilter<"Invoice"> | string
+    status?: EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
     dueDate?: DateTimeFilter<"Invoice"> | Date | string
     createdAt?: DateTimeFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeFilter<"Invoice"> | Date | string
@@ -10121,7 +10154,7 @@ export namespace Prisma {
     client_id?: StringFilter<"Invoice"> | string
     amount?: FloatFilter<"Invoice"> | number
     currency?: StringFilter<"Invoice"> | string
-    status?: StringFilter<"Invoice"> | string
+    status?: EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
     dueDate?: DateTimeFilter<"Invoice"> | Date | string
     createdAt?: DateTimeFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeFilter<"Invoice"> | Date | string
@@ -10156,7 +10189,7 @@ export namespace Prisma {
     client_id?: StringWithAggregatesFilter<"Invoice"> | string
     amount?: FloatWithAggregatesFilter<"Invoice"> | number
     currency?: StringWithAggregatesFilter<"Invoice"> | string
-    status?: StringWithAggregatesFilter<"Invoice"> | string
+    status?: EnumInvoiceStatusWithAggregatesFilter<"Invoice"> | $Enums.InvoiceStatus
     dueDate?: DateTimeWithAggregatesFilter<"Invoice"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Invoice"> | Date | string
@@ -10609,7 +10642,7 @@ export namespace Prisma {
     id?: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10624,7 +10657,7 @@ export namespace Prisma {
     client_id: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10635,7 +10668,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10650,7 +10683,7 @@ export namespace Prisma {
     client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10663,7 +10696,7 @@ export namespace Prisma {
     client_id: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -10673,7 +10706,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10685,7 +10718,7 @@ export namespace Prisma {
     client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11102,6 +11135,13 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type EnumInvoiceStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.InvoiceStatus | EnumInvoiceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InvoiceStatus[] | ListEnumInvoiceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InvoiceStatus[] | ListEnumInvoiceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInvoiceStatusFilter<$PrismaModel> | $Enums.InvoiceStatus
+  }
+
   export type TicketScalarRelationFilter = {
     is?: TicketWhereInput
     isNot?: TicketWhereInput
@@ -11165,6 +11205,16 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type EnumInvoiceStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InvoiceStatus | EnumInvoiceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InvoiceStatus[] | ListEnumInvoiceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InvoiceStatus[] | ListEnumInvoiceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInvoiceStatusWithAggregatesFilter<$PrismaModel> | $Enums.InvoiceStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInvoiceStatusFilter<$PrismaModel>
+    _max?: NestedEnumInvoiceStatusFilter<$PrismaModel>
   }
 
   export type InvoiceScalarRelationFilter = {
@@ -11672,6 +11722,10 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type EnumInvoiceStatusFieldUpdateOperationsInput = {
+    set?: $Enums.InvoiceStatus
+  }
+
   export type TicketUpdateOneRequiredWithoutInvoicesNestedInput = {
     create?: XOR<TicketCreateWithoutInvoicesInput, TicketUncheckedCreateWithoutInvoicesInput>
     connectOrCreate?: TicketCreateOrConnectWithoutInvoicesInput
@@ -11877,6 +11931,13 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumInvoiceStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.InvoiceStatus | EnumInvoiceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InvoiceStatus[] | ListEnumInvoiceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InvoiceStatus[] | ListEnumInvoiceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInvoiceStatusFilter<$PrismaModel> | $Enums.InvoiceStatus
+  }
+
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -11891,6 +11952,16 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumInvoiceStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InvoiceStatus | EnumInvoiceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.InvoiceStatus[] | ListEnumInvoiceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InvoiceStatus[] | ListEnumInvoiceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumInvoiceStatusWithAggregatesFilter<$PrismaModel> | $Enums.InvoiceStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInvoiceStatusFilter<$PrismaModel>
+    _max?: NestedEnumInvoiceStatusFilter<$PrismaModel>
   }
 
   export type UserCreateWithoutRoleInput = {
@@ -12155,7 +12226,7 @@ export namespace Prisma {
     id?: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12168,7 +12239,7 @@ export namespace Prisma {
     ticket_id: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12307,7 +12378,7 @@ export namespace Prisma {
     client_id?: StringFilter<"Invoice"> | string
     amount?: FloatFilter<"Invoice"> | number
     currency?: StringFilter<"Invoice"> | string
-    status?: StringFilter<"Invoice"> | string
+    status?: EnumInvoiceStatusFilter<"Invoice"> | $Enums.InvoiceStatus
     dueDate?: DateTimeFilter<"Invoice"> | Date | string
     createdAt?: DateTimeFilter<"Invoice"> | Date | string
     updatedAt?: DateTimeFilter<"Invoice"> | Date | string
@@ -12531,7 +12602,7 @@ export namespace Prisma {
     id?: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12544,7 +12615,7 @@ export namespace Prisma {
     client_id: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12876,7 +12947,7 @@ export namespace Prisma {
     id?: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12890,7 +12961,7 @@ export namespace Prisma {
     client_id: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12953,7 +13024,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12967,7 +13038,7 @@ export namespace Prisma {
     client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13198,7 +13269,7 @@ export namespace Prisma {
     ticket_id: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13266,7 +13337,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13279,7 +13350,7 @@ export namespace Prisma {
     ticket_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13291,7 +13362,7 @@ export namespace Prisma {
     ticket_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13353,7 +13424,7 @@ export namespace Prisma {
     client_id: string
     amount: number
     currency: string
-    status: string
+    status: $Enums.InvoiceStatus
     dueDate: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13363,7 +13434,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13376,7 +13447,7 @@ export namespace Prisma {
     client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13388,7 +13459,7 @@ export namespace Prisma {
     client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

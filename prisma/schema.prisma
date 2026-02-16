@@ -12,6 +12,7 @@ datasource db {
 }
 
 
+
 model Role {
   id    String @id @default(uuid())
   name  String
@@ -33,6 +34,8 @@ model Priority {
 }
 
 
+
+
 model User {
   id          String   @id @default(uuid())
   first_name  String
@@ -52,27 +55,30 @@ model User {
   clients   Client[] @relation("Clients")
 }
 
-
 model Client {
-id      String  @id @default(uuid())
-company_name String
-company_adress String
-client_id   String
-client User @relation("Clients", fields: [client_id], references: [id])
+  id            String    @id @default(uuid())
+  company_name  String
+  company_adress String
+  client_id     String
+  client        User      @relation("Clients", fields: [client_id], references: [id])
+  projects      Project[] @relation("ClientsProject")
 }
+
+model Project {
+  id        String  @id @default(uuid())
+  client_id String
+  client    Client  @relation("ClientsProject", fields: [client_id], references: [id])
+}
+
 
 
 model Ticket {
   id          String   @id @default(uuid())
   client_id   String
-  first_name  String
-  middle_name String?
-  last_name   String
-  phone       String   @unique
+  title  String
+  description String?
   roleId      String
-  isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 
   priority_id String
   priority    Priority @relation("PriorityRelation", fields: [priority_id], references: [id])
@@ -83,13 +89,21 @@ model Ticket {
 }
 
 
+
+enum InvoiceStatus {
+  PENDING
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
 model Invoice {
   id         String   @id @default(uuid())
   ticket_id   String
   client_id   String
   amount     Float
   currency   String
-  status     String
+  status     InvoiceStatus
   dueDate    DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
@@ -98,6 +112,8 @@ model Invoice {
   client    User    @relation("ClientInvoices", fields: [client_id], references: [id])
   payments  Payment[]
 }
+
+
 
 model Payment {
   id         String   @id @default(uuid())
