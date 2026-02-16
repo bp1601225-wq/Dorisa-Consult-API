@@ -127,35 +127,51 @@ exports.Prisma.RoleScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.UserScalarFieldEnum = {
+exports.Prisma.PriorityScalarFieldEnum = {
   id: 'id',
-  firstName: 'firstName',
-  middleName: 'middleName',
-  lastName: 'lastName',
-  phone: 'phone',
-  roleId: 'roleId',
-  isActive: 'isActive',
+  name: 'name',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  first_name: 'first_name',
+  middle_name: 'middle_name',
+  last_name: 'last_name',
+  email: 'email',
+  phone: 'phone',
+  role_id: 'role_id',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.ClientScalarFieldEnum = {
+  id: 'id',
+  company_name: 'company_name',
+  company_adress: 'company_adress',
+  client_id: 'client_id'
 };
 
 exports.Prisma.TicketScalarFieldEnum = {
   id: 'id',
-  clientId: 'clientId',
-  firstName: 'firstName',
-  middleName: 'middleName',
-  lastName: 'lastName',
+  client_id: 'client_id',
+  first_name: 'first_name',
+  middle_name: 'middle_name',
+  last_name: 'last_name',
   phone: 'phone',
   roleId: 'roleId',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  priority_id: 'priority_id'
 };
 
 exports.Prisma.InvoiceScalarFieldEnum = {
   id: 'id',
-  ticketId: 'ticketId',
-  clientId: 'clientId',
+  ticket_id: 'ticket_id',
+  client_id: 'client_id',
   amount: 'amount',
   currency: 'currency',
   status: 'status',
@@ -166,8 +182,8 @@ exports.Prisma.InvoiceScalarFieldEnum = {
 
 exports.Prisma.PaymentScalarFieldEnum = {
   id: 'id',
-  invoiceId: 'invoiceId',
-  clientId: 'clientId',
+  invoice_id: 'invoice_id',
+  client_id: 'client_id',
   amount: 'amount',
   currency: 'currency',
   status: 'status',
@@ -194,7 +210,9 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   Role: 'Role',
+  Priority: 'Priority',
   User: 'User',
+  Client: 'Client',
   Ticket: 'Ticket',
   Invoice: 'Invoice',
   Payment: 'Payment'

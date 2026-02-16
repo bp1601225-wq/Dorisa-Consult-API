@@ -19,10 +19,20 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type Role = $Result.DefaultSelection<Prisma.$RolePayload>
 /**
+ * Model Priority
+ * 
+ */
+export type Priority = $Result.DefaultSelection<Prisma.$PriorityPayload>
+/**
  * Model User
  * 
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model Client
+ * 
+ */
+export type Client = $Result.DefaultSelection<Prisma.$ClientPayload>
 /**
  * Model Ticket
  * 
@@ -167,6 +177,16 @@ export class PrismaClient<
   get role(): Prisma.RoleDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.priority`: Exposes CRUD operations for the **Priority** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Priorities
+    * const priorities = await prisma.priority.findMany()
+    * ```
+    */
+  get priority(): Prisma.PriorityDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
@@ -175,6 +195,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.client`: Exposes CRUD operations for the **Client** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Clients
+    * const clients = await prisma.client.findMany()
+    * ```
+    */
+  get client(): Prisma.ClientDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.ticket`: Exposes CRUD operations for the **Ticket** model.
@@ -640,7 +670,9 @@ export namespace Prisma {
 
   export const ModelName: {
     Role: 'Role',
+    Priority: 'Priority',
     User: 'User',
+    Client: 'Client',
     Ticket: 'Ticket',
     Invoice: 'Invoice',
     Payment: 'Payment'
@@ -659,7 +691,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "role" | "user" | "ticket" | "invoice" | "payment"
+      modelProps: "role" | "priority" | "user" | "client" | "ticket" | "invoice" | "payment"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -737,6 +769,80 @@ export namespace Prisma {
           }
         }
       }
+      Priority: {
+        payload: Prisma.$PriorityPayload<ExtArgs>
+        fields: Prisma.PriorityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PriorityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriorityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PriorityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriorityPayload>
+          }
+          findFirst: {
+            args: Prisma.PriorityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriorityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PriorityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriorityPayload>
+          }
+          findMany: {
+            args: Prisma.PriorityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriorityPayload>[]
+          }
+          create: {
+            args: Prisma.PriorityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriorityPayload>
+          }
+          createMany: {
+            args: Prisma.PriorityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PriorityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriorityPayload>[]
+          }
+          delete: {
+            args: Prisma.PriorityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriorityPayload>
+          }
+          update: {
+            args: Prisma.PriorityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriorityPayload>
+          }
+          deleteMany: {
+            args: Prisma.PriorityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PriorityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PriorityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriorityPayload>[]
+          }
+          upsert: {
+            args: Prisma.PriorityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PriorityPayload>
+          }
+          aggregate: {
+            args: Prisma.PriorityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePriority>
+          }
+          groupBy: {
+            args: Prisma.PriorityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PriorityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PriorityCountArgs<ExtArgs>
+            result: $Utils.Optional<PriorityCountAggregateOutputType> | number
+          }
+        }
+      }
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
@@ -808,6 +914,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Client: {
+        payload: Prisma.$ClientPayload<ExtArgs>
+        fields: Prisma.ClientFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClientFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClientFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+          }
+          findFirst: {
+            args: Prisma.ClientFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClientFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+          }
+          findMany: {
+            args: Prisma.ClientFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
+          }
+          create: {
+            args: Prisma.ClientCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+          }
+          createMany: {
+            args: Prisma.ClientCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClientCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
+          }
+          delete: {
+            args: Prisma.ClientDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+          }
+          update: {
+            args: Prisma.ClientUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClientDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClientUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClientUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClientUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClientPayload>
+          }
+          aggregate: {
+            args: Prisma.ClientAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClient>
+          }
+          groupBy: {
+            args: Prisma.ClientGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClientGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClientCountArgs<ExtArgs>
+            result: $Utils.Optional<ClientCountAggregateOutputType> | number
           }
         }
       }
@@ -1142,7 +1322,9 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     role?: RoleOmit
+    priority?: PriorityOmit
     user?: UserOmit
+    client?: ClientOmit
     ticket?: TicketOmit
     invoice?: InvoiceOmit
     payment?: PaymentOmit
@@ -1262,6 +1444,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type PriorityCountOutputType
+   */
+
+  export type PriorityCountOutputType = {
+    tickets: number
+  }
+
+  export type PriorityCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tickets?: boolean | PriorityCountOutputTypeCountTicketsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PriorityCountOutputType without action
+   */
+  export type PriorityCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PriorityCountOutputType
+     */
+    select?: PriorityCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PriorityCountOutputType without action
+   */
+  export type PriorityCountOutputTypeCountTicketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TicketWhereInput
+  }
+
+
+  /**
    * Count Type UserCountOutputType
    */
 
@@ -1269,12 +1482,14 @@ export namespace Prisma {
     tickets: number
     invoices: number
     payments: number
+    clients: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tickets?: boolean | UserCountOutputTypeCountTicketsArgs
     invoices?: boolean | UserCountOutputTypeCountInvoicesArgs
     payments?: boolean | UserCountOutputTypeCountPaymentsArgs
+    clients?: boolean | UserCountOutputTypeCountClientsArgs
   }
 
   // Custom InputTypes
@@ -1307,6 +1522,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PaymentWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountClientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClientWhereInput
   }
 
 
@@ -2462,6 +2684,1063 @@ export namespace Prisma {
 
 
   /**
+   * Model Priority
+   */
+
+  export type AggregatePriority = {
+    _count: PriorityCountAggregateOutputType | null
+    _min: PriorityMinAggregateOutputType | null
+    _max: PriorityMaxAggregateOutputType | null
+  }
+
+  export type PriorityMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PriorityMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PriorityCountAggregateOutputType = {
+    id: number
+    name: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PriorityMinAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PriorityMaxAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PriorityCountAggregateInputType = {
+    id?: true
+    name?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PriorityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Priority to aggregate.
+     */
+    where?: PriorityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Priorities to fetch.
+     */
+    orderBy?: PriorityOrderByWithRelationInput | PriorityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PriorityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Priorities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Priorities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Priorities
+    **/
+    _count?: true | PriorityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PriorityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PriorityMaxAggregateInputType
+  }
+
+  export type GetPriorityAggregateType<T extends PriorityAggregateArgs> = {
+        [P in keyof T & keyof AggregatePriority]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePriority[P]>
+      : GetScalarType<T[P], AggregatePriority[P]>
+  }
+
+
+
+
+  export type PriorityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PriorityWhereInput
+    orderBy?: PriorityOrderByWithAggregationInput | PriorityOrderByWithAggregationInput[]
+    by: PriorityScalarFieldEnum[] | PriorityScalarFieldEnum
+    having?: PriorityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PriorityCountAggregateInputType | true
+    _min?: PriorityMinAggregateInputType
+    _max?: PriorityMaxAggregateInputType
+  }
+
+  export type PriorityGroupByOutputType = {
+    id: string
+    name: string
+    createdAt: Date
+    updatedAt: Date
+    _count: PriorityCountAggregateOutputType | null
+    _min: PriorityMinAggregateOutputType | null
+    _max: PriorityMaxAggregateOutputType | null
+  }
+
+  type GetPriorityGroupByPayload<T extends PriorityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PriorityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PriorityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PriorityGroupByOutputType[P]>
+            : GetScalarType<T[P], PriorityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PrioritySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tickets?: boolean | Priority$ticketsArgs<ExtArgs>
+    _count?: boolean | PriorityCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["priority"]>
+
+  export type PrioritySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["priority"]>
+
+  export type PrioritySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["priority"]>
+
+  export type PrioritySelectScalar = {
+    id?: boolean
+    name?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PriorityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "createdAt" | "updatedAt", ExtArgs["result"]["priority"]>
+  export type PriorityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tickets?: boolean | Priority$ticketsArgs<ExtArgs>
+    _count?: boolean | PriorityCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PriorityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PriorityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $PriorityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Priority"
+    objects: {
+      tickets: Prisma.$TicketPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["priority"]>
+    composites: {}
+  }
+
+  type PriorityGetPayload<S extends boolean | null | undefined | PriorityDefaultArgs> = $Result.GetResult<Prisma.$PriorityPayload, S>
+
+  type PriorityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PriorityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PriorityCountAggregateInputType | true
+    }
+
+  export interface PriorityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Priority'], meta: { name: 'Priority' } }
+    /**
+     * Find zero or one Priority that matches the filter.
+     * @param {PriorityFindUniqueArgs} args - Arguments to find a Priority
+     * @example
+     * // Get one Priority
+     * const priority = await prisma.priority.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PriorityFindUniqueArgs>(args: SelectSubset<T, PriorityFindUniqueArgs<ExtArgs>>): Prisma__PriorityClient<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Priority that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PriorityFindUniqueOrThrowArgs} args - Arguments to find a Priority
+     * @example
+     * // Get one Priority
+     * const priority = await prisma.priority.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PriorityFindUniqueOrThrowArgs>(args: SelectSubset<T, PriorityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PriorityClient<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Priority that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriorityFindFirstArgs} args - Arguments to find a Priority
+     * @example
+     * // Get one Priority
+     * const priority = await prisma.priority.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PriorityFindFirstArgs>(args?: SelectSubset<T, PriorityFindFirstArgs<ExtArgs>>): Prisma__PriorityClient<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Priority that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriorityFindFirstOrThrowArgs} args - Arguments to find a Priority
+     * @example
+     * // Get one Priority
+     * const priority = await prisma.priority.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PriorityFindFirstOrThrowArgs>(args?: SelectSubset<T, PriorityFindFirstOrThrowArgs<ExtArgs>>): Prisma__PriorityClient<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Priorities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriorityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Priorities
+     * const priorities = await prisma.priority.findMany()
+     * 
+     * // Get first 10 Priorities
+     * const priorities = await prisma.priority.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const priorityWithIdOnly = await prisma.priority.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PriorityFindManyArgs>(args?: SelectSubset<T, PriorityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Priority.
+     * @param {PriorityCreateArgs} args - Arguments to create a Priority.
+     * @example
+     * // Create one Priority
+     * const Priority = await prisma.priority.create({
+     *   data: {
+     *     // ... data to create a Priority
+     *   }
+     * })
+     * 
+     */
+    create<T extends PriorityCreateArgs>(args: SelectSubset<T, PriorityCreateArgs<ExtArgs>>): Prisma__PriorityClient<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Priorities.
+     * @param {PriorityCreateManyArgs} args - Arguments to create many Priorities.
+     * @example
+     * // Create many Priorities
+     * const priority = await prisma.priority.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PriorityCreateManyArgs>(args?: SelectSubset<T, PriorityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Priorities and returns the data saved in the database.
+     * @param {PriorityCreateManyAndReturnArgs} args - Arguments to create many Priorities.
+     * @example
+     * // Create many Priorities
+     * const priority = await prisma.priority.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Priorities and only return the `id`
+     * const priorityWithIdOnly = await prisma.priority.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PriorityCreateManyAndReturnArgs>(args?: SelectSubset<T, PriorityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Priority.
+     * @param {PriorityDeleteArgs} args - Arguments to delete one Priority.
+     * @example
+     * // Delete one Priority
+     * const Priority = await prisma.priority.delete({
+     *   where: {
+     *     // ... filter to delete one Priority
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PriorityDeleteArgs>(args: SelectSubset<T, PriorityDeleteArgs<ExtArgs>>): Prisma__PriorityClient<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Priority.
+     * @param {PriorityUpdateArgs} args - Arguments to update one Priority.
+     * @example
+     * // Update one Priority
+     * const priority = await prisma.priority.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PriorityUpdateArgs>(args: SelectSubset<T, PriorityUpdateArgs<ExtArgs>>): Prisma__PriorityClient<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Priorities.
+     * @param {PriorityDeleteManyArgs} args - Arguments to filter Priorities to delete.
+     * @example
+     * // Delete a few Priorities
+     * const { count } = await prisma.priority.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PriorityDeleteManyArgs>(args?: SelectSubset<T, PriorityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Priorities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriorityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Priorities
+     * const priority = await prisma.priority.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PriorityUpdateManyArgs>(args: SelectSubset<T, PriorityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Priorities and returns the data updated in the database.
+     * @param {PriorityUpdateManyAndReturnArgs} args - Arguments to update many Priorities.
+     * @example
+     * // Update many Priorities
+     * const priority = await prisma.priority.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Priorities and only return the `id`
+     * const priorityWithIdOnly = await prisma.priority.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PriorityUpdateManyAndReturnArgs>(args: SelectSubset<T, PriorityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Priority.
+     * @param {PriorityUpsertArgs} args - Arguments to update or create a Priority.
+     * @example
+     * // Update or create a Priority
+     * const priority = await prisma.priority.upsert({
+     *   create: {
+     *     // ... data to create a Priority
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Priority we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PriorityUpsertArgs>(args: SelectSubset<T, PriorityUpsertArgs<ExtArgs>>): Prisma__PriorityClient<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Priorities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriorityCountArgs} args - Arguments to filter Priorities to count.
+     * @example
+     * // Count the number of Priorities
+     * const count = await prisma.priority.count({
+     *   where: {
+     *     // ... the filter for the Priorities we want to count
+     *   }
+     * })
+    **/
+    count<T extends PriorityCountArgs>(
+      args?: Subset<T, PriorityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PriorityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Priority.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriorityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PriorityAggregateArgs>(args: Subset<T, PriorityAggregateArgs>): Prisma.PrismaPromise<GetPriorityAggregateType<T>>
+
+    /**
+     * Group by Priority.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PriorityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PriorityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PriorityGroupByArgs['orderBy'] }
+        : { orderBy?: PriorityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PriorityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPriorityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Priority model
+   */
+  readonly fields: PriorityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Priority.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PriorityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tickets<T extends Priority$ticketsArgs<ExtArgs> = {}>(args?: Subset<T, Priority$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Priority model
+   */
+  interface PriorityFieldRefs {
+    readonly id: FieldRef<"Priority", 'String'>
+    readonly name: FieldRef<"Priority", 'String'>
+    readonly createdAt: FieldRef<"Priority", 'DateTime'>
+    readonly updatedAt: FieldRef<"Priority", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Priority findUnique
+   */
+  export type PriorityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriorityInclude<ExtArgs> | null
+    /**
+     * Filter, which Priority to fetch.
+     */
+    where: PriorityWhereUniqueInput
+  }
+
+  /**
+   * Priority findUniqueOrThrow
+   */
+  export type PriorityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriorityInclude<ExtArgs> | null
+    /**
+     * Filter, which Priority to fetch.
+     */
+    where: PriorityWhereUniqueInput
+  }
+
+  /**
+   * Priority findFirst
+   */
+  export type PriorityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriorityInclude<ExtArgs> | null
+    /**
+     * Filter, which Priority to fetch.
+     */
+    where?: PriorityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Priorities to fetch.
+     */
+    orderBy?: PriorityOrderByWithRelationInput | PriorityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Priorities.
+     */
+    cursor?: PriorityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Priorities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Priorities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Priorities.
+     */
+    distinct?: PriorityScalarFieldEnum | PriorityScalarFieldEnum[]
+  }
+
+  /**
+   * Priority findFirstOrThrow
+   */
+  export type PriorityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriorityInclude<ExtArgs> | null
+    /**
+     * Filter, which Priority to fetch.
+     */
+    where?: PriorityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Priorities to fetch.
+     */
+    orderBy?: PriorityOrderByWithRelationInput | PriorityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Priorities.
+     */
+    cursor?: PriorityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Priorities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Priorities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Priorities.
+     */
+    distinct?: PriorityScalarFieldEnum | PriorityScalarFieldEnum[]
+  }
+
+  /**
+   * Priority findMany
+   */
+  export type PriorityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriorityInclude<ExtArgs> | null
+    /**
+     * Filter, which Priorities to fetch.
+     */
+    where?: PriorityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Priorities to fetch.
+     */
+    orderBy?: PriorityOrderByWithRelationInput | PriorityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Priorities.
+     */
+    cursor?: PriorityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Priorities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Priorities.
+     */
+    skip?: number
+    distinct?: PriorityScalarFieldEnum | PriorityScalarFieldEnum[]
+  }
+
+  /**
+   * Priority create
+   */
+  export type PriorityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriorityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Priority.
+     */
+    data: XOR<PriorityCreateInput, PriorityUncheckedCreateInput>
+  }
+
+  /**
+   * Priority createMany
+   */
+  export type PriorityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Priorities.
+     */
+    data: PriorityCreateManyInput | PriorityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Priority createManyAndReturn
+   */
+  export type PriorityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * The data used to create many Priorities.
+     */
+    data: PriorityCreateManyInput | PriorityCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Priority update
+   */
+  export type PriorityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriorityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Priority.
+     */
+    data: XOR<PriorityUpdateInput, PriorityUncheckedUpdateInput>
+    /**
+     * Choose, which Priority to update.
+     */
+    where: PriorityWhereUniqueInput
+  }
+
+  /**
+   * Priority updateMany
+   */
+  export type PriorityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Priorities.
+     */
+    data: XOR<PriorityUpdateManyMutationInput, PriorityUncheckedUpdateManyInput>
+    /**
+     * Filter which Priorities to update
+     */
+    where?: PriorityWhereInput
+    /**
+     * Limit how many Priorities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Priority updateManyAndReturn
+   */
+  export type PriorityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * The data used to update Priorities.
+     */
+    data: XOR<PriorityUpdateManyMutationInput, PriorityUncheckedUpdateManyInput>
+    /**
+     * Filter which Priorities to update
+     */
+    where?: PriorityWhereInput
+    /**
+     * Limit how many Priorities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Priority upsert
+   */
+  export type PriorityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriorityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Priority to update in case it exists.
+     */
+    where: PriorityWhereUniqueInput
+    /**
+     * In case the Priority found by the `where` argument doesn't exist, create a new Priority with this data.
+     */
+    create: XOR<PriorityCreateInput, PriorityUncheckedCreateInput>
+    /**
+     * In case the Priority was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PriorityUpdateInput, PriorityUncheckedUpdateInput>
+  }
+
+  /**
+   * Priority delete
+   */
+  export type PriorityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriorityInclude<ExtArgs> | null
+    /**
+     * Filter which Priority to delete.
+     */
+    where: PriorityWhereUniqueInput
+  }
+
+  /**
+   * Priority deleteMany
+   */
+  export type PriorityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Priorities to delete
+     */
+    where?: PriorityWhereInput
+    /**
+     * Limit how many Priorities to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Priority.tickets
+   */
+  export type Priority$ticketsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ticket
+     */
+    select?: TicketSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ticket
+     */
+    omit?: TicketOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TicketInclude<ExtArgs> | null
+    where?: TicketWhereInput
+    orderBy?: TicketOrderByWithRelationInput | TicketOrderByWithRelationInput[]
+    cursor?: TicketWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TicketScalarFieldEnum | TicketScalarFieldEnum[]
+  }
+
+  /**
+   * Priority without action
+   */
+  export type PriorityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Priority
+     */
+    select?: PrioritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Priority
+     */
+    omit?: PriorityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PriorityInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model User
    */
 
@@ -2473,76 +3752,82 @@ export namespace Prisma {
 
   export type UserMinAggregateOutputType = {
     id: string | null
-    firstName: string | null
-    middleName: string | null
-    lastName: string | null
+    first_name: string | null
+    middle_name: string | null
+    last_name: string | null
+    email: string | null
     phone: string | null
-    roleId: string | null
-    isActive: boolean | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    role_id: string | null
+    is_active: boolean | null
+    created_at: Date | null
+    updated_at: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
-    firstName: string | null
-    middleName: string | null
-    lastName: string | null
+    first_name: string | null
+    middle_name: string | null
+    last_name: string | null
+    email: string | null
     phone: string | null
-    roleId: string | null
-    isActive: boolean | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    role_id: string | null
+    is_active: boolean | null
+    created_at: Date | null
+    updated_at: Date | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
-    firstName: number
-    middleName: number
-    lastName: number
+    first_name: number
+    middle_name: number
+    last_name: number
+    email: number
     phone: number
-    roleId: number
-    isActive: number
-    createdAt: number
-    updatedAt: number
+    role_id: number
+    is_active: number
+    created_at: number
+    updated_at: number
     _all: number
   }
 
 
   export type UserMinAggregateInputType = {
     id?: true
-    firstName?: true
-    middleName?: true
-    lastName?: true
+    first_name?: true
+    middle_name?: true
+    last_name?: true
+    email?: true
     phone?: true
-    roleId?: true
-    isActive?: true
-    createdAt?: true
-    updatedAt?: true
+    role_id?: true
+    is_active?: true
+    created_at?: true
+    updated_at?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
-    firstName?: true
-    middleName?: true
-    lastName?: true
+    first_name?: true
+    middle_name?: true
+    last_name?: true
+    email?: true
     phone?: true
-    roleId?: true
-    isActive?: true
-    createdAt?: true
-    updatedAt?: true
+    role_id?: true
+    is_active?: true
+    created_at?: true
+    updated_at?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
-    firstName?: true
-    middleName?: true
-    lastName?: true
+    first_name?: true
+    middle_name?: true
+    last_name?: true
+    email?: true
     phone?: true
-    roleId?: true
-    isActive?: true
-    createdAt?: true
-    updatedAt?: true
+    role_id?: true
+    is_active?: true
+    created_at?: true
+    updated_at?: true
     _all?: true
   }
 
@@ -2620,14 +3905,15 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
-    firstName: string
-    middleName: string | null
-    lastName: string
+    first_name: string
+    middle_name: string | null
+    last_name: string
+    email: string
     phone: string
-    roleId: string
-    isActive: boolean
-    createdAt: Date
-    updatedAt: Date
+    role_id: string
+    is_active: boolean
+    created_at: Date
+    updated_at: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -2649,65 +3935,71 @@ export namespace Prisma {
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    firstName?: boolean
-    middleName?: boolean
-    lastName?: boolean
+    first_name?: boolean
+    middle_name?: boolean
+    last_name?: boolean
+    email?: boolean
     phone?: boolean
-    roleId?: boolean
-    isActive?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    role_id?: boolean
+    is_active?: boolean
+    created_at?: boolean
+    updated_at?: boolean
     role?: boolean | RoleDefaultArgs<ExtArgs>
     tickets?: boolean | User$ticketsArgs<ExtArgs>
     invoices?: boolean | User$invoicesArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
+    clients?: boolean | User$clientsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    firstName?: boolean
-    middleName?: boolean
-    lastName?: boolean
+    first_name?: boolean
+    middle_name?: boolean
+    last_name?: boolean
+    email?: boolean
     phone?: boolean
-    roleId?: boolean
-    isActive?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    role_id?: boolean
+    is_active?: boolean
+    created_at?: boolean
+    updated_at?: boolean
     role?: boolean | RoleDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    firstName?: boolean
-    middleName?: boolean
-    lastName?: boolean
+    first_name?: boolean
+    middle_name?: boolean
+    last_name?: boolean
+    email?: boolean
     phone?: boolean
-    roleId?: boolean
-    isActive?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    role_id?: boolean
+    is_active?: boolean
+    created_at?: boolean
+    updated_at?: boolean
     role?: boolean | RoleDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
-    firstName?: boolean
-    middleName?: boolean
-    lastName?: boolean
+    first_name?: boolean
+    middle_name?: boolean
+    last_name?: boolean
+    email?: boolean
     phone?: boolean
-    roleId?: boolean
-    isActive?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    role_id?: boolean
+    is_active?: boolean
+    created_at?: boolean
+    updated_at?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "middleName" | "lastName" | "phone" | "roleId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "first_name" | "middle_name" | "last_name" | "email" | "phone" | "role_id" | "is_active" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     role?: boolean | RoleDefaultArgs<ExtArgs>
     tickets?: boolean | User$ticketsArgs<ExtArgs>
     invoices?: boolean | User$invoicesArgs<ExtArgs>
     payments?: boolean | User$paymentsArgs<ExtArgs>
+    clients?: boolean | User$clientsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2724,17 +4016,19 @@ export namespace Prisma {
       tickets: Prisma.$TicketPayload<ExtArgs>[]
       invoices: Prisma.$InvoicePayload<ExtArgs>[]
       payments: Prisma.$PaymentPayload<ExtArgs>[]
+      clients: Prisma.$ClientPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      firstName: string
-      middleName: string | null
-      lastName: string
+      first_name: string
+      middle_name: string | null
+      last_name: string
+      email: string
       phone: string
-      roleId: string
-      isActive: boolean
-      createdAt: Date
-      updatedAt: Date
+      role_id: string
+      is_active: boolean
+      created_at: Date
+      updated_at: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -3133,6 +4427,7 @@ export namespace Prisma {
     tickets<T extends User$ticketsArgs<ExtArgs> = {}>(args?: Subset<T, User$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     invoices<T extends User$invoicesArgs<ExtArgs> = {}>(args?: Subset<T, User$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     payments<T extends User$paymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    clients<T extends User$clientsArgs<ExtArgs> = {}>(args?: Subset<T, User$clientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3163,14 +4458,15 @@ export namespace Prisma {
    */
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
-    readonly firstName: FieldRef<"User", 'String'>
-    readonly middleName: FieldRef<"User", 'String'>
-    readonly lastName: FieldRef<"User", 'String'>
+    readonly first_name: FieldRef<"User", 'String'>
+    readonly middle_name: FieldRef<"User", 'String'>
+    readonly last_name: FieldRef<"User", 'String'>
+    readonly email: FieldRef<"User", 'String'>
     readonly phone: FieldRef<"User", 'String'>
-    readonly roleId: FieldRef<"User", 'String'>
-    readonly isActive: FieldRef<"User", 'Boolean'>
-    readonly createdAt: FieldRef<"User", 'DateTime'>
-    readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly role_id: FieldRef<"User", 'String'>
+    readonly is_active: FieldRef<"User", 'Boolean'>
+    readonly created_at: FieldRef<"User", 'DateTime'>
+    readonly updated_at: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -3639,6 +4935,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.clients
+   */
+  export type User$clientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+    where?: ClientWhereInput
+    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    cursor?: ClientWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3658,6 +4978,1051 @@ export namespace Prisma {
 
 
   /**
+   * Model Client
+   */
+
+  export type AggregateClient = {
+    _count: ClientCountAggregateOutputType | null
+    _min: ClientMinAggregateOutputType | null
+    _max: ClientMaxAggregateOutputType | null
+  }
+
+  export type ClientMinAggregateOutputType = {
+    id: string | null
+    company_name: string | null
+    company_adress: string | null
+    client_id: string | null
+  }
+
+  export type ClientMaxAggregateOutputType = {
+    id: string | null
+    company_name: string | null
+    company_adress: string | null
+    client_id: string | null
+  }
+
+  export type ClientCountAggregateOutputType = {
+    id: number
+    company_name: number
+    company_adress: number
+    client_id: number
+    _all: number
+  }
+
+
+  export type ClientMinAggregateInputType = {
+    id?: true
+    company_name?: true
+    company_adress?: true
+    client_id?: true
+  }
+
+  export type ClientMaxAggregateInputType = {
+    id?: true
+    company_name?: true
+    company_adress?: true
+    client_id?: true
+  }
+
+  export type ClientCountAggregateInputType = {
+    id?: true
+    company_name?: true
+    company_adress?: true
+    client_id?: true
+    _all?: true
+  }
+
+  export type ClientAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Client to aggregate.
+     */
+    where?: ClientWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clients to fetch.
+     */
+    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClientWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Clients
+    **/
+    _count?: true | ClientCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClientMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClientMaxAggregateInputType
+  }
+
+  export type GetClientAggregateType<T extends ClientAggregateArgs> = {
+        [P in keyof T & keyof AggregateClient]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClient[P]>
+      : GetScalarType<T[P], AggregateClient[P]>
+  }
+
+
+
+
+  export type ClientGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClientWhereInput
+    orderBy?: ClientOrderByWithAggregationInput | ClientOrderByWithAggregationInput[]
+    by: ClientScalarFieldEnum[] | ClientScalarFieldEnum
+    having?: ClientScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClientCountAggregateInputType | true
+    _min?: ClientMinAggregateInputType
+    _max?: ClientMaxAggregateInputType
+  }
+
+  export type ClientGroupByOutputType = {
+    id: string
+    company_name: string
+    company_adress: string
+    client_id: string
+    _count: ClientCountAggregateOutputType | null
+    _min: ClientMinAggregateOutputType | null
+    _max: ClientMaxAggregateOutputType | null
+  }
+
+  type GetClientGroupByPayload<T extends ClientGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClientGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClientGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClientGroupByOutputType[P]>
+            : GetScalarType<T[P], ClientGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClientSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_name?: boolean
+    company_adress?: boolean
+    client_id?: boolean
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["client"]>
+
+  export type ClientSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_name?: boolean
+    company_adress?: boolean
+    client_id?: boolean
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["client"]>
+
+  export type ClientSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    company_name?: boolean
+    company_adress?: boolean
+    client_id?: boolean
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["client"]>
+
+  export type ClientSelectScalar = {
+    id?: boolean
+    company_name?: boolean
+    company_adress?: boolean
+    client_id?: boolean
+  }
+
+  export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "company_name" | "company_adress" | "client_id", ExtArgs["result"]["client"]>
+  export type ClientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ClientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ClientIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ClientPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Client"
+    objects: {
+      client: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      company_name: string
+      company_adress: string
+      client_id: string
+    }, ExtArgs["result"]["client"]>
+    composites: {}
+  }
+
+  type ClientGetPayload<S extends boolean | null | undefined | ClientDefaultArgs> = $Result.GetResult<Prisma.$ClientPayload, S>
+
+  type ClientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ClientCountAggregateInputType | true
+    }
+
+  export interface ClientDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Client'], meta: { name: 'Client' } }
+    /**
+     * Find zero or one Client that matches the filter.
+     * @param {ClientFindUniqueArgs} args - Arguments to find a Client
+     * @example
+     * // Get one Client
+     * const client = await prisma.client.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClientFindUniqueArgs>(args: SelectSubset<T, ClientFindUniqueArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Client that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClientFindUniqueOrThrowArgs} args - Arguments to find a Client
+     * @example
+     * // Get one Client
+     * const client = await prisma.client.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClientFindUniqueOrThrowArgs>(args: SelectSubset<T, ClientFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Client that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClientFindFirstArgs} args - Arguments to find a Client
+     * @example
+     * // Get one Client
+     * const client = await prisma.client.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClientFindFirstArgs>(args?: SelectSubset<T, ClientFindFirstArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Client that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClientFindFirstOrThrowArgs} args - Arguments to find a Client
+     * @example
+     * // Get one Client
+     * const client = await prisma.client.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClientFindFirstOrThrowArgs>(args?: SelectSubset<T, ClientFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Clients that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClientFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Clients
+     * const clients = await prisma.client.findMany()
+     * 
+     * // Get first 10 Clients
+     * const clients = await prisma.client.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clientWithIdOnly = await prisma.client.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClientFindManyArgs>(args?: SelectSubset<T, ClientFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Client.
+     * @param {ClientCreateArgs} args - Arguments to create a Client.
+     * @example
+     * // Create one Client
+     * const Client = await prisma.client.create({
+     *   data: {
+     *     // ... data to create a Client
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClientCreateArgs>(args: SelectSubset<T, ClientCreateArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Clients.
+     * @param {ClientCreateManyArgs} args - Arguments to create many Clients.
+     * @example
+     * // Create many Clients
+     * const client = await prisma.client.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClientCreateManyArgs>(args?: SelectSubset<T, ClientCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Clients and returns the data saved in the database.
+     * @param {ClientCreateManyAndReturnArgs} args - Arguments to create many Clients.
+     * @example
+     * // Create many Clients
+     * const client = await prisma.client.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Clients and only return the `id`
+     * const clientWithIdOnly = await prisma.client.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClientCreateManyAndReturnArgs>(args?: SelectSubset<T, ClientCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Client.
+     * @param {ClientDeleteArgs} args - Arguments to delete one Client.
+     * @example
+     * // Delete one Client
+     * const Client = await prisma.client.delete({
+     *   where: {
+     *     // ... filter to delete one Client
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClientDeleteArgs>(args: SelectSubset<T, ClientDeleteArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Client.
+     * @param {ClientUpdateArgs} args - Arguments to update one Client.
+     * @example
+     * // Update one Client
+     * const client = await prisma.client.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClientUpdateArgs>(args: SelectSubset<T, ClientUpdateArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Clients.
+     * @param {ClientDeleteManyArgs} args - Arguments to filter Clients to delete.
+     * @example
+     * // Delete a few Clients
+     * const { count } = await prisma.client.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClientDeleteManyArgs>(args?: SelectSubset<T, ClientDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Clients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClientUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Clients
+     * const client = await prisma.client.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClientUpdateManyArgs>(args: SelectSubset<T, ClientUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Clients and returns the data updated in the database.
+     * @param {ClientUpdateManyAndReturnArgs} args - Arguments to update many Clients.
+     * @example
+     * // Update many Clients
+     * const client = await prisma.client.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Clients and only return the `id`
+     * const clientWithIdOnly = await prisma.client.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClientUpdateManyAndReturnArgs>(args: SelectSubset<T, ClientUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Client.
+     * @param {ClientUpsertArgs} args - Arguments to update or create a Client.
+     * @example
+     * // Update or create a Client
+     * const client = await prisma.client.upsert({
+     *   create: {
+     *     // ... data to create a Client
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Client we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClientUpsertArgs>(args: SelectSubset<T, ClientUpsertArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Clients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClientCountArgs} args - Arguments to filter Clients to count.
+     * @example
+     * // Count the number of Clients
+     * const count = await prisma.client.count({
+     *   where: {
+     *     // ... the filter for the Clients we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClientCountArgs>(
+      args?: Subset<T, ClientCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClientCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Client.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClientAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClientAggregateArgs>(args: Subset<T, ClientAggregateArgs>): Prisma.PrismaPromise<GetClientAggregateType<T>>
+
+    /**
+     * Group by Client.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClientGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClientGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClientGroupByArgs['orderBy'] }
+        : { orderBy?: ClientGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClientGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClientGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Client model
+   */
+  readonly fields: ClientFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Client.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClientClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Client model
+   */
+  interface ClientFieldRefs {
+    readonly id: FieldRef<"Client", 'String'>
+    readonly company_name: FieldRef<"Client", 'String'>
+    readonly company_adress: FieldRef<"Client", 'String'>
+    readonly client_id: FieldRef<"Client", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Client findUnique
+   */
+  export type ClientFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+    /**
+     * Filter, which Client to fetch.
+     */
+    where: ClientWhereUniqueInput
+  }
+
+  /**
+   * Client findUniqueOrThrow
+   */
+  export type ClientFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+    /**
+     * Filter, which Client to fetch.
+     */
+    where: ClientWhereUniqueInput
+  }
+
+  /**
+   * Client findFirst
+   */
+  export type ClientFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+    /**
+     * Filter, which Client to fetch.
+     */
+    where?: ClientWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clients to fetch.
+     */
+    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Clients.
+     */
+    cursor?: ClientWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Clients.
+     */
+    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
+  }
+
+  /**
+   * Client findFirstOrThrow
+   */
+  export type ClientFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+    /**
+     * Filter, which Client to fetch.
+     */
+    where?: ClientWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clients to fetch.
+     */
+    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Clients.
+     */
+    cursor?: ClientWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Clients.
+     */
+    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
+  }
+
+  /**
+   * Client findMany
+   */
+  export type ClientFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+    /**
+     * Filter, which Clients to fetch.
+     */
+    where?: ClientWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clients to fetch.
+     */
+    orderBy?: ClientOrderByWithRelationInput | ClientOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Clients.
+     */
+    cursor?: ClientWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clients.
+     */
+    skip?: number
+    distinct?: ClientScalarFieldEnum | ClientScalarFieldEnum[]
+  }
+
+  /**
+   * Client create
+   */
+  export type ClientCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Client.
+     */
+    data: XOR<ClientCreateInput, ClientUncheckedCreateInput>
+  }
+
+  /**
+   * Client createMany
+   */
+  export type ClientCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Clients.
+     */
+    data: ClientCreateManyInput | ClientCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Client createManyAndReturn
+   */
+  export type ClientCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * The data used to create many Clients.
+     */
+    data: ClientCreateManyInput | ClientCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Client update
+   */
+  export type ClientUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Client.
+     */
+    data: XOR<ClientUpdateInput, ClientUncheckedUpdateInput>
+    /**
+     * Choose, which Client to update.
+     */
+    where: ClientWhereUniqueInput
+  }
+
+  /**
+   * Client updateMany
+   */
+  export type ClientUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Clients.
+     */
+    data: XOR<ClientUpdateManyMutationInput, ClientUncheckedUpdateManyInput>
+    /**
+     * Filter which Clients to update
+     */
+    where?: ClientWhereInput
+    /**
+     * Limit how many Clients to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Client updateManyAndReturn
+   */
+  export type ClientUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * The data used to update Clients.
+     */
+    data: XOR<ClientUpdateManyMutationInput, ClientUncheckedUpdateManyInput>
+    /**
+     * Filter which Clients to update
+     */
+    where?: ClientWhereInput
+    /**
+     * Limit how many Clients to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Client upsert
+   */
+  export type ClientUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Client to update in case it exists.
+     */
+    where: ClientWhereUniqueInput
+    /**
+     * In case the Client found by the `where` argument doesn't exist, create a new Client with this data.
+     */
+    create: XOR<ClientCreateInput, ClientUncheckedCreateInput>
+    /**
+     * In case the Client was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClientUpdateInput, ClientUncheckedUpdateInput>
+  }
+
+  /**
+   * Client delete
+   */
+  export type ClientDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+    /**
+     * Filter which Client to delete.
+     */
+    where: ClientWhereUniqueInput
+  }
+
+  /**
+   * Client deleteMany
+   */
+  export type ClientDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Clients to delete
+     */
+    where?: ClientWhereInput
+    /**
+     * Limit how many Clients to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Client without action
+   */
+  export type ClientDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Client
+     */
+    select?: ClientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Client
+     */
+    omit?: ClientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClientInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Ticket
    */
 
@@ -3669,82 +6034,88 @@ export namespace Prisma {
 
   export type TicketMinAggregateOutputType = {
     id: string | null
-    clientId: string | null
-    firstName: string | null
-    middleName: string | null
-    lastName: string | null
+    client_id: string | null
+    first_name: string | null
+    middle_name: string | null
+    last_name: string | null
     phone: string | null
     roleId: string | null
     isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    priority_id: string | null
   }
 
   export type TicketMaxAggregateOutputType = {
     id: string | null
-    clientId: string | null
-    firstName: string | null
-    middleName: string | null
-    lastName: string | null
+    client_id: string | null
+    first_name: string | null
+    middle_name: string | null
+    last_name: string | null
     phone: string | null
     roleId: string | null
     isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    priority_id: string | null
   }
 
   export type TicketCountAggregateOutputType = {
     id: number
-    clientId: number
-    firstName: number
-    middleName: number
-    lastName: number
+    client_id: number
+    first_name: number
+    middle_name: number
+    last_name: number
     phone: number
     roleId: number
     isActive: number
     createdAt: number
     updatedAt: number
+    priority_id: number
     _all: number
   }
 
 
   export type TicketMinAggregateInputType = {
     id?: true
-    clientId?: true
-    firstName?: true
-    middleName?: true
-    lastName?: true
+    client_id?: true
+    first_name?: true
+    middle_name?: true
+    last_name?: true
     phone?: true
     roleId?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
+    priority_id?: true
   }
 
   export type TicketMaxAggregateInputType = {
     id?: true
-    clientId?: true
-    firstName?: true
-    middleName?: true
-    lastName?: true
+    client_id?: true
+    first_name?: true
+    middle_name?: true
+    last_name?: true
     phone?: true
     roleId?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
+    priority_id?: true
   }
 
   export type TicketCountAggregateInputType = {
     id?: true
-    clientId?: true
-    firstName?: true
-    middleName?: true
-    lastName?: true
+    client_id?: true
+    first_name?: true
+    middle_name?: true
+    last_name?: true
     phone?: true
     roleId?: true
     isActive?: true
     createdAt?: true
     updatedAt?: true
+    priority_id?: true
     _all?: true
   }
 
@@ -3822,15 +6193,16 @@ export namespace Prisma {
 
   export type TicketGroupByOutputType = {
     id: string
-    clientId: string
-    firstName: string
-    middleName: string | null
-    lastName: string
+    client_id: string
+    first_name: string
+    middle_name: string | null
+    last_name: string
     phone: string
     roleId: string
     isActive: boolean
     createdAt: Date
     updatedAt: Date
+    priority_id: string
     _count: TicketCountAggregateOutputType | null
     _min: TicketMinAggregateOutputType | null
     _max: TicketMaxAggregateOutputType | null
@@ -3852,15 +6224,17 @@ export namespace Prisma {
 
   export type TicketSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    clientId?: boolean
-    firstName?: boolean
-    middleName?: boolean
-    lastName?: boolean
+    client_id?: boolean
+    first_name?: boolean
+    middle_name?: boolean
+    last_name?: boolean
     phone?: boolean
     roleId?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    priority_id?: boolean
+    priority?: boolean | PriorityDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
     role?: boolean | RoleDefaultArgs<ExtArgs>
     invoices?: boolean | Ticket$invoicesArgs<ExtArgs>
@@ -3869,59 +6243,67 @@ export namespace Prisma {
 
   export type TicketSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    clientId?: boolean
-    firstName?: boolean
-    middleName?: boolean
-    lastName?: boolean
+    client_id?: boolean
+    first_name?: boolean
+    middle_name?: boolean
+    last_name?: boolean
     phone?: boolean
     roleId?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    priority_id?: boolean
+    priority?: boolean | PriorityDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
     role?: boolean | RoleDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ticket"]>
 
   export type TicketSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    clientId?: boolean
-    firstName?: boolean
-    middleName?: boolean
-    lastName?: boolean
+    client_id?: boolean
+    first_name?: boolean
+    middle_name?: boolean
+    last_name?: boolean
     phone?: boolean
     roleId?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    priority_id?: boolean
+    priority?: boolean | PriorityDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
     role?: boolean | RoleDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["ticket"]>
 
   export type TicketSelectScalar = {
     id?: boolean
-    clientId?: boolean
-    firstName?: boolean
-    middleName?: boolean
-    lastName?: boolean
+    client_id?: boolean
+    first_name?: boolean
+    middle_name?: boolean
+    last_name?: boolean
     phone?: boolean
     roleId?: boolean
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    priority_id?: boolean
   }
 
-  export type TicketOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientId" | "firstName" | "middleName" | "lastName" | "phone" | "roleId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["ticket"]>
+  export type TicketOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "client_id" | "first_name" | "middle_name" | "last_name" | "phone" | "roleId" | "isActive" | "createdAt" | "updatedAt" | "priority_id", ExtArgs["result"]["ticket"]>
   export type TicketInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    priority?: boolean | PriorityDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
     role?: boolean | RoleDefaultArgs<ExtArgs>
     invoices?: boolean | Ticket$invoicesArgs<ExtArgs>
     _count?: boolean | TicketCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TicketIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    priority?: boolean | PriorityDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
     role?: boolean | RoleDefaultArgs<ExtArgs>
   }
   export type TicketIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    priority?: boolean | PriorityDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
     role?: boolean | RoleDefaultArgs<ExtArgs>
   }
@@ -3929,21 +6311,23 @@ export namespace Prisma {
   export type $TicketPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Ticket"
     objects: {
+      priority: Prisma.$PriorityPayload<ExtArgs>
       client: Prisma.$UserPayload<ExtArgs>
       role: Prisma.$RolePayload<ExtArgs>
       invoices: Prisma.$InvoicePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      clientId: string
-      firstName: string
-      middleName: string | null
-      lastName: string
+      client_id: string
+      first_name: string
+      middle_name: string | null
+      last_name: string
       phone: string
       roleId: string
       isActive: boolean
       createdAt: Date
       updatedAt: Date
+      priority_id: string
     }, ExtArgs["result"]["ticket"]>
     composites: {}
   }
@@ -4338,6 +6722,7 @@ export namespace Prisma {
    */
   export interface Prisma__TicketClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    priority<T extends PriorityDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PriorityDefaultArgs<ExtArgs>>): Prisma__PriorityClient<$Result.GetResult<Prisma.$PriorityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     role<T extends RoleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RoleDefaultArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     invoices<T extends Ticket$invoicesArgs<ExtArgs> = {}>(args?: Subset<T, Ticket$invoicesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvoicePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4371,15 +6756,16 @@ export namespace Prisma {
    */
   interface TicketFieldRefs {
     readonly id: FieldRef<"Ticket", 'String'>
-    readonly clientId: FieldRef<"Ticket", 'String'>
-    readonly firstName: FieldRef<"Ticket", 'String'>
-    readonly middleName: FieldRef<"Ticket", 'String'>
-    readonly lastName: FieldRef<"Ticket", 'String'>
+    readonly client_id: FieldRef<"Ticket", 'String'>
+    readonly first_name: FieldRef<"Ticket", 'String'>
+    readonly middle_name: FieldRef<"Ticket", 'String'>
+    readonly last_name: FieldRef<"Ticket", 'String'>
     readonly phone: FieldRef<"Ticket", 'String'>
     readonly roleId: FieldRef<"Ticket", 'String'>
     readonly isActive: FieldRef<"Ticket", 'Boolean'>
     readonly createdAt: FieldRef<"Ticket", 'DateTime'>
     readonly updatedAt: FieldRef<"Ticket", 'DateTime'>
+    readonly priority_id: FieldRef<"Ticket", 'String'>
   }
     
 
@@ -4840,8 +7226,8 @@ export namespace Prisma {
 
   export type InvoiceMinAggregateOutputType = {
     id: string | null
-    ticketId: string | null
-    clientId: string | null
+    ticket_id: string | null
+    client_id: string | null
     amount: number | null
     currency: string | null
     status: string | null
@@ -4852,8 +7238,8 @@ export namespace Prisma {
 
   export type InvoiceMaxAggregateOutputType = {
     id: string | null
-    ticketId: string | null
-    clientId: string | null
+    ticket_id: string | null
+    client_id: string | null
     amount: number | null
     currency: string | null
     status: string | null
@@ -4864,8 +7250,8 @@ export namespace Prisma {
 
   export type InvoiceCountAggregateOutputType = {
     id: number
-    ticketId: number
-    clientId: number
+    ticket_id: number
+    client_id: number
     amount: number
     currency: number
     status: number
@@ -4886,8 +7272,8 @@ export namespace Prisma {
 
   export type InvoiceMinAggregateInputType = {
     id?: true
-    ticketId?: true
-    clientId?: true
+    ticket_id?: true
+    client_id?: true
     amount?: true
     currency?: true
     status?: true
@@ -4898,8 +7284,8 @@ export namespace Prisma {
 
   export type InvoiceMaxAggregateInputType = {
     id?: true
-    ticketId?: true
-    clientId?: true
+    ticket_id?: true
+    client_id?: true
     amount?: true
     currency?: true
     status?: true
@@ -4910,8 +7296,8 @@ export namespace Prisma {
 
   export type InvoiceCountAggregateInputType = {
     id?: true
-    ticketId?: true
-    clientId?: true
+    ticket_id?: true
+    client_id?: true
     amount?: true
     currency?: true
     status?: true
@@ -5009,8 +7395,8 @@ export namespace Prisma {
 
   export type InvoiceGroupByOutputType = {
     id: string
-    ticketId: string
-    clientId: string
+    ticket_id: string
+    client_id: string
     amount: number
     currency: string
     status: string
@@ -5040,8 +7426,8 @@ export namespace Prisma {
 
   export type InvoiceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    ticketId?: boolean
-    clientId?: boolean
+    ticket_id?: boolean
+    client_id?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -5056,8 +7442,8 @@ export namespace Prisma {
 
   export type InvoiceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    ticketId?: boolean
-    clientId?: boolean
+    ticket_id?: boolean
+    client_id?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -5070,8 +7456,8 @@ export namespace Prisma {
 
   export type InvoiceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    ticketId?: boolean
-    clientId?: boolean
+    ticket_id?: boolean
+    client_id?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -5084,8 +7470,8 @@ export namespace Prisma {
 
   export type InvoiceSelectScalar = {
     id?: boolean
-    ticketId?: boolean
-    clientId?: boolean
+    ticket_id?: boolean
+    client_id?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -5094,7 +7480,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type InvoiceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ticketId" | "clientId" | "amount" | "currency" | "status" | "dueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
+  export type InvoiceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ticket_id" | "client_id" | "amount" | "currency" | "status" | "dueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["invoice"]>
   export type InvoiceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ticket?: boolean | TicketDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
@@ -5119,8 +7505,8 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      ticketId: string
-      clientId: string
+      ticket_id: string
+      client_id: string
       amount: number
       currency: string
       status: string
@@ -5554,8 +7940,8 @@ export namespace Prisma {
    */
   interface InvoiceFieldRefs {
     readonly id: FieldRef<"Invoice", 'String'>
-    readonly ticketId: FieldRef<"Invoice", 'String'>
-    readonly clientId: FieldRef<"Invoice", 'String'>
+    readonly ticket_id: FieldRef<"Invoice", 'String'>
+    readonly client_id: FieldRef<"Invoice", 'String'>
     readonly amount: FieldRef<"Invoice", 'Float'>
     readonly currency: FieldRef<"Invoice", 'String'>
     readonly status: FieldRef<"Invoice", 'String'>
@@ -6022,8 +8408,8 @@ export namespace Prisma {
 
   export type PaymentMinAggregateOutputType = {
     id: string | null
-    invoiceId: string | null
-    clientId: string | null
+    invoice_id: string | null
+    client_id: string | null
     amount: number | null
     currency: string | null
     status: string | null
@@ -6034,8 +8420,8 @@ export namespace Prisma {
 
   export type PaymentMaxAggregateOutputType = {
     id: string | null
-    invoiceId: string | null
-    clientId: string | null
+    invoice_id: string | null
+    client_id: string | null
     amount: number | null
     currency: string | null
     status: string | null
@@ -6046,8 +8432,8 @@ export namespace Prisma {
 
   export type PaymentCountAggregateOutputType = {
     id: number
-    invoiceId: number
-    clientId: number
+    invoice_id: number
+    client_id: number
     amount: number
     currency: number
     status: number
@@ -6068,8 +8454,8 @@ export namespace Prisma {
 
   export type PaymentMinAggregateInputType = {
     id?: true
-    invoiceId?: true
-    clientId?: true
+    invoice_id?: true
+    client_id?: true
     amount?: true
     currency?: true
     status?: true
@@ -6080,8 +8466,8 @@ export namespace Prisma {
 
   export type PaymentMaxAggregateInputType = {
     id?: true
-    invoiceId?: true
-    clientId?: true
+    invoice_id?: true
+    client_id?: true
     amount?: true
     currency?: true
     status?: true
@@ -6092,8 +8478,8 @@ export namespace Prisma {
 
   export type PaymentCountAggregateInputType = {
     id?: true
-    invoiceId?: true
-    clientId?: true
+    invoice_id?: true
+    client_id?: true
     amount?: true
     currency?: true
     status?: true
@@ -6191,8 +8577,8 @@ export namespace Prisma {
 
   export type PaymentGroupByOutputType = {
     id: string
-    invoiceId: string
-    clientId: string
+    invoice_id: string
+    client_id: string
     amount: number
     currency: string
     status: string
@@ -6222,8 +8608,8 @@ export namespace Prisma {
 
   export type PaymentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    invoiceId?: boolean
-    clientId?: boolean
+    invoice_id?: boolean
+    client_id?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -6236,8 +8622,8 @@ export namespace Prisma {
 
   export type PaymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    invoiceId?: boolean
-    clientId?: boolean
+    invoice_id?: boolean
+    client_id?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -6250,8 +8636,8 @@ export namespace Prisma {
 
   export type PaymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    invoiceId?: boolean
-    clientId?: boolean
+    invoice_id?: boolean
+    client_id?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -6264,8 +8650,8 @@ export namespace Prisma {
 
   export type PaymentSelectScalar = {
     id?: boolean
-    invoiceId?: boolean
-    clientId?: boolean
+    invoice_id?: boolean
+    client_id?: boolean
     amount?: boolean
     currency?: boolean
     status?: boolean
@@ -6274,7 +8660,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "invoiceId" | "clientId" | "amount" | "currency" | "status" | "dueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+  export type PaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "invoice_id" | "client_id" | "amount" | "currency" | "status" | "dueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
   export type PaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     invoice?: boolean | InvoiceDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
@@ -6296,8 +8682,8 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      invoiceId: string
-      clientId: string
+      invoice_id: string
+      client_id: string
       amount: number
       currency: string
       status: string
@@ -6730,8 +9116,8 @@ export namespace Prisma {
    */
   interface PaymentFieldRefs {
     readonly id: FieldRef<"Payment", 'String'>
-    readonly invoiceId: FieldRef<"Payment", 'String'>
-    readonly clientId: FieldRef<"Payment", 'String'>
+    readonly invoice_id: FieldRef<"Payment", 'String'>
+    readonly client_id: FieldRef<"Payment", 'String'>
     readonly amount: FieldRef<"Payment", 'Float'>
     readonly currency: FieldRef<"Payment", 'String'>
     readonly status: FieldRef<"Payment", 'String'>
@@ -7176,32 +9562,54 @@ export namespace Prisma {
   export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
 
 
-  export const UserScalarFieldEnum: {
+  export const PriorityScalarFieldEnum: {
     id: 'id',
-    firstName: 'firstName',
-    middleName: 'middleName',
-    lastName: 'lastName',
-    phone: 'phone',
-    roleId: 'roleId',
-    isActive: 'isActive',
+    name: 'name',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
+  };
+
+  export type PriorityScalarFieldEnum = (typeof PriorityScalarFieldEnum)[keyof typeof PriorityScalarFieldEnum]
+
+
+  export const UserScalarFieldEnum: {
+    id: 'id',
+    first_name: 'first_name',
+    middle_name: 'middle_name',
+    last_name: 'last_name',
+    email: 'email',
+    phone: 'phone',
+    role_id: 'role_id',
+    is_active: 'is_active',
+    created_at: 'created_at',
+    updated_at: 'updated_at'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const ClientScalarFieldEnum: {
+    id: 'id',
+    company_name: 'company_name',
+    company_adress: 'company_adress',
+    client_id: 'client_id'
+  };
+
+  export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+
+
   export const TicketScalarFieldEnum: {
     id: 'id',
-    clientId: 'clientId',
-    firstName: 'firstName',
-    middleName: 'middleName',
-    lastName: 'lastName',
+    client_id: 'client_id',
+    first_name: 'first_name',
+    middle_name: 'middle_name',
+    last_name: 'last_name',
     phone: 'phone',
     roleId: 'roleId',
     isActive: 'isActive',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    priority_id: 'priority_id'
   };
 
   export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
@@ -7209,8 +9617,8 @@ export namespace Prisma {
 
   export const InvoiceScalarFieldEnum: {
     id: 'id',
-    ticketId: 'ticketId',
-    clientId: 'clientId',
+    ticket_id: 'ticket_id',
+    client_id: 'client_id',
     amount: 'amount',
     currency: 'currency',
     status: 'status',
@@ -7224,8 +9632,8 @@ export namespace Prisma {
 
   export const PaymentScalarFieldEnum: {
     id: 'id',
-    invoiceId: 'invoiceId',
-    clientId: 'clientId',
+    invoice_id: 'invoice_id',
+    client_id: 'client_id',
     amount: 'amount',
     currency: 'currency',
     status: 'status',
@@ -7385,70 +9793,127 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Role"> | Date | string
   }
 
+  export type PriorityWhereInput = {
+    AND?: PriorityWhereInput | PriorityWhereInput[]
+    OR?: PriorityWhereInput[]
+    NOT?: PriorityWhereInput | PriorityWhereInput[]
+    id?: StringFilter<"Priority"> | string
+    name?: StringFilter<"Priority"> | string
+    createdAt?: DateTimeFilter<"Priority"> | Date | string
+    updatedAt?: DateTimeFilter<"Priority"> | Date | string
+    tickets?: TicketListRelationFilter
+  }
+
+  export type PriorityOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tickets?: TicketOrderByRelationAggregateInput
+  }
+
+  export type PriorityWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PriorityWhereInput | PriorityWhereInput[]
+    OR?: PriorityWhereInput[]
+    NOT?: PriorityWhereInput | PriorityWhereInput[]
+    name?: StringFilter<"Priority"> | string
+    createdAt?: DateTimeFilter<"Priority"> | Date | string
+    updatedAt?: DateTimeFilter<"Priority"> | Date | string
+    tickets?: TicketListRelationFilter
+  }, "id">
+
+  export type PriorityOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PriorityCountOrderByAggregateInput
+    _max?: PriorityMaxOrderByAggregateInput
+    _min?: PriorityMinOrderByAggregateInput
+  }
+
+  export type PriorityScalarWhereWithAggregatesInput = {
+    AND?: PriorityScalarWhereWithAggregatesInput | PriorityScalarWhereWithAggregatesInput[]
+    OR?: PriorityScalarWhereWithAggregatesInput[]
+    NOT?: PriorityScalarWhereWithAggregatesInput | PriorityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Priority"> | string
+    name?: StringWithAggregatesFilter<"Priority"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Priority"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Priority"> | Date | string
+  }
+
   export type UserWhereInput = {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
-    firstName?: StringFilter<"User"> | string
-    middleName?: StringNullableFilter<"User"> | string | null
-    lastName?: StringFilter<"User"> | string
+    first_name?: StringFilter<"User"> | string
+    middle_name?: StringNullableFilter<"User"> | string | null
+    last_name?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
     phone?: StringFilter<"User"> | string
-    roleId?: StringFilter<"User"> | string
-    isActive?: BoolFilter<"User"> | boolean
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
+    role_id?: StringFilter<"User"> | string
+    is_active?: BoolFilter<"User"> | boolean
+    created_at?: DateTimeFilter<"User"> | Date | string
+    updated_at?: DateTimeFilter<"User"> | Date | string
     role?: XOR<RoleScalarRelationFilter, RoleWhereInput>
     tickets?: TicketListRelationFilter
     invoices?: InvoiceListRelationFilter
     payments?: PaymentListRelationFilter
+    clients?: ClientListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    firstName?: SortOrder
-    middleName?: SortOrderInput | SortOrder
-    lastName?: SortOrder
+    first_name?: SortOrder
+    middle_name?: SortOrderInput | SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
     phone?: SortOrder
-    roleId?: SortOrder
-    isActive?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    role_id?: SortOrder
+    is_active?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
     role?: RoleOrderByWithRelationInput
     tickets?: TicketOrderByRelationAggregateInput
     invoices?: InvoiceOrderByRelationAggregateInput
     payments?: PaymentOrderByRelationAggregateInput
+    clients?: ClientOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    email?: string
     phone?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    firstName?: StringFilter<"User"> | string
-    middleName?: StringNullableFilter<"User"> | string | null
-    lastName?: StringFilter<"User"> | string
-    roleId?: StringFilter<"User"> | string
-    isActive?: BoolFilter<"User"> | boolean
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
+    first_name?: StringFilter<"User"> | string
+    middle_name?: StringNullableFilter<"User"> | string | null
+    last_name?: StringFilter<"User"> | string
+    role_id?: StringFilter<"User"> | string
+    is_active?: BoolFilter<"User"> | boolean
+    created_at?: DateTimeFilter<"User"> | Date | string
+    updated_at?: DateTimeFilter<"User"> | Date | string
     role?: XOR<RoleScalarRelationFilter, RoleWhereInput>
     tickets?: TicketListRelationFilter
     invoices?: InvoiceListRelationFilter
     payments?: PaymentListRelationFilter
-  }, "id" | "phone">
+    clients?: ClientListRelationFilter
+  }, "id" | "email" | "phone">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    firstName?: SortOrder
-    middleName?: SortOrderInput | SortOrder
-    lastName?: SortOrder
+    first_name?: SortOrder
+    middle_name?: SortOrderInput | SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
     phone?: SortOrder
-    roleId?: SortOrder
-    isActive?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    role_id?: SortOrder
+    is_active?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -7459,14 +9924,65 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
-    firstName?: StringWithAggregatesFilter<"User"> | string
-    middleName?: StringNullableWithAggregatesFilter<"User"> | string | null
-    lastName?: StringWithAggregatesFilter<"User"> | string
+    first_name?: StringWithAggregatesFilter<"User"> | string
+    middle_name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    last_name?: StringWithAggregatesFilter<"User"> | string
+    email?: StringWithAggregatesFilter<"User"> | string
     phone?: StringWithAggregatesFilter<"User"> | string
-    roleId?: StringWithAggregatesFilter<"User"> | string
-    isActive?: BoolWithAggregatesFilter<"User"> | boolean
-    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    role_id?: StringWithAggregatesFilter<"User"> | string
+    is_active?: BoolWithAggregatesFilter<"User"> | boolean
+    created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type ClientWhereInput = {
+    AND?: ClientWhereInput | ClientWhereInput[]
+    OR?: ClientWhereInput[]
+    NOT?: ClientWhereInput | ClientWhereInput[]
+    id?: StringFilter<"Client"> | string
+    company_name?: StringFilter<"Client"> | string
+    company_adress?: StringFilter<"Client"> | string
+    client_id?: StringFilter<"Client"> | string
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ClientOrderByWithRelationInput = {
+    id?: SortOrder
+    company_name?: SortOrder
+    company_adress?: SortOrder
+    client_id?: SortOrder
+    client?: UserOrderByWithRelationInput
+  }
+
+  export type ClientWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ClientWhereInput | ClientWhereInput[]
+    OR?: ClientWhereInput[]
+    NOT?: ClientWhereInput | ClientWhereInput[]
+    company_name?: StringFilter<"Client"> | string
+    company_adress?: StringFilter<"Client"> | string
+    client_id?: StringFilter<"Client"> | string
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ClientOrderByWithAggregationInput = {
+    id?: SortOrder
+    company_name?: SortOrder
+    company_adress?: SortOrder
+    client_id?: SortOrder
+    _count?: ClientCountOrderByAggregateInput
+    _max?: ClientMaxOrderByAggregateInput
+    _min?: ClientMinOrderByAggregateInput
+  }
+
+  export type ClientScalarWhereWithAggregatesInput = {
+    AND?: ClientScalarWhereWithAggregatesInput | ClientScalarWhereWithAggregatesInput[]
+    OR?: ClientScalarWhereWithAggregatesInput[]
+    NOT?: ClientScalarWhereWithAggregatesInput | ClientScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Client"> | string
+    company_name?: StringWithAggregatesFilter<"Client"> | string
+    company_adress?: StringWithAggregatesFilter<"Client"> | string
+    client_id?: StringWithAggregatesFilter<"Client"> | string
   }
 
   export type TicketWhereInput = {
@@ -7474,15 +9990,17 @@ export namespace Prisma {
     OR?: TicketWhereInput[]
     NOT?: TicketWhereInput | TicketWhereInput[]
     id?: StringFilter<"Ticket"> | string
-    clientId?: StringFilter<"Ticket"> | string
-    firstName?: StringFilter<"Ticket"> | string
-    middleName?: StringNullableFilter<"Ticket"> | string | null
-    lastName?: StringFilter<"Ticket"> | string
+    client_id?: StringFilter<"Ticket"> | string
+    first_name?: StringFilter<"Ticket"> | string
+    middle_name?: StringNullableFilter<"Ticket"> | string | null
+    last_name?: StringFilter<"Ticket"> | string
     phone?: StringFilter<"Ticket"> | string
     roleId?: StringFilter<"Ticket"> | string
     isActive?: BoolFilter<"Ticket"> | boolean
     createdAt?: DateTimeFilter<"Ticket"> | Date | string
     updatedAt?: DateTimeFilter<"Ticket"> | Date | string
+    priority_id?: StringFilter<"Ticket"> | string
+    priority?: XOR<PriorityScalarRelationFilter, PriorityWhereInput>
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
     role?: XOR<RoleScalarRelationFilter, RoleWhereInput>
     invoices?: InvoiceListRelationFilter
@@ -7490,15 +10008,17 @@ export namespace Prisma {
 
   export type TicketOrderByWithRelationInput = {
     id?: SortOrder
-    clientId?: SortOrder
-    firstName?: SortOrder
-    middleName?: SortOrderInput | SortOrder
-    lastName?: SortOrder
+    client_id?: SortOrder
+    first_name?: SortOrder
+    middle_name?: SortOrderInput | SortOrder
+    last_name?: SortOrder
     phone?: SortOrder
     roleId?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    priority_id?: SortOrder
+    priority?: PriorityOrderByWithRelationInput
     client?: UserOrderByWithRelationInput
     role?: RoleOrderByWithRelationInput
     invoices?: InvoiceOrderByRelationAggregateInput
@@ -7510,14 +10030,16 @@ export namespace Prisma {
     AND?: TicketWhereInput | TicketWhereInput[]
     OR?: TicketWhereInput[]
     NOT?: TicketWhereInput | TicketWhereInput[]
-    clientId?: StringFilter<"Ticket"> | string
-    firstName?: StringFilter<"Ticket"> | string
-    middleName?: StringNullableFilter<"Ticket"> | string | null
-    lastName?: StringFilter<"Ticket"> | string
+    client_id?: StringFilter<"Ticket"> | string
+    first_name?: StringFilter<"Ticket"> | string
+    middle_name?: StringNullableFilter<"Ticket"> | string | null
+    last_name?: StringFilter<"Ticket"> | string
     roleId?: StringFilter<"Ticket"> | string
     isActive?: BoolFilter<"Ticket"> | boolean
     createdAt?: DateTimeFilter<"Ticket"> | Date | string
     updatedAt?: DateTimeFilter<"Ticket"> | Date | string
+    priority_id?: StringFilter<"Ticket"> | string
+    priority?: XOR<PriorityScalarRelationFilter, PriorityWhereInput>
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
     role?: XOR<RoleScalarRelationFilter, RoleWhereInput>
     invoices?: InvoiceListRelationFilter
@@ -7525,15 +10047,16 @@ export namespace Prisma {
 
   export type TicketOrderByWithAggregationInput = {
     id?: SortOrder
-    clientId?: SortOrder
-    firstName?: SortOrder
-    middleName?: SortOrderInput | SortOrder
-    lastName?: SortOrder
+    client_id?: SortOrder
+    first_name?: SortOrder
+    middle_name?: SortOrderInput | SortOrder
+    last_name?: SortOrder
     phone?: SortOrder
     roleId?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    priority_id?: SortOrder
     _count?: TicketCountOrderByAggregateInput
     _max?: TicketMaxOrderByAggregateInput
     _min?: TicketMinOrderByAggregateInput
@@ -7544,15 +10067,16 @@ export namespace Prisma {
     OR?: TicketScalarWhereWithAggregatesInput[]
     NOT?: TicketScalarWhereWithAggregatesInput | TicketScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Ticket"> | string
-    clientId?: StringWithAggregatesFilter<"Ticket"> | string
-    firstName?: StringWithAggregatesFilter<"Ticket"> | string
-    middleName?: StringNullableWithAggregatesFilter<"Ticket"> | string | null
-    lastName?: StringWithAggregatesFilter<"Ticket"> | string
+    client_id?: StringWithAggregatesFilter<"Ticket"> | string
+    first_name?: StringWithAggregatesFilter<"Ticket"> | string
+    middle_name?: StringNullableWithAggregatesFilter<"Ticket"> | string | null
+    last_name?: StringWithAggregatesFilter<"Ticket"> | string
     phone?: StringWithAggregatesFilter<"Ticket"> | string
     roleId?: StringWithAggregatesFilter<"Ticket"> | string
     isActive?: BoolWithAggregatesFilter<"Ticket"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Ticket"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Ticket"> | Date | string
+    priority_id?: StringWithAggregatesFilter<"Ticket"> | string
   }
 
   export type InvoiceWhereInput = {
@@ -7560,8 +10084,8 @@ export namespace Prisma {
     OR?: InvoiceWhereInput[]
     NOT?: InvoiceWhereInput | InvoiceWhereInput[]
     id?: StringFilter<"Invoice"> | string
-    ticketId?: StringFilter<"Invoice"> | string
-    clientId?: StringFilter<"Invoice"> | string
+    ticket_id?: StringFilter<"Invoice"> | string
+    client_id?: StringFilter<"Invoice"> | string
     amount?: FloatFilter<"Invoice"> | number
     currency?: StringFilter<"Invoice"> | string
     status?: StringFilter<"Invoice"> | string
@@ -7575,8 +10099,8 @@ export namespace Prisma {
 
   export type InvoiceOrderByWithRelationInput = {
     id?: SortOrder
-    ticketId?: SortOrder
-    clientId?: SortOrder
+    ticket_id?: SortOrder
+    client_id?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -7593,8 +10117,8 @@ export namespace Prisma {
     AND?: InvoiceWhereInput | InvoiceWhereInput[]
     OR?: InvoiceWhereInput[]
     NOT?: InvoiceWhereInput | InvoiceWhereInput[]
-    ticketId?: StringFilter<"Invoice"> | string
-    clientId?: StringFilter<"Invoice"> | string
+    ticket_id?: StringFilter<"Invoice"> | string
+    client_id?: StringFilter<"Invoice"> | string
     amount?: FloatFilter<"Invoice"> | number
     currency?: StringFilter<"Invoice"> | string
     status?: StringFilter<"Invoice"> | string
@@ -7608,8 +10132,8 @@ export namespace Prisma {
 
   export type InvoiceOrderByWithAggregationInput = {
     id?: SortOrder
-    ticketId?: SortOrder
-    clientId?: SortOrder
+    ticket_id?: SortOrder
+    client_id?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -7628,8 +10152,8 @@ export namespace Prisma {
     OR?: InvoiceScalarWhereWithAggregatesInput[]
     NOT?: InvoiceScalarWhereWithAggregatesInput | InvoiceScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Invoice"> | string
-    ticketId?: StringWithAggregatesFilter<"Invoice"> | string
-    clientId?: StringWithAggregatesFilter<"Invoice"> | string
+    ticket_id?: StringWithAggregatesFilter<"Invoice"> | string
+    client_id?: StringWithAggregatesFilter<"Invoice"> | string
     amount?: FloatWithAggregatesFilter<"Invoice"> | number
     currency?: StringWithAggregatesFilter<"Invoice"> | string
     status?: StringWithAggregatesFilter<"Invoice"> | string
@@ -7643,8 +10167,8 @@ export namespace Prisma {
     OR?: PaymentWhereInput[]
     NOT?: PaymentWhereInput | PaymentWhereInput[]
     id?: StringFilter<"Payment"> | string
-    invoiceId?: StringFilter<"Payment"> | string
-    clientId?: StringFilter<"Payment"> | string
+    invoice_id?: StringFilter<"Payment"> | string
+    client_id?: StringFilter<"Payment"> | string
     amount?: FloatFilter<"Payment"> | number
     currency?: StringFilter<"Payment"> | string
     status?: StringFilter<"Payment"> | string
@@ -7657,8 +10181,8 @@ export namespace Prisma {
 
   export type PaymentOrderByWithRelationInput = {
     id?: SortOrder
-    invoiceId?: SortOrder
-    clientId?: SortOrder
+    invoice_id?: SortOrder
+    client_id?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -7674,8 +10198,8 @@ export namespace Prisma {
     AND?: PaymentWhereInput | PaymentWhereInput[]
     OR?: PaymentWhereInput[]
     NOT?: PaymentWhereInput | PaymentWhereInput[]
-    invoiceId?: StringFilter<"Payment"> | string
-    clientId?: StringFilter<"Payment"> | string
+    invoice_id?: StringFilter<"Payment"> | string
+    client_id?: StringFilter<"Payment"> | string
     amount?: FloatFilter<"Payment"> | number
     currency?: StringFilter<"Payment"> | string
     status?: StringFilter<"Payment"> | string
@@ -7688,8 +10212,8 @@ export namespace Prisma {
 
   export type PaymentOrderByWithAggregationInput = {
     id?: SortOrder
-    invoiceId?: SortOrder
-    clientId?: SortOrder
+    invoice_id?: SortOrder
+    client_id?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -7708,8 +10232,8 @@ export namespace Prisma {
     OR?: PaymentScalarWhereWithAggregatesInput[]
     NOT?: PaymentScalarWhereWithAggregatesInput | PaymentScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Payment"> | string
-    invoiceId?: StringWithAggregatesFilter<"Payment"> | string
-    clientId?: StringWithAggregatesFilter<"Payment"> | string
+    invoice_id?: StringWithAggregatesFilter<"Payment"> | string
+    client_id?: StringWithAggregatesFilter<"Payment"> | string
     amount?: FloatWithAggregatesFilter<"Payment"> | number
     currency?: StringWithAggregatesFilter<"Payment"> | string
     status?: StringWithAggregatesFilter<"Payment"> | string
@@ -7775,110 +10299,223 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateInput = {
+  export type PriorityCreateInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
-    phone: string
-    isActive?: boolean
+    name: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    tickets?: TicketCreateNestedManyWithoutPriorityInput
+  }
+
+  export type PriorityUncheckedCreateInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tickets?: TicketUncheckedCreateNestedManyWithoutPriorityInput
+  }
+
+  export type PriorityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tickets?: TicketUpdateManyWithoutPriorityNestedInput
+  }
+
+  export type PriorityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tickets?: TicketUncheckedUpdateManyWithoutPriorityNestedInput
+  }
+
+  export type PriorityCreateManyInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PriorityUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PriorityUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateInput = {
+    id?: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
+    phone: string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
     role: RoleCreateNestedOneWithoutUsersInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     invoices?: InvoiceCreateNestedManyWithoutClientInput
     payments?: PaymentCreateNestedManyWithoutClientInput
+    clients?: ClientCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
     phone: string
-    roleId: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    role_id: string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutClientInput
     payments?: PaymentUncheckedCreateNestedManyWithoutClientInput
+    clients?: ClientUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     invoices?: InvoiceUpdateManyWithoutClientNestedInput
     payments?: PaymentUpdateManyWithoutClientNestedInput
+    clients?: ClientUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    roleId?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role_id?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutClientNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutClientNestedInput
+    clients?: ClientUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
     phone: string
-    roleId: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    role_id: string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    roleId?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role_id?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClientCreateInput = {
+    id?: string
+    company_name: string
+    company_adress: string
+    client: UserCreateNestedOneWithoutClientsInput
+  }
+
+  export type ClientUncheckedCreateInput = {
+    id?: string
+    company_name: string
+    company_adress: string
+    client_id: string
+  }
+
+  export type ClientUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_name?: StringFieldUpdateOperationsInput | string
+    company_adress?: StringFieldUpdateOperationsInput | string
+    client?: UserUpdateOneRequiredWithoutClientsNestedInput
+  }
+
+  export type ClientUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_name?: StringFieldUpdateOperationsInput | string
+    company_adress?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClientCreateManyInput = {
+    id?: string
+    company_name: string
+    company_adress: string
+    client_id: string
+  }
+
+  export type ClientUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_name?: StringFieldUpdateOperationsInput | string
+    company_adress?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClientUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_name?: StringFieldUpdateOperationsInput | string
+    company_adress?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type TicketCreateInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
     phone: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    priority: PriorityCreateNestedOneWithoutTicketsInput
     client: UserCreateNestedOneWithoutTicketsInput
     role: RoleCreateNestedOneWithoutTicketsInput
     invoices?: InvoiceCreateNestedManyWithoutTicketInput
@@ -7886,27 +10523,29 @@ export namespace Prisma {
 
   export type TicketUncheckedCreateInput = {
     id?: string
-    clientId: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    client_id: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
     phone: string
     roleId: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    priority_id: string
     invoices?: InvoiceUncheckedCreateNestedManyWithoutTicketInput
   }
 
   export type TicketUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priority?: PriorityUpdateOneRequiredWithoutTicketsNestedInput
     client?: UserUpdateOneRequiredWithoutTicketsNestedInput
     role?: RoleUpdateOneRequiredWithoutTicketsNestedInput
     invoices?: InvoiceUpdateManyWithoutTicketNestedInput
@@ -7914,36 +10553,38 @@ export namespace Prisma {
 
   export type TicketUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priority_id?: StringFieldUpdateOperationsInput | string
     invoices?: InvoiceUncheckedUpdateManyWithoutTicketNestedInput
   }
 
   export type TicketCreateManyInput = {
     id?: string
-    clientId: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    client_id: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
     phone: string
     roleId: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    priority_id: string
   }
 
   export type TicketUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7952,15 +10593,16 @@ export namespace Prisma {
 
   export type TicketUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priority_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type InvoiceCreateInput = {
@@ -7978,8 +10620,8 @@ export namespace Prisma {
 
   export type InvoiceUncheckedCreateInput = {
     id?: string
-    ticketId: string
-    clientId: string
+    ticket_id: string
+    client_id: string
     amount: number
     currency: string
     status: string
@@ -8004,8 +10646,8 @@ export namespace Prisma {
 
   export type InvoiceUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    ticketId?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
+    ticket_id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -8017,8 +10659,8 @@ export namespace Prisma {
 
   export type InvoiceCreateManyInput = {
     id?: string
-    ticketId: string
-    clientId: string
+    ticket_id: string
+    client_id: string
     amount: number
     currency: string
     status: string
@@ -8039,8 +10681,8 @@ export namespace Prisma {
 
   export type InvoiceUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    ticketId?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
+    ticket_id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -8063,8 +10705,8 @@ export namespace Prisma {
 
   export type PaymentUncheckedCreateInput = {
     id?: string
-    invoiceId: string
-    clientId: string
+    invoice_id: string
+    client_id: string
     amount: number
     currency: string
     status: string
@@ -8087,8 +10729,8 @@ export namespace Prisma {
 
   export type PaymentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    invoiceId?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
+    invoice_id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -8099,8 +10741,8 @@ export namespace Prisma {
 
   export type PaymentCreateManyInput = {
     id?: string
-    invoiceId: string
-    clientId: string
+    invoice_id: string
+    client_id: string
     amount: number
     currency: string
     status: string
@@ -8121,8 +10763,8 @@ export namespace Prisma {
 
   export type PaymentUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    invoiceId?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
+    invoice_id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -8230,6 +10872,27 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type PriorityCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PriorityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PriorityMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -8267,6 +10930,12 @@ export namespace Prisma {
     none?: PaymentWhereInput
   }
 
+  export type ClientListRelationFilter = {
+    every?: ClientWhereInput
+    some?: ClientWhereInput
+    none?: ClientWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -8280,40 +10949,47 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type ClientOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
-    firstName?: SortOrder
-    middleName?: SortOrder
-    lastName?: SortOrder
+    first_name?: SortOrder
+    middle_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
     phone?: SortOrder
-    roleId?: SortOrder
-    isActive?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    role_id?: SortOrder
+    is_active?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
-    firstName?: SortOrder
-    middleName?: SortOrder
-    lastName?: SortOrder
+    first_name?: SortOrder
+    middle_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
     phone?: SortOrder
-    roleId?: SortOrder
-    isActive?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    role_id?: SortOrder
+    is_active?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
-    firstName?: SortOrder
-    middleName?: SortOrder
-    lastName?: SortOrder
+    first_name?: SortOrder
+    middle_name?: SortOrder
+    last_name?: SortOrder
+    email?: SortOrder
     phone?: SortOrder
-    roleId?: SortOrder
-    isActive?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    role_id?: SortOrder
+    is_active?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -8347,43 +11023,72 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
+  export type ClientCountOrderByAggregateInput = {
+    id?: SortOrder
+    company_name?: SortOrder
+    company_adress?: SortOrder
+    client_id?: SortOrder
+  }
+
+  export type ClientMaxOrderByAggregateInput = {
+    id?: SortOrder
+    company_name?: SortOrder
+    company_adress?: SortOrder
+    client_id?: SortOrder
+  }
+
+  export type ClientMinOrderByAggregateInput = {
+    id?: SortOrder
+    company_name?: SortOrder
+    company_adress?: SortOrder
+    client_id?: SortOrder
+  }
+
+  export type PriorityScalarRelationFilter = {
+    is?: PriorityWhereInput
+    isNot?: PriorityWhereInput
+  }
+
   export type TicketCountOrderByAggregateInput = {
     id?: SortOrder
-    clientId?: SortOrder
-    firstName?: SortOrder
-    middleName?: SortOrder
-    lastName?: SortOrder
+    client_id?: SortOrder
+    first_name?: SortOrder
+    middle_name?: SortOrder
+    last_name?: SortOrder
     phone?: SortOrder
     roleId?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    priority_id?: SortOrder
   }
 
   export type TicketMaxOrderByAggregateInput = {
     id?: SortOrder
-    clientId?: SortOrder
-    firstName?: SortOrder
-    middleName?: SortOrder
-    lastName?: SortOrder
+    client_id?: SortOrder
+    first_name?: SortOrder
+    middle_name?: SortOrder
+    last_name?: SortOrder
     phone?: SortOrder
     roleId?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    priority_id?: SortOrder
   }
 
   export type TicketMinOrderByAggregateInput = {
     id?: SortOrder
-    clientId?: SortOrder
-    firstName?: SortOrder
-    middleName?: SortOrder
-    lastName?: SortOrder
+    client_id?: SortOrder
+    first_name?: SortOrder
+    middle_name?: SortOrder
+    last_name?: SortOrder
     phone?: SortOrder
     roleId?: SortOrder
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    priority_id?: SortOrder
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -8404,8 +11109,8 @@ export namespace Prisma {
 
   export type InvoiceCountOrderByAggregateInput = {
     id?: SortOrder
-    ticketId?: SortOrder
-    clientId?: SortOrder
+    ticket_id?: SortOrder
+    client_id?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -8420,8 +11125,8 @@ export namespace Prisma {
 
   export type InvoiceMaxOrderByAggregateInput = {
     id?: SortOrder
-    ticketId?: SortOrder
-    clientId?: SortOrder
+    ticket_id?: SortOrder
+    client_id?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -8432,8 +11137,8 @@ export namespace Prisma {
 
   export type InvoiceMinOrderByAggregateInput = {
     id?: SortOrder
-    ticketId?: SortOrder
-    clientId?: SortOrder
+    ticket_id?: SortOrder
+    client_id?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -8469,8 +11174,8 @@ export namespace Prisma {
 
   export type PaymentCountOrderByAggregateInput = {
     id?: SortOrder
-    invoiceId?: SortOrder
-    clientId?: SortOrder
+    invoice_id?: SortOrder
+    client_id?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -8485,8 +11190,8 @@ export namespace Prisma {
 
   export type PaymentMaxOrderByAggregateInput = {
     id?: SortOrder
-    invoiceId?: SortOrder
-    clientId?: SortOrder
+    invoice_id?: SortOrder
+    client_id?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -8497,8 +11202,8 @@ export namespace Prisma {
 
   export type PaymentMinOrderByAggregateInput = {
     id?: SortOrder
-    invoiceId?: SortOrder
-    clientId?: SortOrder
+    invoice_id?: SortOrder
+    client_id?: SortOrder
     amount?: SortOrder
     currency?: SortOrder
     status?: SortOrder
@@ -8603,6 +11308,48 @@ export namespace Prisma {
     deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[]
   }
 
+  export type TicketCreateNestedManyWithoutPriorityInput = {
+    create?: XOR<TicketCreateWithoutPriorityInput, TicketUncheckedCreateWithoutPriorityInput> | TicketCreateWithoutPriorityInput[] | TicketUncheckedCreateWithoutPriorityInput[]
+    connectOrCreate?: TicketCreateOrConnectWithoutPriorityInput | TicketCreateOrConnectWithoutPriorityInput[]
+    createMany?: TicketCreateManyPriorityInputEnvelope
+    connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
+  }
+
+  export type TicketUncheckedCreateNestedManyWithoutPriorityInput = {
+    create?: XOR<TicketCreateWithoutPriorityInput, TicketUncheckedCreateWithoutPriorityInput> | TicketCreateWithoutPriorityInput[] | TicketUncheckedCreateWithoutPriorityInput[]
+    connectOrCreate?: TicketCreateOrConnectWithoutPriorityInput | TicketCreateOrConnectWithoutPriorityInput[]
+    createMany?: TicketCreateManyPriorityInputEnvelope
+    connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
+  }
+
+  export type TicketUpdateManyWithoutPriorityNestedInput = {
+    create?: XOR<TicketCreateWithoutPriorityInput, TicketUncheckedCreateWithoutPriorityInput> | TicketCreateWithoutPriorityInput[] | TicketUncheckedCreateWithoutPriorityInput[]
+    connectOrCreate?: TicketCreateOrConnectWithoutPriorityInput | TicketCreateOrConnectWithoutPriorityInput[]
+    upsert?: TicketUpsertWithWhereUniqueWithoutPriorityInput | TicketUpsertWithWhereUniqueWithoutPriorityInput[]
+    createMany?: TicketCreateManyPriorityInputEnvelope
+    set?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
+    disconnect?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
+    delete?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
+    connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
+    update?: TicketUpdateWithWhereUniqueWithoutPriorityInput | TicketUpdateWithWhereUniqueWithoutPriorityInput[]
+    updateMany?: TicketUpdateManyWithWhereWithoutPriorityInput | TicketUpdateManyWithWhereWithoutPriorityInput[]
+    deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[]
+  }
+
+  export type TicketUncheckedUpdateManyWithoutPriorityNestedInput = {
+    create?: XOR<TicketCreateWithoutPriorityInput, TicketUncheckedCreateWithoutPriorityInput> | TicketCreateWithoutPriorityInput[] | TicketUncheckedCreateWithoutPriorityInput[]
+    connectOrCreate?: TicketCreateOrConnectWithoutPriorityInput | TicketCreateOrConnectWithoutPriorityInput[]
+    upsert?: TicketUpsertWithWhereUniqueWithoutPriorityInput | TicketUpsertWithWhereUniqueWithoutPriorityInput[]
+    createMany?: TicketCreateManyPriorityInputEnvelope
+    set?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
+    disconnect?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
+    delete?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
+    connect?: TicketWhereUniqueInput | TicketWhereUniqueInput[]
+    update?: TicketUpdateWithWhereUniqueWithoutPriorityInput | TicketUpdateWithWhereUniqueWithoutPriorityInput[]
+    updateMany?: TicketUpdateManyWithWhereWithoutPriorityInput | TicketUpdateManyWithWhereWithoutPriorityInput[]
+    deleteMany?: TicketScalarWhereInput | TicketScalarWhereInput[]
+  }
+
   export type RoleCreateNestedOneWithoutUsersInput = {
     create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
     connectOrCreate?: RoleCreateOrConnectWithoutUsersInput
@@ -8630,6 +11377,13 @@ export namespace Prisma {
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
   }
 
+  export type ClientCreateNestedManyWithoutClientInput = {
+    create?: XOR<ClientCreateWithoutClientInput, ClientUncheckedCreateWithoutClientInput> | ClientCreateWithoutClientInput[] | ClientUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: ClientCreateOrConnectWithoutClientInput | ClientCreateOrConnectWithoutClientInput[]
+    createMany?: ClientCreateManyClientInputEnvelope
+    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+  }
+
   export type TicketUncheckedCreateNestedManyWithoutClientInput = {
     create?: XOR<TicketCreateWithoutClientInput, TicketUncheckedCreateWithoutClientInput> | TicketCreateWithoutClientInput[] | TicketUncheckedCreateWithoutClientInput[]
     connectOrCreate?: TicketCreateOrConnectWithoutClientInput | TicketCreateOrConnectWithoutClientInput[]
@@ -8649,6 +11403,13 @@ export namespace Prisma {
     connectOrCreate?: PaymentCreateOrConnectWithoutClientInput | PaymentCreateOrConnectWithoutClientInput[]
     createMany?: PaymentCreateManyClientInputEnvelope
     connect?: PaymentWhereUniqueInput | PaymentWhereUniqueInput[]
+  }
+
+  export type ClientUncheckedCreateNestedManyWithoutClientInput = {
+    create?: XOR<ClientCreateWithoutClientInput, ClientUncheckedCreateWithoutClientInput> | ClientCreateWithoutClientInput[] | ClientUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: ClientCreateOrConnectWithoutClientInput | ClientCreateOrConnectWithoutClientInput[]
+    createMany?: ClientCreateManyClientInputEnvelope
+    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -8709,6 +11470,20 @@ export namespace Prisma {
     deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
+  export type ClientUpdateManyWithoutClientNestedInput = {
+    create?: XOR<ClientCreateWithoutClientInput, ClientUncheckedCreateWithoutClientInput> | ClientCreateWithoutClientInput[] | ClientUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: ClientCreateOrConnectWithoutClientInput | ClientCreateOrConnectWithoutClientInput[]
+    upsert?: ClientUpsertWithWhereUniqueWithoutClientInput | ClientUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: ClientCreateManyClientInputEnvelope
+    set?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    disconnect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    delete?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    update?: ClientUpdateWithWhereUniqueWithoutClientInput | ClientUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: ClientUpdateManyWithWhereWithoutClientInput | ClientUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: ClientScalarWhereInput | ClientScalarWhereInput[]
+  }
+
   export type TicketUncheckedUpdateManyWithoutClientNestedInput = {
     create?: XOR<TicketCreateWithoutClientInput, TicketUncheckedCreateWithoutClientInput> | TicketCreateWithoutClientInput[] | TicketUncheckedCreateWithoutClientInput[]
     connectOrCreate?: TicketCreateOrConnectWithoutClientInput | TicketCreateOrConnectWithoutClientInput[]
@@ -8751,6 +11526,40 @@ export namespace Prisma {
     deleteMany?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
   }
 
+  export type ClientUncheckedUpdateManyWithoutClientNestedInput = {
+    create?: XOR<ClientCreateWithoutClientInput, ClientUncheckedCreateWithoutClientInput> | ClientCreateWithoutClientInput[] | ClientUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: ClientCreateOrConnectWithoutClientInput | ClientCreateOrConnectWithoutClientInput[]
+    upsert?: ClientUpsertWithWhereUniqueWithoutClientInput | ClientUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: ClientCreateManyClientInputEnvelope
+    set?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    disconnect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    delete?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    connect?: ClientWhereUniqueInput | ClientWhereUniqueInput[]
+    update?: ClientUpdateWithWhereUniqueWithoutClientInput | ClientUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: ClientUpdateManyWithWhereWithoutClientInput | ClientUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: ClientScalarWhereInput | ClientScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutClientsInput = {
+    create?: XOR<UserCreateWithoutClientsInput, UserUncheckedCreateWithoutClientsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClientsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutClientsNestedInput = {
+    create?: XOR<UserCreateWithoutClientsInput, UserUncheckedCreateWithoutClientsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClientsInput
+    upsert?: UserUpsertWithoutClientsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutClientsInput, UserUpdateWithoutClientsInput>, UserUncheckedUpdateWithoutClientsInput>
+  }
+
+  export type PriorityCreateNestedOneWithoutTicketsInput = {
+    create?: XOR<PriorityCreateWithoutTicketsInput, PriorityUncheckedCreateWithoutTicketsInput>
+    connectOrCreate?: PriorityCreateOrConnectWithoutTicketsInput
+    connect?: PriorityWhereUniqueInput
+  }
+
   export type UserCreateNestedOneWithoutTicketsInput = {
     create?: XOR<UserCreateWithoutTicketsInput, UserUncheckedCreateWithoutTicketsInput>
     connectOrCreate?: UserCreateOrConnectWithoutTicketsInput
@@ -8775,6 +11584,14 @@ export namespace Prisma {
     connectOrCreate?: InvoiceCreateOrConnectWithoutTicketInput | InvoiceCreateOrConnectWithoutTicketInput[]
     createMany?: InvoiceCreateManyTicketInputEnvelope
     connect?: InvoiceWhereUniqueInput | InvoiceWhereUniqueInput[]
+  }
+
+  export type PriorityUpdateOneRequiredWithoutTicketsNestedInput = {
+    create?: XOR<PriorityCreateWithoutTicketsInput, PriorityUncheckedCreateWithoutTicketsInput>
+    connectOrCreate?: PriorityCreateOrConnectWithoutTicketsInput
+    upsert?: PriorityUpsertWithoutTicketsInput
+    connect?: PriorityWhereUniqueInput
+    update?: XOR<XOR<PriorityUpdateToOneWithWhereWithoutTicketsInput, PriorityUpdateWithoutTicketsInput>, PriorityUncheckedUpdateWithoutTicketsInput>
   }
 
   export type UserUpdateOneRequiredWithoutTicketsNestedInput = {
@@ -9078,30 +11895,34 @@ export namespace Prisma {
 
   export type UserCreateWithoutRoleInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
     phone: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
     tickets?: TicketCreateNestedManyWithoutClientInput
     invoices?: InvoiceCreateNestedManyWithoutClientInput
     payments?: PaymentCreateNestedManyWithoutClientInput
+    clients?: ClientCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutRoleInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
     phone: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutClientInput
     payments?: PaymentUncheckedCreateNestedManyWithoutClientInput
+    clients?: ClientUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutRoleInput = {
@@ -9116,27 +11937,29 @@ export namespace Prisma {
 
   export type TicketCreateWithoutRoleInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
     phone: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    priority: PriorityCreateNestedOneWithoutTicketsInput
     client: UserCreateNestedOneWithoutTicketsInput
     invoices?: InvoiceCreateNestedManyWithoutTicketInput
   }
 
   export type TicketUncheckedCreateWithoutRoleInput = {
     id?: string
-    clientId: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    client_id: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
     phone: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    priority_id: string
     invoices?: InvoiceUncheckedCreateNestedManyWithoutTicketInput
   }
 
@@ -9171,14 +11994,15 @@ export namespace Prisma {
     OR?: UserScalarWhereInput[]
     NOT?: UserScalarWhereInput | UserScalarWhereInput[]
     id?: StringFilter<"User"> | string
-    firstName?: StringFilter<"User"> | string
-    middleName?: StringNullableFilter<"User"> | string | null
-    lastName?: StringFilter<"User"> | string
+    first_name?: StringFilter<"User"> | string
+    middle_name?: StringNullableFilter<"User"> | string | null
+    last_name?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
     phone?: StringFilter<"User"> | string
-    roleId?: StringFilter<"User"> | string
-    isActive?: BoolFilter<"User"> | boolean
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
+    role_id?: StringFilter<"User"> | string
+    is_active?: BoolFilter<"User"> | boolean
+    created_at?: DateTimeFilter<"User"> | Date | string
+    updated_at?: DateTimeFilter<"User"> | Date | string
   }
 
   export type TicketUpsertWithWhereUniqueWithoutRoleInput = {
@@ -9202,15 +12026,70 @@ export namespace Prisma {
     OR?: TicketScalarWhereInput[]
     NOT?: TicketScalarWhereInput | TicketScalarWhereInput[]
     id?: StringFilter<"Ticket"> | string
-    clientId?: StringFilter<"Ticket"> | string
-    firstName?: StringFilter<"Ticket"> | string
-    middleName?: StringNullableFilter<"Ticket"> | string | null
-    lastName?: StringFilter<"Ticket"> | string
+    client_id?: StringFilter<"Ticket"> | string
+    first_name?: StringFilter<"Ticket"> | string
+    middle_name?: StringNullableFilter<"Ticket"> | string | null
+    last_name?: StringFilter<"Ticket"> | string
     phone?: StringFilter<"Ticket"> | string
     roleId?: StringFilter<"Ticket"> | string
     isActive?: BoolFilter<"Ticket"> | boolean
     createdAt?: DateTimeFilter<"Ticket"> | Date | string
     updatedAt?: DateTimeFilter<"Ticket"> | Date | string
+    priority_id?: StringFilter<"Ticket"> | string
+  }
+
+  export type TicketCreateWithoutPriorityInput = {
+    id?: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    phone: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    client: UserCreateNestedOneWithoutTicketsInput
+    role: RoleCreateNestedOneWithoutTicketsInput
+    invoices?: InvoiceCreateNestedManyWithoutTicketInput
+  }
+
+  export type TicketUncheckedCreateWithoutPriorityInput = {
+    id?: string
+    client_id: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    phone: string
+    roleId: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutTicketInput
+  }
+
+  export type TicketCreateOrConnectWithoutPriorityInput = {
+    where: TicketWhereUniqueInput
+    create: XOR<TicketCreateWithoutPriorityInput, TicketUncheckedCreateWithoutPriorityInput>
+  }
+
+  export type TicketCreateManyPriorityInputEnvelope = {
+    data: TicketCreateManyPriorityInput | TicketCreateManyPriorityInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TicketUpsertWithWhereUniqueWithoutPriorityInput = {
+    where: TicketWhereUniqueInput
+    update: XOR<TicketUpdateWithoutPriorityInput, TicketUncheckedUpdateWithoutPriorityInput>
+    create: XOR<TicketCreateWithoutPriorityInput, TicketUncheckedCreateWithoutPriorityInput>
+  }
+
+  export type TicketUpdateWithWhereUniqueWithoutPriorityInput = {
+    where: TicketWhereUniqueInput
+    data: XOR<TicketUpdateWithoutPriorityInput, TicketUncheckedUpdateWithoutPriorityInput>
+  }
+
+  export type TicketUpdateManyWithWhereWithoutPriorityInput = {
+    where: TicketScalarWhereInput
+    data: XOR<TicketUpdateManyMutationInput, TicketUncheckedUpdateManyWithoutPriorityInput>
   }
 
   export type RoleCreateWithoutUsersInput = {
@@ -9236,27 +12115,29 @@ export namespace Prisma {
 
   export type TicketCreateWithoutClientInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
     phone: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    priority: PriorityCreateNestedOneWithoutTicketsInput
     role: RoleCreateNestedOneWithoutTicketsInput
     invoices?: InvoiceCreateNestedManyWithoutTicketInput
   }
 
   export type TicketUncheckedCreateWithoutClientInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
     phone: string
     roleId: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    priority_id: string
     invoices?: InvoiceUncheckedCreateNestedManyWithoutTicketInput
   }
 
@@ -9284,7 +12165,7 @@ export namespace Prisma {
 
   export type InvoiceUncheckedCreateWithoutClientInput = {
     id?: string
-    ticketId: string
+    ticket_id: string
     amount: number
     currency: string
     status: string
@@ -9317,7 +12198,7 @@ export namespace Prisma {
 
   export type PaymentUncheckedCreateWithoutClientInput = {
     id?: string
-    invoiceId: string
+    invoice_id: string
     amount: number
     currency: string
     status: string
@@ -9333,6 +12214,28 @@ export namespace Prisma {
 
   export type PaymentCreateManyClientInputEnvelope = {
     data: PaymentCreateManyClientInput | PaymentCreateManyClientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClientCreateWithoutClientInput = {
+    id?: string
+    company_name: string
+    company_adress: string
+  }
+
+  export type ClientUncheckedCreateWithoutClientInput = {
+    id?: string
+    company_name: string
+    company_adress: string
+  }
+
+  export type ClientCreateOrConnectWithoutClientInput = {
+    where: ClientWhereUniqueInput
+    create: XOR<ClientCreateWithoutClientInput, ClientUncheckedCreateWithoutClientInput>
+  }
+
+  export type ClientCreateManyClientInputEnvelope = {
+    data: ClientCreateManyClientInput | ClientCreateManyClientInput[]
     skipDuplicates?: boolean
   }
 
@@ -9400,8 +12303,8 @@ export namespace Prisma {
     OR?: InvoiceScalarWhereInput[]
     NOT?: InvoiceScalarWhereInput | InvoiceScalarWhereInput[]
     id?: StringFilter<"Invoice"> | string
-    ticketId?: StringFilter<"Invoice"> | string
-    clientId?: StringFilter<"Invoice"> | string
+    ticket_id?: StringFilter<"Invoice"> | string
+    client_id?: StringFilter<"Invoice"> | string
     amount?: FloatFilter<"Invoice"> | number
     currency?: StringFilter<"Invoice"> | string
     status?: StringFilter<"Invoice"> | string
@@ -9431,8 +12334,8 @@ export namespace Prisma {
     OR?: PaymentScalarWhereInput[]
     NOT?: PaymentScalarWhereInput | PaymentScalarWhereInput[]
     id?: StringFilter<"Payment"> | string
-    invoiceId?: StringFilter<"Payment"> | string
-    clientId?: StringFilter<"Payment"> | string
+    invoice_id?: StringFilter<"Payment"> | string
+    client_id?: StringFilter<"Payment"> | string
     amount?: FloatFilter<"Payment"> | number
     currency?: StringFilter<"Payment"> | string
     status?: StringFilter<"Payment"> | string
@@ -9441,32 +12344,161 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Payment"> | Date | string
   }
 
-  export type UserCreateWithoutTicketsInput = {
+  export type ClientUpsertWithWhereUniqueWithoutClientInput = {
+    where: ClientWhereUniqueInput
+    update: XOR<ClientUpdateWithoutClientInput, ClientUncheckedUpdateWithoutClientInput>
+    create: XOR<ClientCreateWithoutClientInput, ClientUncheckedCreateWithoutClientInput>
+  }
+
+  export type ClientUpdateWithWhereUniqueWithoutClientInput = {
+    where: ClientWhereUniqueInput
+    data: XOR<ClientUpdateWithoutClientInput, ClientUncheckedUpdateWithoutClientInput>
+  }
+
+  export type ClientUpdateManyWithWhereWithoutClientInput = {
+    where: ClientScalarWhereInput
+    data: XOR<ClientUpdateManyMutationInput, ClientUncheckedUpdateManyWithoutClientInput>
+  }
+
+  export type ClientScalarWhereInput = {
+    AND?: ClientScalarWhereInput | ClientScalarWhereInput[]
+    OR?: ClientScalarWhereInput[]
+    NOT?: ClientScalarWhereInput | ClientScalarWhereInput[]
+    id?: StringFilter<"Client"> | string
+    company_name?: StringFilter<"Client"> | string
+    company_adress?: StringFilter<"Client"> | string
+    client_id?: StringFilter<"Client"> | string
+  }
+
+  export type UserCreateWithoutClientsInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
     phone: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
     role: RoleCreateNestedOneWithoutUsersInput
+    tickets?: TicketCreateNestedManyWithoutClientInput
     invoices?: InvoiceCreateNestedManyWithoutClientInput
     payments?: PaymentCreateNestedManyWithoutClientInput
   }
 
-  export type UserUncheckedCreateWithoutTicketsInput = {
+  export type UserUncheckedCreateWithoutClientsInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
     phone: string
-    roleId: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    role_id: string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutClientInput
     payments?: PaymentUncheckedCreateNestedManyWithoutClientInput
+  }
+
+  export type UserCreateOrConnectWithoutClientsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutClientsInput, UserUncheckedCreateWithoutClientsInput>
+  }
+
+  export type UserUpsertWithoutClientsInput = {
+    update: XOR<UserUpdateWithoutClientsInput, UserUncheckedUpdateWithoutClientsInput>
+    create: XOR<UserCreateWithoutClientsInput, UserUncheckedCreateWithoutClientsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutClientsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutClientsInput, UserUncheckedUpdateWithoutClientsInput>
+  }
+
+  export type UserUpdateWithoutClientsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: RoleUpdateOneRequiredWithoutUsersNestedInput
+    tickets?: TicketUpdateManyWithoutClientNestedInput
+    invoices?: InvoiceUpdateManyWithoutClientNestedInput
+    payments?: PaymentUpdateManyWithoutClientNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutClientsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    role_id?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutClientNestedInput
+    payments?: PaymentUncheckedUpdateManyWithoutClientNestedInput
+  }
+
+  export type PriorityCreateWithoutTicketsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PriorityUncheckedCreateWithoutTicketsInput = {
+    id?: string
+    name: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PriorityCreateOrConnectWithoutTicketsInput = {
+    where: PriorityWhereUniqueInput
+    create: XOR<PriorityCreateWithoutTicketsInput, PriorityUncheckedCreateWithoutTicketsInput>
+  }
+
+  export type UserCreateWithoutTicketsInput = {
+    id?: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
+    phone: string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    role: RoleCreateNestedOneWithoutUsersInput
+    invoices?: InvoiceCreateNestedManyWithoutClientInput
+    payments?: PaymentCreateNestedManyWithoutClientInput
+    clients?: ClientCreateNestedManyWithoutClientInput
+  }
+
+  export type UserUncheckedCreateWithoutTicketsInput = {
+    id?: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
+    phone: string
+    role_id: string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutClientInput
+    payments?: PaymentUncheckedCreateNestedManyWithoutClientInput
+    clients?: ClientUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutTicketsInput = {
@@ -9509,7 +12541,7 @@ export namespace Prisma {
 
   export type InvoiceUncheckedCreateWithoutTicketInput = {
     id?: string
-    clientId: string
+    client_id: string
     amount: number
     currency: string
     status: string
@@ -9529,6 +12561,31 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PriorityUpsertWithoutTicketsInput = {
+    update: XOR<PriorityUpdateWithoutTicketsInput, PriorityUncheckedUpdateWithoutTicketsInput>
+    create: XOR<PriorityCreateWithoutTicketsInput, PriorityUncheckedCreateWithoutTicketsInput>
+    where?: PriorityWhereInput
+  }
+
+  export type PriorityUpdateToOneWithWhereWithoutTicketsInput = {
+    where?: PriorityWhereInput
+    data: XOR<PriorityUpdateWithoutTicketsInput, PriorityUncheckedUpdateWithoutTicketsInput>
+  }
+
+  export type PriorityUpdateWithoutTicketsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PriorityUncheckedUpdateWithoutTicketsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserUpsertWithoutTicketsInput = {
     update: XOR<UserUpdateWithoutTicketsInput, UserUncheckedUpdateWithoutTicketsInput>
     create: XOR<UserCreateWithoutTicketsInput, UserUncheckedCreateWithoutTicketsInput>
@@ -9542,30 +12599,34 @@ export namespace Prisma {
 
   export type UserUpdateWithoutTicketsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     invoices?: InvoiceUpdateManyWithoutClientNestedInput
     payments?: PaymentUpdateManyWithoutClientNestedInput
+    clients?: ClientUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTicketsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    roleId?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role_id?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     invoices?: InvoiceUncheckedUpdateManyWithoutClientNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutClientNestedInput
+    clients?: ClientUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type RoleUpsertWithoutTicketsInput = {
@@ -9613,28 +12674,30 @@ export namespace Prisma {
 
   export type TicketCreateWithoutInvoicesInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
     phone: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    priority: PriorityCreateNestedOneWithoutTicketsInput
     client: UserCreateNestedOneWithoutTicketsInput
     role: RoleCreateNestedOneWithoutTicketsInput
   }
 
   export type TicketUncheckedCreateWithoutInvoicesInput = {
     id?: string
-    clientId: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    client_id: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
     phone: string
     roleId: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    priority_id: string
   }
 
   export type TicketCreateOrConnectWithoutInvoicesInput = {
@@ -9644,30 +12707,34 @@ export namespace Prisma {
 
   export type UserCreateWithoutInvoicesInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
     phone: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
     role: RoleCreateNestedOneWithoutUsersInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     payments?: PaymentCreateNestedManyWithoutClientInput
+    clients?: ClientCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutInvoicesInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
     phone: string
-    roleId: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    role_id: string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
     payments?: PaymentUncheckedCreateNestedManyWithoutClientInput
+    clients?: ClientUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutInvoicesInput = {
@@ -9688,7 +12755,7 @@ export namespace Prisma {
 
   export type PaymentUncheckedCreateWithoutInvoiceInput = {
     id?: string
-    clientId: string
+    client_id: string
     amount: number
     currency: string
     status: string
@@ -9720,28 +12787,30 @@ export namespace Prisma {
 
   export type TicketUpdateWithoutInvoicesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priority?: PriorityUpdateOneRequiredWithoutTicketsNestedInput
     client?: UserUpdateOneRequiredWithoutTicketsNestedInput
     role?: RoleUpdateOneRequiredWithoutTicketsNestedInput
   }
 
   export type TicketUncheckedUpdateWithoutInvoicesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priority_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUpsertWithoutInvoicesInput = {
@@ -9757,30 +12826,34 @@ export namespace Prisma {
 
   export type UserUpdateWithoutInvoicesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     payments?: PaymentUpdateManyWithoutClientNestedInput
+    clients?: ClientUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutInvoicesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    roleId?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role_id?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutClientNestedInput
+    clients?: ClientUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type PaymentUpsertWithWhereUniqueWithoutInvoiceInput = {
@@ -9813,8 +12886,8 @@ export namespace Prisma {
 
   export type InvoiceUncheckedCreateWithoutPaymentsInput = {
     id?: string
-    ticketId: string
-    clientId: string
+    ticket_id: string
+    client_id: string
     amount: number
     currency: string
     status: string
@@ -9830,30 +12903,34 @@ export namespace Prisma {
 
   export type UserCreateWithoutPaymentsInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
     phone: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
     role: RoleCreateNestedOneWithoutUsersInput
     tickets?: TicketCreateNestedManyWithoutClientInput
     invoices?: InvoiceCreateNestedManyWithoutClientInput
+    clients?: ClientCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutPaymentsInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
     phone: string
-    roleId: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    role_id: string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
     tickets?: TicketUncheckedCreateNestedManyWithoutClientInput
     invoices?: InvoiceUncheckedCreateNestedManyWithoutClientInput
+    clients?: ClientUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -9886,8 +12963,8 @@ export namespace Prisma {
 
   export type InvoiceUncheckedUpdateWithoutPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    ticketId?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
+    ticket_id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -9909,137 +12986,152 @@ export namespace Prisma {
 
   export type UserUpdateWithoutPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     tickets?: TicketUpdateManyWithoutClientNestedInput
     invoices?: InvoiceUpdateManyWithoutClientNestedInput
+    clients?: ClientUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    roleId?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role_id?: StringFieldUpdateOperationsInput | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutClientNestedInput
+    clients?: ClientUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type UserCreateManyRoleInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    email: string
     phone: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    is_active?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type TicketCreateManyRoleInput = {
     id?: string
-    clientId: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    client_id: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
     phone: string
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    priority_id: string
   }
 
   export type UserUpdateWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     tickets?: TicketUpdateManyWithoutClientNestedInput
     invoices?: InvoiceUpdateManyWithoutClientNestedInput
     payments?: PaymentUpdateManyWithoutClientNestedInput
+    clients?: ClientUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     tickets?: TicketUncheckedUpdateManyWithoutClientNestedInput
     invoices?: InvoiceUncheckedUpdateManyWithoutClientNestedInput
     payments?: PaymentUncheckedUpdateManyWithoutClientNestedInput
+    clients?: ClientUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TicketUpdateWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priority?: PriorityUpdateOneRequiredWithoutTicketsNestedInput
     client?: UserUpdateOneRequiredWithoutTicketsNestedInput
     invoices?: InvoiceUpdateManyWithoutTicketNestedInput
   }
 
   export type TicketUncheckedUpdateWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priority_id?: StringFieldUpdateOperationsInput | string
     invoices?: InvoiceUncheckedUpdateManyWithoutTicketNestedInput
   }
 
   export type TicketUncheckedUpdateManyWithoutRoleInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priority_id?: StringFieldUpdateOperationsInput | string
   }
 
-  export type TicketCreateManyClientInput = {
+  export type TicketCreateManyPriorityInput = {
     id?: string
-    firstName: string
-    middleName?: string | null
-    lastName: string
+    client_id: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
     phone: string
     roleId: string
     isActive?: boolean
@@ -10047,9 +13139,63 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type TicketUpdateWithoutPriorityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    client?: UserUpdateOneRequiredWithoutTicketsNestedInput
+    role?: RoleUpdateOneRequiredWithoutTicketsNestedInput
+    invoices?: InvoiceUpdateManyWithoutTicketNestedInput
+  }
+
+  export type TicketUncheckedUpdateWithoutPriorityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    invoices?: InvoiceUncheckedUpdateManyWithoutTicketNestedInput
+  }
+
+  export type TicketUncheckedUpdateManyWithoutPriorityInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    roleId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TicketCreateManyClientInput = {
+    id?: string
+    first_name: string
+    middle_name?: string | null
+    last_name: string
+    phone: string
+    roleId: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    priority_id: string
+  }
+
   export type InvoiceCreateManyClientInput = {
     id?: string
-    ticketId: string
+    ticket_id: string
     amount: number
     currency: string
     status: string
@@ -10060,7 +13206,7 @@ export namespace Prisma {
 
   export type PaymentCreateManyClientInput = {
     id?: string
-    invoiceId: string
+    invoice_id: string
     amount: number
     currency: string
     status: string
@@ -10069,42 +13215,51 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type ClientCreateManyClientInput = {
+    id?: string
+    company_name: string
+    company_adress: string
+  }
+
   export type TicketUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priority?: PriorityUpdateOneRequiredWithoutTicketsNestedInput
     role?: RoleUpdateOneRequiredWithoutTicketsNestedInput
     invoices?: InvoiceUpdateManyWithoutTicketNestedInput
   }
 
   export type TicketUncheckedUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priority_id?: StringFieldUpdateOperationsInput | string
     invoices?: InvoiceUncheckedUpdateManyWithoutTicketNestedInput
   }
 
   export type TicketUncheckedUpdateManyWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
-    firstName?: StringFieldUpdateOperationsInput | string
-    middleName?: NullableStringFieldUpdateOperationsInput | string | null
-    lastName?: StringFieldUpdateOperationsInput | string
+    first_name?: StringFieldUpdateOperationsInput | string
+    middle_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     roleId?: StringFieldUpdateOperationsInput | string
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    priority_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type InvoiceUpdateWithoutClientInput = {
@@ -10121,7 +13276,7 @@ export namespace Prisma {
 
   export type InvoiceUncheckedUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
-    ticketId?: StringFieldUpdateOperationsInput | string
+    ticket_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -10133,7 +13288,7 @@ export namespace Prisma {
 
   export type InvoiceUncheckedUpdateManyWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
-    ticketId?: StringFieldUpdateOperationsInput | string
+    ticket_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -10155,7 +13310,7 @@ export namespace Prisma {
 
   export type PaymentUncheckedUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
-    invoiceId?: StringFieldUpdateOperationsInput | string
+    invoice_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -10166,7 +13321,7 @@ export namespace Prisma {
 
   export type PaymentUncheckedUpdateManyWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
-    invoiceId?: StringFieldUpdateOperationsInput | string
+    invoice_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -10175,9 +13330,27 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ClientUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_name?: StringFieldUpdateOperationsInput | string
+    company_adress?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClientUncheckedUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_name?: StringFieldUpdateOperationsInput | string
+    company_adress?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClientUncheckedUpdateManyWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    company_name?: StringFieldUpdateOperationsInput | string
+    company_adress?: StringFieldUpdateOperationsInput | string
+  }
+
   export type InvoiceCreateManyTicketInput = {
     id?: string
-    clientId: string
+    client_id: string
     amount: number
     currency: string
     status: string
@@ -10200,7 +13373,7 @@ export namespace Prisma {
 
   export type InvoiceUncheckedUpdateWithoutTicketInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -10212,7 +13385,7 @@ export namespace Prisma {
 
   export type InvoiceUncheckedUpdateManyWithoutTicketInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -10223,7 +13396,7 @@ export namespace Prisma {
 
   export type PaymentCreateManyInvoiceInput = {
     id?: string
-    clientId: string
+    client_id: string
     amount: number
     currency: string
     status: string
@@ -10245,7 +13418,7 @@ export namespace Prisma {
 
   export type PaymentUncheckedUpdateWithoutInvoiceInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -10256,7 +13429,7 @@ export namespace Prisma {
 
   export type PaymentUncheckedUpdateManyWithoutInvoiceInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
     amount?: FloatFieldUpdateOperationsInput | number
     currency?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string

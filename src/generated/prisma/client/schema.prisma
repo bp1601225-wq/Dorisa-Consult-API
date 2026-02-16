@@ -21,44 +21,66 @@ model Role {
   tickets Ticket[]
 }
 
-model User {
-  id         String   @id @default(uuid())
-  firstName  String
-  middleName String?
-  lastName   String
-  phone      String   @unique
-  roleId     String
-  isActive   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model Priority {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  role     Role      @relation(fields: [roleId], references: [id])
+  tickets Ticket[] @relation("PriorityRelation")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  first_name  String
+  middle_name String?
+  last_name   String
+  email       String   @unique
+  phone       String   @unique
+  role_id     String
+  is_active   Boolean  @default(true)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  role     Role      @relation(fields: [role_id], references: [id])
   tickets  Ticket[]  @relation("ClientTickets")
   invoices Invoice[] @relation("ClientInvoices")
   payments Payment[] @relation("ClientPayments")
+  clients  Client[]  @relation("Clients")
+}
+
+model Client {
+  id             String @id @default(uuid())
+  company_name   String
+  company_adress String
+  client_id      String
+  client         User   @relation("Clients", fields: [client_id], references: [id])
 }
 
 model Ticket {
-  id         String   @id @default(uuid())
-  clientId   String
-  firstName  String
-  middleName String?
-  lastName   String
-  phone      String   @unique
-  roleId     String
-  isActive   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id          String   @id @default(uuid())
+  client_id   String
+  first_name  String
+  middle_name String?
+  last_name   String
+  phone       String   @unique
+  roleId      String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  client   User      @relation("ClientTickets", fields: [clientId], references: [id])
+  priority_id String
+  priority    Priority @relation("PriorityRelation", fields: [priority_id], references: [id])
+
+  client   User      @relation("ClientTickets", fields: [client_id], references: [id])
   role     Role      @relation(fields: [roleId], references: [id])
   invoices Invoice[]
 }
 
 model Invoice {
   id        String   @id @default(uuid())
-  ticketId  String
-  clientId  String
+  ticket_id String
+  client_id String
   amount    Float
   currency  String
   status    String
@@ -66,22 +88,22 @@ model Invoice {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  ticket   Ticket    @relation(fields: [ticketId], references: [id])
-  client   User      @relation("ClientInvoices", fields: [clientId], references: [id])
+  ticket   Ticket    @relation(fields: [ticket_id], references: [id])
+  client   User      @relation("ClientInvoices", fields: [client_id], references: [id])
   payments Payment[]
 }
 
 model Payment {
-  id        String   @id @default(uuid())
-  invoiceId String
-  clientId  String
-  amount    Float
-  currency  String
-  status    String
-  dueDate   DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(uuid())
+  invoice_id String
+  client_id  String
+  amount     Float
+  currency   String
+  status     String
+  dueDate    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  invoice Invoice @relation(fields: [invoiceId], references: [id])
-  client  User    @relation("ClientPayments", fields: [clientId], references: [id])
+  invoice Invoice @relation(fields: [invoice_id], references: [id])
+  client  User    @relation("ClientPayments", fields: [client_id], references: [id])
 }
