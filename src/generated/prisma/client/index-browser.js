@@ -154,17 +154,18 @@ exports.Prisma.ClientScalarFieldEnum = {
   client_id: 'client_id'
 };
 
+exports.Prisma.ProjectScalarFieldEnum = {
+  id: 'id',
+  client_id: 'client_id'
+};
+
 exports.Prisma.TicketScalarFieldEnum = {
   id: 'id',
   client_id: 'client_id',
-  first_name: 'first_name',
-  middle_name: 'middle_name',
-  last_name: 'last_name',
-  phone: 'phone',
+  title: 'title',
+  description: 'description',
   roleId: 'roleId',
-  isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
   priority_id: 'priority_id'
 };
 
@@ -218,6 +219,7 @@ exports.Prisma.ModelName = {
   Priority: 'Priority',
   User: 'User',
   Client: 'Client',
+  Project: 'Project',
   Ticket: 'Ticket',
   Invoice: 'Invoice',
   Payment: 'Payment'

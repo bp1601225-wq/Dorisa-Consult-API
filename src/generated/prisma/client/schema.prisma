@@ -50,24 +50,27 @@ model User {
 }
 
 model Client {
-  id             String @id @default(uuid())
+  id             String    @id @default(uuid())
   company_name   String
   company_adress String
   client_id      String
-  client         User   @relation("Clients", fields: [client_id], references: [id])
+  client         User      @relation("Clients", fields: [client_id], references: [id])
+  projects       Project[] @relation("ClientsProject")
+}
+
+model Project {
+  id        String @id @default(uuid())
+  client_id String
+  client    Client @relation("ClientsProject", fields: [client_id], references: [id])
 }
 
 model Ticket {
   id          String   @id @default(uuid())
   client_id   String
-  first_name  String
-  middle_name String?
-  last_name   String
-  phone       String   @unique
+  title       String
+  description String?
   roleId      String
-  isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 
   priority_id String
   priority    Priority @relation("PriorityRelation", fields: [priority_id], references: [id])
