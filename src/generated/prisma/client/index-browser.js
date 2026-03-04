@@ -120,77 +120,16 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.RoleScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.PriorityScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.UserScalarFieldEnum = {
-  id: 'id',
-  first_name: 'first_name',
-  middle_name: 'middle_name',
-  last_name: 'last_name',
-  email: 'email',
-  phone: 'phone',
-  role_id: 'role_id',
-  is_active: 'is_active',
-  created_at: 'created_at',
-  updated_at: 'updated_at'
-};
-
 exports.Prisma.ClientScalarFieldEnum = {
   id: 'id',
-  company_name: 'company_name',
-  company_adress: 'company_adress',
-  client_id: 'client_id'
-};
-
-exports.Prisma.ProjectScalarFieldEnum = {
-  id: 'id',
-  client_id: 'client_id'
-};
-
-exports.Prisma.TicketScalarFieldEnum = {
-  id: 'id',
-  client_id: 'client_id',
-  title: 'title',
-  description: 'description',
-  roleId: 'roleId',
-  createdAt: 'createdAt',
-  priority_id: 'priority_id'
-};
-
-exports.Prisma.InvoiceScalarFieldEnum = {
-  id: 'id',
-  ticket_id: 'ticket_id',
-  client_id: 'client_id',
-  amount: 'amount',
-  currency: 'currency',
-  status: 'status',
-  dueDate: 'dueDate',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.PaymentScalarFieldEnum = {
-  id: 'id',
-  invoice_id: 'invoice_id',
-  client_id: 'client_id',
-  amount: 'amount',
-  currency: 'currency',
-  status: 'status',
-  dueDate: 'dueDate',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  email: 'email',
+  phone: 'phone',
+  password: 'password',
+  country: 'country',
+  companyName: 'companyName',
+  contactPerson: 'contactPerson',
+  companyWebsite: 'companyWebsite',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -207,22 +146,10 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.InvoiceStatus = exports.$Enums.InvoiceStatus = {
-  PENDING: 'PENDING',
-  PAID: 'PAID',
-  OVERDUE: 'OVERDUE',
-  CANCELLED: 'CANCELLED'
-};
+
 
 exports.Prisma.ModelName = {
-  Role: 'Role',
-  Priority: 'Priority',
-  User: 'User',
-  Client: 'Client',
-  Project: 'Project',
-  Ticket: 'Ticket',
-  Invoice: 'Invoice',
-  Payment: 'Payment'
+  Client: 'Client'
 };
 
 /**

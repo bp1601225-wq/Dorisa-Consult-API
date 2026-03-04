@@ -1,10 +1,11 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import testRoutesRouter from "./routes/testRoutesRouter";
 import { prisma } from "./prisma/client";
 import { globalErrorHandler } from "./middleware/errorhandler";
 import rolesRouter from "./routes/rolesRoutes";
+import {ClientRouter} from "./routes/clientsRoutes"
+
 
 const app = express();
 
@@ -29,8 +30,9 @@ app.get("/greet/:name", (req, res) => {
   res.json({ message: `Hello, ${req.params.name}!` });
 });
 
-// ✅ Register roles routes
+//  Register all routes
 app.use(`/${baseRoutes}`, rolesRouter);
+app.use(`/${baseRoutes}`, ClientRouter);
 
 // ✅ 404 must be after routes
 app.use((_req, res) => {
