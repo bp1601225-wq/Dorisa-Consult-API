@@ -15,10 +15,13 @@ model Client {
   id             String   @id @default(uuid())
   email          String   @unique
   phone          String
-  password       String
+  password       String?
   country        String
-  companyName    String
-  contactPerson  String
+  companyName    String?
+  contactPerson  String?
+  fullName       String?
   companyWebsite String?
+  industry String?
+  type           String
   createdAt      DateTime @default(now())
 }

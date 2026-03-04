@@ -22,9 +22,12 @@ const clientsController = {
 
       return res.status(201).json(newClient);
 
-    } catch (error) {
-      next(error);
-    }
+    } catch (error: any) {
+  console.error("CREATE CLIENT ERROR:", error);
+  return res.status(400).json({
+    message: error.message,
+  });
+}
   },
 
   async GetAllClients(_req: Request, res: Response, next: NextFunction) {

@@ -128,7 +128,10 @@ exports.Prisma.ClientScalarFieldEnum = {
   country: 'country',
   companyName: 'companyName',
   contactPerson: 'contactPerson',
+  fullName: 'fullName',
   companyWebsite: 'companyWebsite',
+  industry: 'industry',
+  type: 'type',
   createdAt: 'createdAt'
 };
 
