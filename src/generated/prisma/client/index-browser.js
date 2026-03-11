@@ -135,6 +135,12 @@ exports.Prisma.ClientScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.RoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -152,7 +158,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  Client: 'Client'
+  Client: 'Client',
+  Role: 'Role'
 };
 
 /**

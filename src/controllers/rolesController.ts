@@ -1,11 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import { prisma } from "../prisma/client";
-import type { rolesType } from "../GlobalTypes";
 
 const RolesController = {
     async GetAllRoles(_req: Request, res: Response, next: NextFunction) { 
         try {
-    const roles: rolesType[] = await prisma.role.findMany();
+    const roles = await prisma.role.findMany();
             res.status(200).json(roles);
         } catch (error: any) {
             next(error);
@@ -16,8 +15,8 @@ const RolesController = {
     ) {
         try {
 
-            const incomingData: rolesType = req.body
-            const roles: rolesType = await prisma.role.create({
+            const incomingData = req.body
+            const roles = await prisma.role.create({
                 data:incomingData
             })
             return res.status(200).json({
@@ -48,8 +47,8 @@ next(error)
     async UpdateRoles(req:Request, res:Response, next:NextFunction) {
         try {
             const id = req.params.id as string;
-            const incomingData: rolesType = req.body
-            const roles: rolesType = await prisma.role.update({
+            const incomingData = req.body
+            const roles = await prisma.role.update({
                 where: {
                     id
                 },
@@ -67,7 +66,7 @@ next(error)
     async GetRolesById(req:Request, res:Response, next:NextFunction) {
         try {
             const id = req.params.id as string;
-            const roles: rolesType | null = await prisma.role.findUnique({
+            const roles = await prisma.role.findUnique({
                 where: {
                     id
                 }

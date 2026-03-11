@@ -10,3 +10,8 @@ export const createClientSchema = Joi.object({
   contactPerson: Joi.string().required(),
   companyWebsite: Joi.string().uri().optional().allow(null, ""),
 });
+
+export const AuthSchema = Joi.object({
+email: Joi.string().email().required(),
+password: Joi.string().min(8).required()
+})

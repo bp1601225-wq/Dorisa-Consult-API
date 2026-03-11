@@ -5,12 +5,17 @@ import { prisma } from "./prisma/client";
 import { globalErrorHandler } from "./middleware/errorhandler";
 import rolesRouter from "./routes/rolesRoutes";
 import {ClientRouter} from "./routes/clientsRoutes"
-
+import { AuthRouter } from "./routes/AuthRoutes";
+import helmet from "helmet";
 
 const app = express();
 
+
+
 app.use(cors());
 app.use(express.json());
+app.use(helmet())
+
 
 const baseRoutes = "Consulting";
 
@@ -33,8 +38,9 @@ app.get("/greet/:name", (req, res) => {
 //  Register all routes
 app.use(`/${baseRoutes}`, rolesRouter);
 app.use(`/${baseRoutes}`, ClientRouter);
+app.use(`/${baseRoutes}`, AuthRouter)
 
-// ✅ 404 must be after routes
+//  404 must be after routes
 app.use((_req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
