@@ -7,6 +7,7 @@ import rolesRouter from "./routes/rolesRoutes";
 import {ClientRouter} from "./routes/clientsRoutes"
 import { AuthRouter } from "./routes/AuthRoutes";
 import helmet from "helmet";
+import { userRoutes } from "./routes/userRoutes";
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.get("/greet/:name", (req, res) => {
 app.use(`/${baseRoutes}`, rolesRouter);
 app.use(`/${baseRoutes}`, ClientRouter);
 app.use(`/${baseRoutes}`, AuthRouter)
+app.use(`/${baseRoutes}`, userRoutes)
 
 //  404 must be after routes
 app.use((_req, res) => {

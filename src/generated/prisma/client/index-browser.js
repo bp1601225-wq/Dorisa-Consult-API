@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.4.0
- * Query Engine version: ab56fe763f921d033a6c195e7ddeb3e255bdbb57
+ * Prisma Client JS version: 7.5.0
+ * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
  */
 Prisma.prismaVersion = {
-  client: "7.4.0",
-  engine: "ab56fe763f921d033a6c195e7ddeb3e255bdbb57"
+  client: "7.5.0",
+  engine: "280c870be64f457428992c43c1f6d557fab6e29e"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -120,7 +120,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.ClientScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   phone: 'phone',
@@ -129,15 +129,20 @@ exports.Prisma.ClientScalarFieldEnum = {
   companyName: 'companyName',
   contactPerson: 'contactPerson',
   fullName: 'fullName',
+  firstName: 'firstName',
+  middleName: 'middleName',
+  lastName: 'lastName',
   companyWebsite: 'companyWebsite',
   industry: 'industry',
   type: 'type',
+  roleId: 'roleId',
   createdAt: 'createdAt'
 };
 
 exports.Prisma.RoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  status: 'status',
   createdAt: 'createdAt'
 };
 
@@ -155,10 +160,18 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.UserTypeEnum = exports.$Enums.UserTypeEnum = {
+  INDIVIDUAL: 'INDIVIDUAL',
+  CORPORATE: 'CORPORATE'
+};
 
+exports.Status = exports.$Enums.Status = {
+  Active: 'Active',
+  InActive: 'InActive'
+};
 
 exports.Prisma.ModelName = {
-  Client: 'Client',
+  User: 'User',
   Role: 'Role'
 };
 

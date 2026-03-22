@@ -11,24 +11,44 @@ datasource db {
   provider = "postgresql"
 }
 
-model Client {
+model User {
   id             String   @id @default(uuid())
-  email          String   @unique
-  phone          String
+  email          String?   @unique
+  phone          String?
   password       String?
-  country        String
+  country        String?
   companyName    String?
   contactPerson  String?
   fullName       String?
+  firstName      String?
+  middleName     String?
+  lastName       String?
   companyWebsite String?
-  industry String?
-  type           String
+  industry       String?
+  type           UserTypeEnum?
+
+  roleId         String
+  role           Role     @relation(fields: [roleId], references: [id])
+
   createdAt      DateTime @default(now())
 }
 
-model Role {
-  id    String  @id @default(uuid())
-  name  String
-  createdAt      DateTime @default(now())
+enum UserTypeEnum {
+  INDIVIDUAL
+  CORPORATE
+}
 
+model Role {
+  id        String   @id @default(uuid())
+  name      String   // "Client", "Admin", etc
+  status    Status   @default(Active)
+  createdAt DateTime @default(now())
+
+  users     User[]   // 🔥 one-to-many
+}
+
+
+enum Status {
+  Active
+  InActive
 }

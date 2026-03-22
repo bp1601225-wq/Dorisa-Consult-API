@@ -26,8 +26,8 @@ export const AuthController = {
 
       const { email, password } = value;
 
-      // Find user by email
-      const user = await prisma.client.findUnique({
+      // Find user by emailn
+      const user = await prisma.user.findUnique({
         where: { email }
       });
       console.log("User found:", user ? "Yes" : "No");
@@ -64,10 +64,13 @@ export const AuthController = {
       return res.status(200).json({
         message: "Login successful",
         token,
-        user: {
-          id: user.id,
-          email: user.email
-        }
+        id: user.id,
+        email: user.email
+        
+        // user: {
+        //   id: user.id,
+        //   email: user.email
+        // }
       });
 
     } catch (err: any) {
