@@ -146,6 +146,14 @@ exports.Prisma.RoleScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ServicesScalarFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
+  ServiceName: 'ServiceName',
+  status: 'status',
+  DateCreated: 'DateCreated'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -170,9 +178,17 @@ exports.Status = exports.$Enums.Status = {
   InActive: 'InActive'
 };
 
+exports.serviceStatus = exports.$Enums.serviceStatus = {
+  REQUESTED: 'REQUESTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
-  Role: 'Role'
+  Role: 'Role',
+  Services: 'Services'
 };
 
 /**

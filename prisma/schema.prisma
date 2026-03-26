@@ -29,7 +29,7 @@ model User {
 
   roleId         String
   role           Role     @relation(fields: [roleId], references: [id])
-
+  service       Services[]
   createdAt      DateTime @default(now())
 }
 
@@ -52,3 +52,37 @@ enum Status {
   Active
   InActive
 }
+
+//  enum status for propsoals stages
+
+enum serviceStatus {
+  REQUESTED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ProposalStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum ProjectStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+// Entry Point Service Models
+
+model Services {
+  id    String   @id @default(uuid())
+  clientId    String
+  client      User @relation(fields: [clientId], references: [id])
+  ServiceName   String  
+  status   serviceStatus
+  DateCreated   DateTime   @default(now())
+}
+
+
