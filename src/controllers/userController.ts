@@ -4,8 +4,19 @@ import argon2 from "argon2";
 import { resolveRoleId } from "../utils/roleHelpers";
 
 export const UserController = {
-    async GetAllUsers(_req: Request, res: Response) {
+    async GetAllUsers(req: Request, res: Response) {
+
+         
         try {
+
+            // Pagination
+const page = Number(req.query.page) || 1;
+const PageSize = Number(req.query.PageSize) || 100;
+
+            const skip = (page - 1) * PageSize
+            const take = PageSize
+
+
             const userPayLoad = await prisma.user.findMany({
                 include: {
                     role: {
@@ -14,6 +25,11 @@ export const UserController = {
                         },
                     },
                 },
+                skip,
+                take, 
+                orderBy: {
+                    createdAt: 'desc'
+                }
             });
 
 
@@ -23,10 +39,17 @@ export const UserController = {
   }));
 
 
-            console.log(flattenedUsers)
+            // console.log(flattenedUsers)
+
+  const totalUsers = await prisma.user.count()
+
+        
             return res.status(200).json({
                 message: "Users fetched successfully",
                 data: flattenedUsers,
+                total:totalUsers,
+                page,
+                PageSize
             });
         } catch (error: any) {
             console.error("GET ALL USERS ERROR:", error);
@@ -40,7 +63,7 @@ export const UserController = {
     async CreateUser(req: Request, res: Response) {
         try {
             const incomingData = req.body;
-console.log(incomingData)
+// console.log(incomingData)
 
             const { roleId, password, ...rest } = incomingData;
 

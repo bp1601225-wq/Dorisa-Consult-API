@@ -50,6 +50,8 @@ export type Status = (typeof Status)[keyof typeof Status]
 
 
 export const serviceStatus: {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
   REQUESTED: 'REQUESTED',
   IN_PROGRESS: 'IN_PROGRESS',
   COMPLETED: 'COMPLETED',
@@ -3490,6 +3492,7 @@ export namespace Prisma {
     id: string | null
     clientId: string | null
     ServiceName: string | null
+    Description: string | null
     status: $Enums.serviceStatus | null
     DateCreated: Date | null
   }
@@ -3498,6 +3501,7 @@ export namespace Prisma {
     id: string | null
     clientId: string | null
     ServiceName: string | null
+    Description: string | null
     status: $Enums.serviceStatus | null
     DateCreated: Date | null
   }
@@ -3506,6 +3510,7 @@ export namespace Prisma {
     id: number
     clientId: number
     ServiceName: number
+    Description: number
     status: number
     DateCreated: number
     _all: number
@@ -3516,6 +3521,7 @@ export namespace Prisma {
     id?: true
     clientId?: true
     ServiceName?: true
+    Description?: true
     status?: true
     DateCreated?: true
   }
@@ -3524,6 +3530,7 @@ export namespace Prisma {
     id?: true
     clientId?: true
     ServiceName?: true
+    Description?: true
     status?: true
     DateCreated?: true
   }
@@ -3532,6 +3539,7 @@ export namespace Prisma {
     id?: true
     clientId?: true
     ServiceName?: true
+    Description?: true
     status?: true
     DateCreated?: true
     _all?: true
@@ -3611,8 +3619,9 @@ export namespace Prisma {
 
   export type ServicesGroupByOutputType = {
     id: string
-    clientId: string
+    clientId: string | null
     ServiceName: string
+    Description: string
     status: $Enums.serviceStatus
     DateCreated: Date
     _count: ServicesCountAggregateOutputType | null
@@ -3638,57 +3647,62 @@ export namespace Prisma {
     id?: boolean
     clientId?: boolean
     ServiceName?: boolean
+    Description?: boolean
     status?: boolean
     DateCreated?: boolean
-    client?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | Services$clientArgs<ExtArgs>
   }, ExtArgs["result"]["services"]>
 
   export type ServicesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     clientId?: boolean
     ServiceName?: boolean
+    Description?: boolean
     status?: boolean
     DateCreated?: boolean
-    client?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | Services$clientArgs<ExtArgs>
   }, ExtArgs["result"]["services"]>
 
   export type ServicesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     clientId?: boolean
     ServiceName?: boolean
+    Description?: boolean
     status?: boolean
     DateCreated?: boolean
-    client?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | Services$clientArgs<ExtArgs>
   }, ExtArgs["result"]["services"]>
 
   export type ServicesSelectScalar = {
     id?: boolean
     clientId?: boolean
     ServiceName?: boolean
+    Description?: boolean
     status?: boolean
     DateCreated?: boolean
   }
 
-  export type ServicesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientId" | "ServiceName" | "status" | "DateCreated", ExtArgs["result"]["services"]>
+  export type ServicesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientId" | "ServiceName" | "Description" | "status" | "DateCreated", ExtArgs["result"]["services"]>
   export type ServicesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | Services$clientArgs<ExtArgs>
   }
   export type ServicesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | Services$clientArgs<ExtArgs>
   }
   export type ServicesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    client?: boolean | UserDefaultArgs<ExtArgs>
+    client?: boolean | Services$clientArgs<ExtArgs>
   }
 
   export type $ServicesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Services"
     objects: {
-      client: Prisma.$UserPayload<ExtArgs>
+      client: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      clientId: string
+      clientId: string | null
       ServiceName: string
+      Description: string
       status: $Enums.serviceStatus
       DateCreated: Date
     }, ExtArgs["result"]["services"]>
@@ -4085,7 +4099,7 @@ export namespace Prisma {
    */
   export interface Prisma__ServicesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    client<T extends Services$clientArgs<ExtArgs> = {}>(args?: Subset<T, Services$clientArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4118,6 +4132,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Services", 'String'>
     readonly clientId: FieldRef<"Services", 'String'>
     readonly ServiceName: FieldRef<"Services", 'String'>
+    readonly Description: FieldRef<"Services", 'String'>
     readonly status: FieldRef<"Services", 'serviceStatus'>
     readonly DateCreated: FieldRef<"Services", 'DateTime'>
   }
@@ -4521,6 +4536,25 @@ export namespace Prisma {
   }
 
   /**
+   * Services.client
+   */
+  export type Services$clientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Services without action
    */
   export type ServicesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4589,6 +4623,7 @@ export namespace Prisma {
     id: 'id',
     clientId: 'clientId',
     ServiceName: 'ServiceName',
+    Description: 'Description',
     status: 'status',
     DateCreated: 'DateCreated'
   };
@@ -4880,17 +4915,19 @@ export namespace Prisma {
     OR?: ServicesWhereInput[]
     NOT?: ServicesWhereInput | ServicesWhereInput[]
     id?: StringFilter<"Services"> | string
-    clientId?: StringFilter<"Services"> | string
+    clientId?: StringNullableFilter<"Services"> | string | null
     ServiceName?: StringFilter<"Services"> | string
+    Description?: StringFilter<"Services"> | string
     status?: EnumserviceStatusFilter<"Services"> | $Enums.serviceStatus
     DateCreated?: DateTimeFilter<"Services"> | Date | string
-    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+    client?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type ServicesOrderByWithRelationInput = {
     id?: SortOrder
-    clientId?: SortOrder
+    clientId?: SortOrderInput | SortOrder
     ServiceName?: SortOrder
+    Description?: SortOrder
     status?: SortOrder
     DateCreated?: SortOrder
     client?: UserOrderByWithRelationInput
@@ -4901,17 +4938,19 @@ export namespace Prisma {
     AND?: ServicesWhereInput | ServicesWhereInput[]
     OR?: ServicesWhereInput[]
     NOT?: ServicesWhereInput | ServicesWhereInput[]
-    clientId?: StringFilter<"Services"> | string
+    clientId?: StringNullableFilter<"Services"> | string | null
     ServiceName?: StringFilter<"Services"> | string
+    Description?: StringFilter<"Services"> | string
     status?: EnumserviceStatusFilter<"Services"> | $Enums.serviceStatus
     DateCreated?: DateTimeFilter<"Services"> | Date | string
-    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+    client?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type ServicesOrderByWithAggregationInput = {
     id?: SortOrder
-    clientId?: SortOrder
+    clientId?: SortOrderInput | SortOrder
     ServiceName?: SortOrder
+    Description?: SortOrder
     status?: SortOrder
     DateCreated?: SortOrder
     _count?: ServicesCountOrderByAggregateInput
@@ -4924,8 +4963,9 @@ export namespace Prisma {
     OR?: ServicesScalarWhereWithAggregatesInput[]
     NOT?: ServicesScalarWhereWithAggregatesInput | ServicesScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Services"> | string
-    clientId?: StringWithAggregatesFilter<"Services"> | string
+    clientId?: StringNullableWithAggregatesFilter<"Services"> | string | null
     ServiceName?: StringWithAggregatesFilter<"Services"> | string
+    Description?: StringWithAggregatesFilter<"Services"> | string
     status?: EnumserviceStatusWithAggregatesFilter<"Services"> | $Enums.serviceStatus
     DateCreated?: DateTimeWithAggregatesFilter<"Services"> | Date | string
   }
@@ -5122,15 +5162,17 @@ export namespace Prisma {
   export type ServicesCreateInput = {
     id?: string
     ServiceName: string
+    Description: string
     status: $Enums.serviceStatus
     DateCreated?: Date | string
-    client: UserCreateNestedOneWithoutServiceInput
+    client?: UserCreateNestedOneWithoutServiceInput
   }
 
   export type ServicesUncheckedCreateInput = {
     id?: string
-    clientId: string
+    clientId?: string | null
     ServiceName: string
+    Description: string
     status: $Enums.serviceStatus
     DateCreated?: Date | string
   }
@@ -5138,23 +5180,26 @@ export namespace Prisma {
   export type ServicesUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     ServiceName?: StringFieldUpdateOperationsInput | string
+    Description?: StringFieldUpdateOperationsInput | string
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    client?: UserUpdateOneRequiredWithoutServiceNestedInput
+    client?: UserUpdateOneWithoutServiceNestedInput
   }
 
   export type ServicesUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
+    clientId?: NullableStringFieldUpdateOperationsInput | string | null
     ServiceName?: StringFieldUpdateOperationsInput | string
+    Description?: StringFieldUpdateOperationsInput | string
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ServicesCreateManyInput = {
     id?: string
-    clientId: string
+    clientId?: string | null
     ServiceName: string
+    Description: string
     status: $Enums.serviceStatus
     DateCreated?: Date | string
   }
@@ -5162,14 +5207,16 @@ export namespace Prisma {
   export type ServicesUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     ServiceName?: StringFieldUpdateOperationsInput | string
+    Description?: StringFieldUpdateOperationsInput | string
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ServicesUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    clientId?: StringFieldUpdateOperationsInput | string
+    clientId?: NullableStringFieldUpdateOperationsInput | string | null
     ServiceName?: StringFieldUpdateOperationsInput | string
+    Description?: StringFieldUpdateOperationsInput | string
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5414,15 +5461,16 @@ export namespace Prisma {
     not?: NestedEnumserviceStatusFilter<$PrismaModel> | $Enums.serviceStatus
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
   }
 
   export type ServicesCountOrderByAggregateInput = {
     id?: SortOrder
     clientId?: SortOrder
     ServiceName?: SortOrder
+    Description?: SortOrder
     status?: SortOrder
     DateCreated?: SortOrder
   }
@@ -5431,6 +5479,7 @@ export namespace Prisma {
     id?: SortOrder
     clientId?: SortOrder
     ServiceName?: SortOrder
+    Description?: SortOrder
     status?: SortOrder
     DateCreated?: SortOrder
   }
@@ -5439,6 +5488,7 @@ export namespace Prisma {
     id?: SortOrder
     clientId?: SortOrder
     ServiceName?: SortOrder
+    Description?: SortOrder
     status?: SortOrder
     DateCreated?: SortOrder
   }
@@ -5581,10 +5631,12 @@ export namespace Prisma {
     set?: $Enums.serviceStatus
   }
 
-  export type UserUpdateOneRequiredWithoutServiceNestedInput = {
+  export type UserUpdateOneWithoutServiceNestedInput = {
     create?: XOR<UserCreateWithoutServiceInput, UserUncheckedCreateWithoutServiceInput>
     connectOrCreate?: UserCreateOrConnectWithoutServiceInput
     upsert?: UserUpsertWithoutServiceInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutServiceInput, UserUpdateWithoutServiceInput>, UserUncheckedUpdateWithoutServiceInput>
   }
@@ -5771,6 +5823,7 @@ export namespace Prisma {
   export type ServicesCreateWithoutClientInput = {
     id?: string
     ServiceName: string
+    Description: string
     status: $Enums.serviceStatus
     DateCreated?: Date | string
   }
@@ -5778,6 +5831,7 @@ export namespace Prisma {
   export type ServicesUncheckedCreateWithoutClientInput = {
     id?: string
     ServiceName: string
+    Description: string
     status: $Enums.serviceStatus
     DateCreated?: Date | string
   }
@@ -5838,8 +5892,9 @@ export namespace Prisma {
     OR?: ServicesScalarWhereInput[]
     NOT?: ServicesScalarWhereInput | ServicesScalarWhereInput[]
     id?: StringFilter<"Services"> | string
-    clientId?: StringFilter<"Services"> | string
+    clientId?: StringNullableFilter<"Services"> | string | null
     ServiceName?: StringFilter<"Services"> | string
+    Description?: StringFilter<"Services"> | string
     status?: EnumserviceStatusFilter<"Services"> | $Enums.serviceStatus
     DateCreated?: DateTimeFilter<"Services"> | Date | string
   }
@@ -6025,6 +6080,7 @@ export namespace Prisma {
   export type ServicesCreateManyClientInput = {
     id?: string
     ServiceName: string
+    Description: string
     status: $Enums.serviceStatus
     DateCreated?: Date | string
   }
@@ -6032,6 +6088,7 @@ export namespace Prisma {
   export type ServicesUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
     ServiceName?: StringFieldUpdateOperationsInput | string
+    Description?: StringFieldUpdateOperationsInput | string
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6039,6 +6096,7 @@ export namespace Prisma {
   export type ServicesUncheckedUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
     ServiceName?: StringFieldUpdateOperationsInput | string
+    Description?: StringFieldUpdateOperationsInput | string
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6046,6 +6104,7 @@ export namespace Prisma {
   export type ServicesUncheckedUpdateManyWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
     ServiceName?: StringFieldUpdateOperationsInput | string
+    Description?: StringFieldUpdateOperationsInput | string
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
   }

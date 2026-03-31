@@ -17,7 +17,9 @@ const getAllServices = await prisma.services.findMany({
                fullName: true 
             }
         }
-    },
+    }, orderBy: {
+      DateCreated: "asc"
+    }
 }
 )
 
@@ -49,7 +51,7 @@ const ServicesDetails = await prisma.services.create({
 })
 
 return res.status(200).json({
-    message: "Services Page Created",
+    message: "Services added to catalog",
     data: ServicesDetails 
 })
     } catch (error:any){
@@ -63,12 +65,20 @@ async UpdateService(req:Request, res:Response){
          const id = req.params.id as string
 const incomingData = req.body
 
+const { ServiceName , Description, status} = incomingData
 
   const services = await prisma.services.update({
     where: {
             id        
     },
-    data: incomingData
+    
+    data: {
+        ServiceName,
+        Description,
+        status
+    }
+
+   
   })
 
 

@@ -150,6 +150,7 @@ exports.Prisma.ServicesScalarFieldEnum = {
   id: 'id',
   clientId: 'clientId',
   ServiceName: 'ServiceName',
+  Description: 'Description',
   status: 'status',
   DateCreated: 'DateCreated'
 };
@@ -179,6 +180,8 @@ exports.Status = exports.$Enums.Status = {
 };
 
 exports.serviceStatus = exports.$Enums.serviceStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
   REQUESTED: 'REQUESTED',
   IN_PROGRESS: 'IN_PROGRESS',
   COMPLETED: 'COMPLETED',
