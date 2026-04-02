@@ -30,6 +30,7 @@ model User {
   roleId    String
   role      Role       @relation(fields: [roleId], references: [id])
   service   Services[]
+  client    Proposal[] @relation("clientProposal")
   createdAt DateTime   @default(now())
 }
 
@@ -40,11 +41,11 @@ enum UserTypeEnum {
 
 model Role {
   id        String   @id @default(uuid())
-  name      String // "Client", "Admin", etc
+  name      String
   status    Status   @default(Active)
   createdAt DateTime @default(now())
 
-  users User[] // 🔥 one-to-many
+  users User[]
 }
 
 enum Status {
@@ -64,9 +65,10 @@ enum serviceStatus {
 }
 
 enum ProposalStatus {
-  PENDING
+  DRAFT
+  SENT
   ACCEPTED
-  REJECTED
+  DECLINED
 }
 
 enum ProjectStatus {
@@ -78,11 +80,33 @@ enum ProjectStatus {
 // Entry Point Service Models
 
 model Services {
-  id          String        @id @default(uuid())
-  clientId    String?
-  client      User?         @relation(fields: [clientId], references: [id])
+  id String @id @default(uuid())
+
+  clientId String?
+  client   User?   @relation(fields: [clientId], references: [id])
+
   ServiceName String
   Description String
   status      serviceStatus
-  DateCreated DateTime      @default(now())
+
+  // ✅ one-to-one relation
+  proposal Proposal[] @relation("ServiceProposal")
+
+  DateCreated DateTime @default(now())
+}
+
+model Proposal {
+  id String @id @default(uuid())
+
+  serviceId String
+  clientId  String
+
+  // relations
+  client User? @relation("clientProposal", fields: [clientId], references: [id])
+
+  service Services @relation("ServiceProposal", fields: [serviceId], references: [id])
+
+  proposal_status ProposalStatus
+
+  createdAt DateTime @default(now())
 }

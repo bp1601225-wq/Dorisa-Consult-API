@@ -5,10 +5,10 @@ This note is a quick reference to help you reason through how Prisma handles pag
 ## 1. Pagination Patterns
 Prisma exposes three pagination knobs on every indMany operation:
 - skip: how many records to discard before returning results.
-- 	ake: how many records to return (can be negative for reverse order).
+- 	take: how many records to return (can be negative for reverse order).
 - cursor: a pointer object that marks the starting record (usually by primary key). When you specify a cursor, you typically also set skip: 1 to avoid including the cursor row twice.
 
-`	s
+`	
 const page = await prisma.service.findMany({
   orderBy: { createdAt: 'desc' },
   cursor: { id: 'some-uuid' },

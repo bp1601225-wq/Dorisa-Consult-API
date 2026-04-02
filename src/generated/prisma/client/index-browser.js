@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.5.0
- * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
+ * Prisma Client JS version: 7.6.0
+ * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
  */
 Prisma.prismaVersion = {
-  client: "7.5.0",
-  engine: "280c870be64f457428992c43c1f6d557fab6e29e"
+  client: "7.6.0",
+  engine: "75cbdc1eb7150937890ad5465d861175c6624711"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -155,6 +155,14 @@ exports.Prisma.ServicesScalarFieldEnum = {
   DateCreated: 'DateCreated'
 };
 
+exports.Prisma.ProposalScalarFieldEnum = {
+  id: 'id',
+  serviceId: 'serviceId',
+  clientId: 'clientId',
+  proposal_status: 'proposal_status',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -188,10 +196,18 @@ exports.serviceStatus = exports.$Enums.serviceStatus = {
   CANCELLED: 'CANCELLED'
 };
 
+exports.ProposalStatus = exports.$Enums.ProposalStatus = {
+  DRAFT: 'DRAFT',
+  SENT: 'SENT',
+  ACCEPTED: 'ACCEPTED',
+  DECLINED: 'DECLINED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Role: 'Role',
-  Services: 'Services'
+  Services: 'Services',
+  Proposal: 'Proposal'
 };
 
 /**

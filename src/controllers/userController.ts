@@ -64,7 +64,6 @@ const PageSize = Number(req.query.PageSize) || 100;
         try {
             const incomingData = req.body;
 // console.log(incomingData)
-
             const { roleId, password, ...rest } = incomingData;
 
             if (!password) {

@@ -46,6 +46,7 @@ async CreateServices(req:Request, res:Response){
     try {
 const incomingData = req.body;
 
+
 const ServicesDetails = await prisma.services.create({
     data: incomingData
 })

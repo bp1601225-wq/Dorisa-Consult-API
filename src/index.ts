@@ -9,6 +9,7 @@ import { AuthRouter } from "./routes/AuthRoutes";
 import helmet from "helmet";
 import { userRoutes } from "./routes/userRoutes";
 import { servicesRoute } from "./routes/ServicesRoutes";
+import { ProposalRoute } from "./routes/ProposalRoutes";
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use(`/${baseRoutes}`, ClientRouter);
 app.use(`/${baseRoutes}`, AuthRouter)
 app.use(`/${baseRoutes}`, userRoutes)
 app.use(`/${baseRoutes}`, servicesRoute)
+app.use(`/${baseRoutes}`, ProposalRoute)
 
 //  404 must be after routes
 app.use((_req, res) => {
