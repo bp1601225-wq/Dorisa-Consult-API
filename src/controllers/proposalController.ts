@@ -20,6 +20,7 @@ async GetAllProposals(req:Request, res:Response){
 
             service: {
                 select: {
+                    id:true,
                     ServiceName:true,
                     Description: true
                 }
@@ -27,6 +28,7 @@ async GetAllProposals(req:Request, res:Response){
 
             client: {
                 select:{
+                    id:true,
                     fullName:true,
                     firstName:true,
                     middleName:true,

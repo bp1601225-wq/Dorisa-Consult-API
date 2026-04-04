@@ -31,6 +31,7 @@ model User {
   role           Role     @relation(fields: [roleId], references: [id])
   service       Services[]
   client        Proposal[] @relation("clientProposal")
+  projectReview ProjectReview[]
   createdAt      DateTime @default(now())
 }
 
@@ -91,9 +92,8 @@ model Services {
   Description String
   status serviceStatus
 
-  // ✅ one-to-one relation
   proposal Proposal[] @relation("ServiceProposal")
-
+  ProjectReview ProjectReview[] @relation("clientReview")
   DateCreated DateTime @default(now())
 }
 
@@ -111,4 +111,33 @@ model Proposal {
   proposal_status ProposalStatus
 
   createdAt DateTime @default(now())
+}
+
+
+
+// projects review enum
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  NEGOTIATING
+}
+
+//  Clients to review what proposal Admin sent
+model ProjectReview {
+id  String @id @default(uuid())
+
+service_id  String
+client_id   String
+
+service Services @relation("clientReview", fields: [service_id], references: [id])
+client User @relation(fields: [client_id], references: [id])
+
+contract_id String?
+scope String
+deliverables  String
+timeline    String
+pricing     Int
+status  ReviewStatus
+termsAndConditions   String
 }

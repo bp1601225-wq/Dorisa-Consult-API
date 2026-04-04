@@ -26,10 +26,17 @@ export const AuthController = {
 
       const { email, password } = value;
 
-      // Find user by emailn
+      // Find user by email and role
       const user = await prisma.user.findUnique({
-        where: { email }
+        where: { email },
+        include:{
+          role:true
+        }
       });
+
+
+
+
       console.log("User found:", user ? "Yes" : "No");
 
       if (!user || !user.password) {
@@ -51,26 +58,35 @@ export const AuthController = {
         return res.status(400).json({ message: "Invalid credentials" });
       }
 
-      // Generate JWT token
+      // Generate JWT token and some other details
       const token = jwt.sign(
-        { id: user.id, email: user.email },
+        { id: user.id, 
+          email: user.email,  
+          role: user.role.name
+         },
         JWT_SECRET,
-        { algorithm: "HS256", expiresIn: "7d" }
+        { algorithm: "HS256", expiresIn: "15m" }
       );
 
-      console.log("Login successful for user:", email);
+      console.log("Login successful for user:", user);
 
-      // Return success
+//  combined names and send to front end
+const fullName =
+  user.fullName ||
+  `${user.firstName} ${user.middleName ?? ""} ${user.lastName}`.trim();
+
+
+
+
+      // Return success to front end
       return res.status(200).json({
         message: "Login successful",
         token,
         id: user.id,
-        email: user.email
-        
-        // user: {
-        //   id: user.id,
-        //   email: user.email
-        // }
+        email: user.email,
+        fullName,
+        role: user.role.name
+
       });
 
     } catch (err: any) {

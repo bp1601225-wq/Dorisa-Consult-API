@@ -33,6 +33,11 @@ export type Services = $Result.DefaultSelection<Prisma.$ServicesPayload>
  * 
  */
 export type Proposal = $Result.DefaultSelection<Prisma.$ProposalPayload>
+/**
+ * Model ProjectReview
+ * 
+ */
+export type ProjectReview = $Result.DefaultSelection<Prisma.$ProjectReviewPayload>
 
 /**
  * Enums
@@ -84,6 +89,16 @@ export const ProjectStatus: {
 
 export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]
 
+
+export const ReviewStatus: {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  NEGOTIATING: 'NEGOTIATING'
+};
+
+export type ReviewStatus = (typeof ReviewStatus)[keyof typeof ReviewStatus]
+
 }
 
 export type UserTypeEnum = $Enums.UserTypeEnum
@@ -105,6 +120,10 @@ export const ProposalStatus: typeof $Enums.ProposalStatus
 export type ProjectStatus = $Enums.ProjectStatus
 
 export const ProjectStatus: typeof $Enums.ProjectStatus
+
+export type ReviewStatus = $Enums.ReviewStatus
+
+export const ReviewStatus: typeof $Enums.ReviewStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -266,6 +285,16 @@ export class PrismaClient<
     * ```
     */
   get proposal(): Prisma.ProposalDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.projectReview`: Exposes CRUD operations for the **ProjectReview** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProjectReviews
+    * const projectReviews = await prisma.projectReview.findMany()
+    * ```
+    */
+  get projectReview(): Prisma.ProjectReviewDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -703,7 +732,8 @@ export namespace Prisma {
     User: 'User',
     Role: 'Role',
     Services: 'Services',
-    Proposal: 'Proposal'
+    Proposal: 'Proposal',
+    ProjectReview: 'ProjectReview'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -719,7 +749,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "role" | "services" | "proposal"
+      modelProps: "user" | "role" | "services" | "proposal" | "projectReview"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1019,6 +1049,80 @@ export namespace Prisma {
           }
         }
       }
+      ProjectReview: {
+        payload: Prisma.$ProjectReviewPayload<ExtArgs>
+        fields: Prisma.ProjectReviewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProjectReviewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectReviewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProjectReviewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectReviewPayload>
+          }
+          findFirst: {
+            args: Prisma.ProjectReviewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectReviewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProjectReviewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectReviewPayload>
+          }
+          findMany: {
+            args: Prisma.ProjectReviewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectReviewPayload>[]
+          }
+          create: {
+            args: Prisma.ProjectReviewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectReviewPayload>
+          }
+          createMany: {
+            args: Prisma.ProjectReviewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProjectReviewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectReviewPayload>[]
+          }
+          delete: {
+            args: Prisma.ProjectReviewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectReviewPayload>
+          }
+          update: {
+            args: Prisma.ProjectReviewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectReviewPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProjectReviewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProjectReviewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProjectReviewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectReviewPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProjectReviewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectReviewPayload>
+          }
+          aggregate: {
+            args: Prisma.ProjectReviewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProjectReview>
+          }
+          groupBy: {
+            args: Prisma.ProjectReviewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProjectReviewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProjectReviewCountArgs<ExtArgs>
+            result: $Utils.Optional<ProjectReviewCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1131,6 +1235,7 @@ export namespace Prisma {
     role?: RoleOmit
     services?: ServicesOmit
     proposal?: ProposalOmit
+    projectReview?: ProjectReviewOmit
   }
 
   /* Types for Logging */
@@ -1213,11 +1318,13 @@ export namespace Prisma {
   export type UserCountOutputType = {
     service: number
     client: number
+    projectReview: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     service?: boolean | UserCountOutputTypeCountServiceArgs
     client?: boolean | UserCountOutputTypeCountClientArgs
+    projectReview?: boolean | UserCountOutputTypeCountProjectReviewArgs
   }
 
   // Custom InputTypes
@@ -1243,6 +1350,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountClientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProposalWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountProjectReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectReviewWhereInput
   }
 
 
@@ -1283,10 +1397,12 @@ export namespace Prisma {
 
   export type ServicesCountOutputType = {
     proposal: number
+    ProjectReview: number
   }
 
   export type ServicesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     proposal?: boolean | ServicesCountOutputTypeCountProposalArgs
+    ProjectReview?: boolean | ServicesCountOutputTypeCountProjectReviewArgs
   }
 
   // Custom InputTypes
@@ -1305,6 +1421,13 @@ export namespace Prisma {
    */
   export type ServicesCountOutputTypeCountProposalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProposalWhereInput
+  }
+
+  /**
+   * ServicesCountOutputType without action
+   */
+  export type ServicesCountOutputTypeCountProjectReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectReviewWhereInput
   }
 
 
@@ -1567,6 +1690,7 @@ export namespace Prisma {
     role?: boolean | RoleDefaultArgs<ExtArgs>
     service?: boolean | User$serviceArgs<ExtArgs>
     client?: boolean | User$clientArgs<ExtArgs>
+    projectReview?: boolean | User$projectReviewArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1634,6 +1758,7 @@ export namespace Prisma {
     role?: boolean | RoleDefaultArgs<ExtArgs>
     service?: boolean | User$serviceArgs<ExtArgs>
     client?: boolean | User$clientArgs<ExtArgs>
+    projectReview?: boolean | User$projectReviewArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1649,6 +1774,7 @@ export namespace Prisma {
       role: Prisma.$RolePayload<ExtArgs>
       service: Prisma.$ServicesPayload<ExtArgs>[]
       client: Prisma.$ProposalPayload<ExtArgs>[]
+      projectReview: Prisma.$ProjectReviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2064,6 +2190,7 @@ export namespace Prisma {
     role<T extends RoleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RoleDefaultArgs<ExtArgs>>): Prisma__RoleClient<$Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     service<T extends User$serviceArgs<ExtArgs> = {}>(args?: Subset<T, User$serviceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServicesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     client<T extends User$clientArgs<ExtArgs> = {}>(args?: Subset<T, User$clientArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    projectReview<T extends User$projectReviewArgs<ExtArgs> = {}>(args?: Subset<T, User$projectReviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2555,6 +2682,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProposalScalarFieldEnum | ProposalScalarFieldEnum[]
+  }
+
+  /**
+   * User.projectReview
+   */
+  export type User$projectReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+    where?: ProjectReviewWhereInput
+    orderBy?: ProjectReviewOrderByWithRelationInput | ProjectReviewOrderByWithRelationInput[]
+    cursor?: ProjectReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProjectReviewScalarFieldEnum | ProjectReviewScalarFieldEnum[]
   }
 
   /**
@@ -3812,6 +3963,7 @@ export namespace Prisma {
     DateCreated?: boolean
     client?: boolean | Services$clientArgs<ExtArgs>
     proposal?: boolean | Services$proposalArgs<ExtArgs>
+    ProjectReview?: boolean | Services$ProjectReviewArgs<ExtArgs>
     _count?: boolean | ServicesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["services"]>
 
@@ -3848,6 +4000,7 @@ export namespace Prisma {
   export type ServicesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | Services$clientArgs<ExtArgs>
     proposal?: boolean | Services$proposalArgs<ExtArgs>
+    ProjectReview?: boolean | Services$ProjectReviewArgs<ExtArgs>
     _count?: boolean | ServicesCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ServicesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3862,6 +4015,7 @@ export namespace Prisma {
     objects: {
       client: Prisma.$UserPayload<ExtArgs> | null
       proposal: Prisma.$ProposalPayload<ExtArgs>[]
+      ProjectReview: Prisma.$ProjectReviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4266,6 +4420,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     client<T extends Services$clientArgs<ExtArgs> = {}>(args?: Subset<T, Services$clientArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     proposal<T extends Services$proposalArgs<ExtArgs> = {}>(args?: Subset<T, Services$proposalArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ProjectReview<T extends Services$ProjectReviewArgs<ExtArgs> = {}>(args?: Subset<T, Services$ProjectReviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4742,6 +4897,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProposalScalarFieldEnum | ProposalScalarFieldEnum[]
+  }
+
+  /**
+   * Services.ProjectReview
+   */
+  export type Services$ProjectReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+    where?: ProjectReviewWhereInput
+    orderBy?: ProjectReviewOrderByWithRelationInput | ProjectReviewOrderByWithRelationInput[]
+    cursor?: ProjectReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProjectReviewScalarFieldEnum | ProjectReviewScalarFieldEnum[]
   }
 
   /**
@@ -5854,6 +6033,1176 @@ export namespace Prisma {
 
 
   /**
+   * Model ProjectReview
+   */
+
+  export type AggregateProjectReview = {
+    _count: ProjectReviewCountAggregateOutputType | null
+    _avg: ProjectReviewAvgAggregateOutputType | null
+    _sum: ProjectReviewSumAggregateOutputType | null
+    _min: ProjectReviewMinAggregateOutputType | null
+    _max: ProjectReviewMaxAggregateOutputType | null
+  }
+
+  export type ProjectReviewAvgAggregateOutputType = {
+    pricing: number | null
+  }
+
+  export type ProjectReviewSumAggregateOutputType = {
+    pricing: number | null
+  }
+
+  export type ProjectReviewMinAggregateOutputType = {
+    id: string | null
+    service_id: string | null
+    client_id: string | null
+    contract_id: string | null
+    scope: string | null
+    deliverables: string | null
+    timeline: string | null
+    pricing: number | null
+    status: $Enums.ReviewStatus | null
+    termsAndConditions: string | null
+  }
+
+  export type ProjectReviewMaxAggregateOutputType = {
+    id: string | null
+    service_id: string | null
+    client_id: string | null
+    contract_id: string | null
+    scope: string | null
+    deliverables: string | null
+    timeline: string | null
+    pricing: number | null
+    status: $Enums.ReviewStatus | null
+    termsAndConditions: string | null
+  }
+
+  export type ProjectReviewCountAggregateOutputType = {
+    id: number
+    service_id: number
+    client_id: number
+    contract_id: number
+    scope: number
+    deliverables: number
+    timeline: number
+    pricing: number
+    status: number
+    termsAndConditions: number
+    _all: number
+  }
+
+
+  export type ProjectReviewAvgAggregateInputType = {
+    pricing?: true
+  }
+
+  export type ProjectReviewSumAggregateInputType = {
+    pricing?: true
+  }
+
+  export type ProjectReviewMinAggregateInputType = {
+    id?: true
+    service_id?: true
+    client_id?: true
+    contract_id?: true
+    scope?: true
+    deliverables?: true
+    timeline?: true
+    pricing?: true
+    status?: true
+    termsAndConditions?: true
+  }
+
+  export type ProjectReviewMaxAggregateInputType = {
+    id?: true
+    service_id?: true
+    client_id?: true
+    contract_id?: true
+    scope?: true
+    deliverables?: true
+    timeline?: true
+    pricing?: true
+    status?: true
+    termsAndConditions?: true
+  }
+
+  export type ProjectReviewCountAggregateInputType = {
+    id?: true
+    service_id?: true
+    client_id?: true
+    contract_id?: true
+    scope?: true
+    deliverables?: true
+    timeline?: true
+    pricing?: true
+    status?: true
+    termsAndConditions?: true
+    _all?: true
+  }
+
+  export type ProjectReviewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectReview to aggregate.
+     */
+    where?: ProjectReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectReviews to fetch.
+     */
+    orderBy?: ProjectReviewOrderByWithRelationInput | ProjectReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProjectReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProjectReviews
+    **/
+    _count?: true | ProjectReviewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProjectReviewAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProjectReviewSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProjectReviewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProjectReviewMaxAggregateInputType
+  }
+
+  export type GetProjectReviewAggregateType<T extends ProjectReviewAggregateArgs> = {
+        [P in keyof T & keyof AggregateProjectReview]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProjectReview[P]>
+      : GetScalarType<T[P], AggregateProjectReview[P]>
+  }
+
+
+
+
+  export type ProjectReviewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectReviewWhereInput
+    orderBy?: ProjectReviewOrderByWithAggregationInput | ProjectReviewOrderByWithAggregationInput[]
+    by: ProjectReviewScalarFieldEnum[] | ProjectReviewScalarFieldEnum
+    having?: ProjectReviewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProjectReviewCountAggregateInputType | true
+    _avg?: ProjectReviewAvgAggregateInputType
+    _sum?: ProjectReviewSumAggregateInputType
+    _min?: ProjectReviewMinAggregateInputType
+    _max?: ProjectReviewMaxAggregateInputType
+  }
+
+  export type ProjectReviewGroupByOutputType = {
+    id: string
+    service_id: string
+    client_id: string
+    contract_id: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+    _count: ProjectReviewCountAggregateOutputType | null
+    _avg: ProjectReviewAvgAggregateOutputType | null
+    _sum: ProjectReviewSumAggregateOutputType | null
+    _min: ProjectReviewMinAggregateOutputType | null
+    _max: ProjectReviewMaxAggregateOutputType | null
+  }
+
+  type GetProjectReviewGroupByPayload<T extends ProjectReviewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProjectReviewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProjectReviewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProjectReviewGroupByOutputType[P]>
+            : GetScalarType<T[P], ProjectReviewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProjectReviewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    service_id?: boolean
+    client_id?: boolean
+    contract_id?: boolean
+    scope?: boolean
+    deliverables?: boolean
+    timeline?: boolean
+    pricing?: boolean
+    status?: boolean
+    termsAndConditions?: boolean
+    service?: boolean | ServicesDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectReview"]>
+
+  export type ProjectReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    service_id?: boolean
+    client_id?: boolean
+    contract_id?: boolean
+    scope?: boolean
+    deliverables?: boolean
+    timeline?: boolean
+    pricing?: boolean
+    status?: boolean
+    termsAndConditions?: boolean
+    service?: boolean | ServicesDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectReview"]>
+
+  export type ProjectReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    service_id?: boolean
+    client_id?: boolean
+    contract_id?: boolean
+    scope?: boolean
+    deliverables?: boolean
+    timeline?: boolean
+    pricing?: boolean
+    status?: boolean
+    termsAndConditions?: boolean
+    service?: boolean | ServicesDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectReview"]>
+
+  export type ProjectReviewSelectScalar = {
+    id?: boolean
+    service_id?: boolean
+    client_id?: boolean
+    contract_id?: boolean
+    scope?: boolean
+    deliverables?: boolean
+    timeline?: boolean
+    pricing?: boolean
+    status?: boolean
+    termsAndConditions?: boolean
+  }
+
+  export type ProjectReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "service_id" | "client_id" | "contract_id" | "scope" | "deliverables" | "timeline" | "pricing" | "status" | "termsAndConditions", ExtArgs["result"]["projectReview"]>
+  export type ProjectReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    service?: boolean | ServicesDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ProjectReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    service?: boolean | ServicesDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ProjectReviewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    service?: boolean | ServicesDefaultArgs<ExtArgs>
+    client?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ProjectReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProjectReview"
+    objects: {
+      service: Prisma.$ServicesPayload<ExtArgs>
+      client: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      service_id: string
+      client_id: string
+      contract_id: string | null
+      scope: string
+      deliverables: string
+      timeline: string
+      pricing: number
+      status: $Enums.ReviewStatus
+      termsAndConditions: string
+    }, ExtArgs["result"]["projectReview"]>
+    composites: {}
+  }
+
+  type ProjectReviewGetPayload<S extends boolean | null | undefined | ProjectReviewDefaultArgs> = $Result.GetResult<Prisma.$ProjectReviewPayload, S>
+
+  type ProjectReviewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProjectReviewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProjectReviewCountAggregateInputType | true
+    }
+
+  export interface ProjectReviewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProjectReview'], meta: { name: 'ProjectReview' } }
+    /**
+     * Find zero or one ProjectReview that matches the filter.
+     * @param {ProjectReviewFindUniqueArgs} args - Arguments to find a ProjectReview
+     * @example
+     * // Get one ProjectReview
+     * const projectReview = await prisma.projectReview.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProjectReviewFindUniqueArgs>(args: SelectSubset<T, ProjectReviewFindUniqueArgs<ExtArgs>>): Prisma__ProjectReviewClient<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProjectReview that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProjectReviewFindUniqueOrThrowArgs} args - Arguments to find a ProjectReview
+     * @example
+     * // Get one ProjectReview
+     * const projectReview = await prisma.projectReview.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProjectReviewFindUniqueOrThrowArgs>(args: SelectSubset<T, ProjectReviewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProjectReviewClient<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectReview that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectReviewFindFirstArgs} args - Arguments to find a ProjectReview
+     * @example
+     * // Get one ProjectReview
+     * const projectReview = await prisma.projectReview.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProjectReviewFindFirstArgs>(args?: SelectSubset<T, ProjectReviewFindFirstArgs<ExtArgs>>): Prisma__ProjectReviewClient<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectReview that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectReviewFindFirstOrThrowArgs} args - Arguments to find a ProjectReview
+     * @example
+     * // Get one ProjectReview
+     * const projectReview = await prisma.projectReview.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProjectReviewFindFirstOrThrowArgs>(args?: SelectSubset<T, ProjectReviewFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProjectReviewClient<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProjectReviews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectReviewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProjectReviews
+     * const projectReviews = await prisma.projectReview.findMany()
+     * 
+     * // Get first 10 ProjectReviews
+     * const projectReviews = await prisma.projectReview.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const projectReviewWithIdOnly = await prisma.projectReview.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProjectReviewFindManyArgs>(args?: SelectSubset<T, ProjectReviewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProjectReview.
+     * @param {ProjectReviewCreateArgs} args - Arguments to create a ProjectReview.
+     * @example
+     * // Create one ProjectReview
+     * const ProjectReview = await prisma.projectReview.create({
+     *   data: {
+     *     // ... data to create a ProjectReview
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProjectReviewCreateArgs>(args: SelectSubset<T, ProjectReviewCreateArgs<ExtArgs>>): Prisma__ProjectReviewClient<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProjectReviews.
+     * @param {ProjectReviewCreateManyArgs} args - Arguments to create many ProjectReviews.
+     * @example
+     * // Create many ProjectReviews
+     * const projectReview = await prisma.projectReview.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProjectReviewCreateManyArgs>(args?: SelectSubset<T, ProjectReviewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProjectReviews and returns the data saved in the database.
+     * @param {ProjectReviewCreateManyAndReturnArgs} args - Arguments to create many ProjectReviews.
+     * @example
+     * // Create many ProjectReviews
+     * const projectReview = await prisma.projectReview.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProjectReviews and only return the `id`
+     * const projectReviewWithIdOnly = await prisma.projectReview.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProjectReviewCreateManyAndReturnArgs>(args?: SelectSubset<T, ProjectReviewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProjectReview.
+     * @param {ProjectReviewDeleteArgs} args - Arguments to delete one ProjectReview.
+     * @example
+     * // Delete one ProjectReview
+     * const ProjectReview = await prisma.projectReview.delete({
+     *   where: {
+     *     // ... filter to delete one ProjectReview
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProjectReviewDeleteArgs>(args: SelectSubset<T, ProjectReviewDeleteArgs<ExtArgs>>): Prisma__ProjectReviewClient<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProjectReview.
+     * @param {ProjectReviewUpdateArgs} args - Arguments to update one ProjectReview.
+     * @example
+     * // Update one ProjectReview
+     * const projectReview = await prisma.projectReview.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProjectReviewUpdateArgs>(args: SelectSubset<T, ProjectReviewUpdateArgs<ExtArgs>>): Prisma__ProjectReviewClient<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProjectReviews.
+     * @param {ProjectReviewDeleteManyArgs} args - Arguments to filter ProjectReviews to delete.
+     * @example
+     * // Delete a few ProjectReviews
+     * const { count } = await prisma.projectReview.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProjectReviewDeleteManyArgs>(args?: SelectSubset<T, ProjectReviewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectReviewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProjectReviews
+     * const projectReview = await prisma.projectReview.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProjectReviewUpdateManyArgs>(args: SelectSubset<T, ProjectReviewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectReviews and returns the data updated in the database.
+     * @param {ProjectReviewUpdateManyAndReturnArgs} args - Arguments to update many ProjectReviews.
+     * @example
+     * // Update many ProjectReviews
+     * const projectReview = await prisma.projectReview.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProjectReviews and only return the `id`
+     * const projectReviewWithIdOnly = await prisma.projectReview.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProjectReviewUpdateManyAndReturnArgs>(args: SelectSubset<T, ProjectReviewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProjectReview.
+     * @param {ProjectReviewUpsertArgs} args - Arguments to update or create a ProjectReview.
+     * @example
+     * // Update or create a ProjectReview
+     * const projectReview = await prisma.projectReview.upsert({
+     *   create: {
+     *     // ... data to create a ProjectReview
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProjectReview we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProjectReviewUpsertArgs>(args: SelectSubset<T, ProjectReviewUpsertArgs<ExtArgs>>): Prisma__ProjectReviewClient<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProjectReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectReviewCountArgs} args - Arguments to filter ProjectReviews to count.
+     * @example
+     * // Count the number of ProjectReviews
+     * const count = await prisma.projectReview.count({
+     *   where: {
+     *     // ... the filter for the ProjectReviews we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProjectReviewCountArgs>(
+      args?: Subset<T, ProjectReviewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProjectReviewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProjectReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectReviewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProjectReviewAggregateArgs>(args: Subset<T, ProjectReviewAggregateArgs>): Prisma.PrismaPromise<GetProjectReviewAggregateType<T>>
+
+    /**
+     * Group by ProjectReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectReviewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProjectReviewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProjectReviewGroupByArgs['orderBy'] }
+        : { orderBy?: ProjectReviewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProjectReviewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectReviewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProjectReview model
+   */
+  readonly fields: ProjectReviewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProjectReview.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProjectReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    service<T extends ServicesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ServicesDefaultArgs<ExtArgs>>): Prisma__ServicesClient<$Result.GetResult<Prisma.$ServicesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProjectReview model
+   */
+  interface ProjectReviewFieldRefs {
+    readonly id: FieldRef<"ProjectReview", 'String'>
+    readonly service_id: FieldRef<"ProjectReview", 'String'>
+    readonly client_id: FieldRef<"ProjectReview", 'String'>
+    readonly contract_id: FieldRef<"ProjectReview", 'String'>
+    readonly scope: FieldRef<"ProjectReview", 'String'>
+    readonly deliverables: FieldRef<"ProjectReview", 'String'>
+    readonly timeline: FieldRef<"ProjectReview", 'String'>
+    readonly pricing: FieldRef<"ProjectReview", 'Int'>
+    readonly status: FieldRef<"ProjectReview", 'ReviewStatus'>
+    readonly termsAndConditions: FieldRef<"ProjectReview", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectReview findUnique
+   */
+  export type ProjectReviewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectReview to fetch.
+     */
+    where: ProjectReviewWhereUniqueInput
+  }
+
+  /**
+   * ProjectReview findUniqueOrThrow
+   */
+  export type ProjectReviewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectReview to fetch.
+     */
+    where: ProjectReviewWhereUniqueInput
+  }
+
+  /**
+   * ProjectReview findFirst
+   */
+  export type ProjectReviewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectReview to fetch.
+     */
+    where?: ProjectReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectReviews to fetch.
+     */
+    orderBy?: ProjectReviewOrderByWithRelationInput | ProjectReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectReviews.
+     */
+    cursor?: ProjectReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectReviews.
+     */
+    distinct?: ProjectReviewScalarFieldEnum | ProjectReviewScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectReview findFirstOrThrow
+   */
+  export type ProjectReviewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectReview to fetch.
+     */
+    where?: ProjectReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectReviews to fetch.
+     */
+    orderBy?: ProjectReviewOrderByWithRelationInput | ProjectReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectReviews.
+     */
+    cursor?: ProjectReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectReviews.
+     */
+    distinct?: ProjectReviewScalarFieldEnum | ProjectReviewScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectReview findMany
+   */
+  export type ProjectReviewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectReviews to fetch.
+     */
+    where?: ProjectReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectReviews to fetch.
+     */
+    orderBy?: ProjectReviewOrderByWithRelationInput | ProjectReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProjectReviews.
+     */
+    cursor?: ProjectReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectReviews.
+     */
+    distinct?: ProjectReviewScalarFieldEnum | ProjectReviewScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectReview create
+   */
+  export type ProjectReviewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProjectReview.
+     */
+    data: XOR<ProjectReviewCreateInput, ProjectReviewUncheckedCreateInput>
+  }
+
+  /**
+   * ProjectReview createMany
+   */
+  export type ProjectReviewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProjectReviews.
+     */
+    data: ProjectReviewCreateManyInput | ProjectReviewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectReview createManyAndReturn
+   */
+  export type ProjectReviewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProjectReviews.
+     */
+    data: ProjectReviewCreateManyInput | ProjectReviewCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProjectReview update
+   */
+  export type ProjectReviewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProjectReview.
+     */
+    data: XOR<ProjectReviewUpdateInput, ProjectReviewUncheckedUpdateInput>
+    /**
+     * Choose, which ProjectReview to update.
+     */
+    where: ProjectReviewWhereUniqueInput
+  }
+
+  /**
+   * ProjectReview updateMany
+   */
+  export type ProjectReviewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProjectReviews.
+     */
+    data: XOR<ProjectReviewUpdateManyMutationInput, ProjectReviewUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectReviews to update
+     */
+    where?: ProjectReviewWhereInput
+    /**
+     * Limit how many ProjectReviews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectReview updateManyAndReturn
+   */
+  export type ProjectReviewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * The data used to update ProjectReviews.
+     */
+    data: XOR<ProjectReviewUpdateManyMutationInput, ProjectReviewUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectReviews to update
+     */
+    where?: ProjectReviewWhereInput
+    /**
+     * Limit how many ProjectReviews to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProjectReview upsert
+   */
+  export type ProjectReviewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProjectReview to update in case it exists.
+     */
+    where: ProjectReviewWhereUniqueInput
+    /**
+     * In case the ProjectReview found by the `where` argument doesn't exist, create a new ProjectReview with this data.
+     */
+    create: XOR<ProjectReviewCreateInput, ProjectReviewUncheckedCreateInput>
+    /**
+     * In case the ProjectReview was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProjectReviewUpdateInput, ProjectReviewUncheckedUpdateInput>
+  }
+
+  /**
+   * ProjectReview delete
+   */
+  export type ProjectReviewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+    /**
+     * Filter which ProjectReview to delete.
+     */
+    where: ProjectReviewWhereUniqueInput
+  }
+
+  /**
+   * ProjectReview deleteMany
+   */
+  export type ProjectReviewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectReviews to delete
+     */
+    where?: ProjectReviewWhereInput
+    /**
+     * Limit how many ProjectReviews to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectReview without action
+   */
+  export type ProjectReviewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReview
+     */
+    select?: ProjectReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectReview
+     */
+    omit?: ProjectReviewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectReviewInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -5920,6 +7269,22 @@ export namespace Prisma {
   };
 
   export type ProposalScalarFieldEnum = (typeof ProposalScalarFieldEnum)[keyof typeof ProposalScalarFieldEnum]
+
+
+  export const ProjectReviewScalarFieldEnum: {
+    id: 'id',
+    service_id: 'service_id',
+    client_id: 'client_id',
+    contract_id: 'contract_id',
+    scope: 'scope',
+    deliverables: 'deliverables',
+    timeline: 'timeline',
+    pricing: 'pricing',
+    status: 'status',
+    termsAndConditions: 'termsAndConditions'
+  };
+
+  export type ProjectReviewScalarFieldEnum = (typeof ProjectReviewScalarFieldEnum)[keyof typeof ProjectReviewScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -6047,6 +7412,34 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
+
+
+  /**
+   * Reference to a field of type 'ReviewStatus'
+   */
+  export type EnumReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ReviewStatus[]'
+   */
+  export type ListEnumReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
   /**
    * Deep Input Types
    */
@@ -6075,6 +7468,7 @@ export namespace Prisma {
     role?: XOR<RoleScalarRelationFilter, RoleWhereInput>
     service?: ServicesListRelationFilter
     client?: ProposalListRelationFilter
+    projectReview?: ProjectReviewListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -6097,6 +7491,7 @@ export namespace Prisma {
     role?: RoleOrderByWithRelationInput
     service?: ServicesOrderByRelationAggregateInput
     client?: ProposalOrderByRelationAggregateInput
+    projectReview?: ProjectReviewOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -6122,6 +7517,7 @@ export namespace Prisma {
     role?: XOR<RoleScalarRelationFilter, RoleWhereInput>
     service?: ServicesListRelationFilter
     client?: ProposalListRelationFilter
+    projectReview?: ProjectReviewListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -6230,6 +7626,7 @@ export namespace Prisma {
     DateCreated?: DateTimeFilter<"Services"> | Date | string
     client?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     proposal?: ProposalListRelationFilter
+    ProjectReview?: ProjectReviewListRelationFilter
   }
 
   export type ServicesOrderByWithRelationInput = {
@@ -6241,6 +7638,7 @@ export namespace Prisma {
     DateCreated?: SortOrder
     client?: UserOrderByWithRelationInput
     proposal?: ProposalOrderByRelationAggregateInput
+    ProjectReview?: ProjectReviewOrderByRelationAggregateInput
   }
 
   export type ServicesWhereUniqueInput = Prisma.AtLeast<{
@@ -6255,6 +7653,7 @@ export namespace Prisma {
     DateCreated?: DateTimeFilter<"Services"> | Date | string
     client?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     proposal?: ProposalListRelationFilter
+    ProjectReview?: ProjectReviewListRelationFilter
   }, "id">
 
   export type ServicesOrderByWithAggregationInput = {
@@ -6339,6 +7738,91 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Proposal"> | Date | string
   }
 
+  export type ProjectReviewWhereInput = {
+    AND?: ProjectReviewWhereInput | ProjectReviewWhereInput[]
+    OR?: ProjectReviewWhereInput[]
+    NOT?: ProjectReviewWhereInput | ProjectReviewWhereInput[]
+    id?: StringFilter<"ProjectReview"> | string
+    service_id?: StringFilter<"ProjectReview"> | string
+    client_id?: StringFilter<"ProjectReview"> | string
+    contract_id?: StringNullableFilter<"ProjectReview"> | string | null
+    scope?: StringFilter<"ProjectReview"> | string
+    deliverables?: StringFilter<"ProjectReview"> | string
+    timeline?: StringFilter<"ProjectReview"> | string
+    pricing?: IntFilter<"ProjectReview"> | number
+    status?: EnumReviewStatusFilter<"ProjectReview"> | $Enums.ReviewStatus
+    termsAndConditions?: StringFilter<"ProjectReview"> | string
+    service?: XOR<ServicesScalarRelationFilter, ServicesWhereInput>
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ProjectReviewOrderByWithRelationInput = {
+    id?: SortOrder
+    service_id?: SortOrder
+    client_id?: SortOrder
+    contract_id?: SortOrderInput | SortOrder
+    scope?: SortOrder
+    deliverables?: SortOrder
+    timeline?: SortOrder
+    pricing?: SortOrder
+    status?: SortOrder
+    termsAndConditions?: SortOrder
+    service?: ServicesOrderByWithRelationInput
+    client?: UserOrderByWithRelationInput
+  }
+
+  export type ProjectReviewWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ProjectReviewWhereInput | ProjectReviewWhereInput[]
+    OR?: ProjectReviewWhereInput[]
+    NOT?: ProjectReviewWhereInput | ProjectReviewWhereInput[]
+    service_id?: StringFilter<"ProjectReview"> | string
+    client_id?: StringFilter<"ProjectReview"> | string
+    contract_id?: StringNullableFilter<"ProjectReview"> | string | null
+    scope?: StringFilter<"ProjectReview"> | string
+    deliverables?: StringFilter<"ProjectReview"> | string
+    timeline?: StringFilter<"ProjectReview"> | string
+    pricing?: IntFilter<"ProjectReview"> | number
+    status?: EnumReviewStatusFilter<"ProjectReview"> | $Enums.ReviewStatus
+    termsAndConditions?: StringFilter<"ProjectReview"> | string
+    service?: XOR<ServicesScalarRelationFilter, ServicesWhereInput>
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ProjectReviewOrderByWithAggregationInput = {
+    id?: SortOrder
+    service_id?: SortOrder
+    client_id?: SortOrder
+    contract_id?: SortOrderInput | SortOrder
+    scope?: SortOrder
+    deliverables?: SortOrder
+    timeline?: SortOrder
+    pricing?: SortOrder
+    status?: SortOrder
+    termsAndConditions?: SortOrder
+    _count?: ProjectReviewCountOrderByAggregateInput
+    _avg?: ProjectReviewAvgOrderByAggregateInput
+    _max?: ProjectReviewMaxOrderByAggregateInput
+    _min?: ProjectReviewMinOrderByAggregateInput
+    _sum?: ProjectReviewSumOrderByAggregateInput
+  }
+
+  export type ProjectReviewScalarWhereWithAggregatesInput = {
+    AND?: ProjectReviewScalarWhereWithAggregatesInput | ProjectReviewScalarWhereWithAggregatesInput[]
+    OR?: ProjectReviewScalarWhereWithAggregatesInput[]
+    NOT?: ProjectReviewScalarWhereWithAggregatesInput | ProjectReviewScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProjectReview"> | string
+    service_id?: StringWithAggregatesFilter<"ProjectReview"> | string
+    client_id?: StringWithAggregatesFilter<"ProjectReview"> | string
+    contract_id?: StringNullableWithAggregatesFilter<"ProjectReview"> | string | null
+    scope?: StringWithAggregatesFilter<"ProjectReview"> | string
+    deliverables?: StringWithAggregatesFilter<"ProjectReview"> | string
+    timeline?: StringWithAggregatesFilter<"ProjectReview"> | string
+    pricing?: IntWithAggregatesFilter<"ProjectReview"> | number
+    status?: EnumReviewStatusWithAggregatesFilter<"ProjectReview"> | $Enums.ReviewStatus
+    termsAndConditions?: StringWithAggregatesFilter<"ProjectReview"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email?: string | null
@@ -6358,6 +7842,7 @@ export namespace Prisma {
     role: RoleCreateNestedOneWithoutUsersInput
     service?: ServicesCreateNestedManyWithoutClientInput
     client?: ProposalCreateNestedManyWithoutClientInput
+    projectReview?: ProjectReviewCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -6379,6 +7864,7 @@ export namespace Prisma {
     createdAt?: Date | string
     service?: ServicesUncheckedCreateNestedManyWithoutClientInput
     client?: ProposalUncheckedCreateNestedManyWithoutClientInput
+    projectReview?: ProjectReviewUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserUpdateInput = {
@@ -6400,6 +7886,7 @@ export namespace Prisma {
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     service?: ServicesUpdateManyWithoutClientNestedInput
     client?: ProposalUpdateManyWithoutClientNestedInput
+    projectReview?: ProjectReviewUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6421,6 +7908,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     service?: ServicesUncheckedUpdateManyWithoutClientNestedInput
     client?: ProposalUncheckedUpdateManyWithoutClientNestedInput
+    projectReview?: ProjectReviewUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -6540,6 +8028,7 @@ export namespace Prisma {
     DateCreated?: Date | string
     client?: UserCreateNestedOneWithoutServiceInput
     proposal?: ProposalCreateNestedManyWithoutServiceInput
+    ProjectReview?: ProjectReviewCreateNestedManyWithoutServiceInput
   }
 
   export type ServicesUncheckedCreateInput = {
@@ -6550,6 +8039,7 @@ export namespace Prisma {
     status: $Enums.serviceStatus
     DateCreated?: Date | string
     proposal?: ProposalUncheckedCreateNestedManyWithoutServiceInput
+    ProjectReview?: ProjectReviewUncheckedCreateNestedManyWithoutServiceInput
   }
 
   export type ServicesUpdateInput = {
@@ -6560,6 +8050,7 @@ export namespace Prisma {
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: UserUpdateOneWithoutServiceNestedInput
     proposal?: ProposalUpdateManyWithoutServiceNestedInput
+    ProjectReview?: ProjectReviewUpdateManyWithoutServiceNestedInput
   }
 
   export type ServicesUncheckedUpdateInput = {
@@ -6570,6 +8061,7 @@ export namespace Prisma {
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
     proposal?: ProposalUncheckedUpdateManyWithoutServiceNestedInput
+    ProjectReview?: ProjectReviewUncheckedUpdateManyWithoutServiceNestedInput
   }
 
   export type ServicesCreateManyInput = {
@@ -6652,6 +8144,95 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ProjectReviewCreateInput = {
+    id?: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+    service: ServicesCreateNestedOneWithoutProjectReviewInput
+    client: UserCreateNestedOneWithoutProjectReviewInput
+  }
+
+  export type ProjectReviewUncheckedCreateInput = {
+    id?: string
+    service_id: string
+    client_id: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+  }
+
+  export type ProjectReviewUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
+    service?: ServicesUpdateOneRequiredWithoutProjectReviewNestedInput
+    client?: UserUpdateOneRequiredWithoutProjectReviewNestedInput
+  }
+
+  export type ProjectReviewUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    service_id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProjectReviewCreateManyInput = {
+    id?: string
+    service_id: string
+    client_id: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+  }
+
+  export type ProjectReviewUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProjectReviewUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    service_id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -6717,6 +8298,12 @@ export namespace Prisma {
     none?: ProposalWhereInput
   }
 
+  export type ProjectReviewListRelationFilter = {
+    every?: ProjectReviewWhereInput
+    some?: ProjectReviewWhereInput
+    none?: ProjectReviewWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -6727,6 +8314,10 @@ export namespace Prisma {
   }
 
   export type ProposalOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProjectReviewOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -6990,6 +8581,102 @@ export namespace Prisma {
     _max?: NestedEnumProposalStatusFilter<$PrismaModel>
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type EnumReviewStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReviewStatus | EnumReviewStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ReviewStatus[] | ListEnumReviewStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReviewStatus[] | ListEnumReviewStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumReviewStatusFilter<$PrismaModel> | $Enums.ReviewStatus
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type ProjectReviewCountOrderByAggregateInput = {
+    id?: SortOrder
+    service_id?: SortOrder
+    client_id?: SortOrder
+    contract_id?: SortOrder
+    scope?: SortOrder
+    deliverables?: SortOrder
+    timeline?: SortOrder
+    pricing?: SortOrder
+    status?: SortOrder
+    termsAndConditions?: SortOrder
+  }
+
+  export type ProjectReviewAvgOrderByAggregateInput = {
+    pricing?: SortOrder
+  }
+
+  export type ProjectReviewMaxOrderByAggregateInput = {
+    id?: SortOrder
+    service_id?: SortOrder
+    client_id?: SortOrder
+    contract_id?: SortOrder
+    scope?: SortOrder
+    deliverables?: SortOrder
+    timeline?: SortOrder
+    pricing?: SortOrder
+    status?: SortOrder
+    termsAndConditions?: SortOrder
+  }
+
+  export type ProjectReviewMinOrderByAggregateInput = {
+    id?: SortOrder
+    service_id?: SortOrder
+    client_id?: SortOrder
+    contract_id?: SortOrder
+    scope?: SortOrder
+    deliverables?: SortOrder
+    timeline?: SortOrder
+    pricing?: SortOrder
+    status?: SortOrder
+    termsAndConditions?: SortOrder
+  }
+
+  export type ProjectReviewSumOrderByAggregateInput = {
+    pricing?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type EnumReviewStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReviewStatus | EnumReviewStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ReviewStatus[] | ListEnumReviewStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReviewStatus[] | ListEnumReviewStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumReviewStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReviewStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumReviewStatusFilter<$PrismaModel>
+    _max?: NestedEnumReviewStatusFilter<$PrismaModel>
+  }
+
   export type RoleCreateNestedOneWithoutUsersInput = {
     create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
     connectOrCreate?: RoleCreateOrConnectWithoutUsersInput
@@ -7010,6 +8697,13 @@ export namespace Prisma {
     connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
   }
 
+  export type ProjectReviewCreateNestedManyWithoutClientInput = {
+    create?: XOR<ProjectReviewCreateWithoutClientInput, ProjectReviewUncheckedCreateWithoutClientInput> | ProjectReviewCreateWithoutClientInput[] | ProjectReviewUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: ProjectReviewCreateOrConnectWithoutClientInput | ProjectReviewCreateOrConnectWithoutClientInput[]
+    createMany?: ProjectReviewCreateManyClientInputEnvelope
+    connect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+  }
+
   export type ServicesUncheckedCreateNestedManyWithoutClientInput = {
     create?: XOR<ServicesCreateWithoutClientInput, ServicesUncheckedCreateWithoutClientInput> | ServicesCreateWithoutClientInput[] | ServicesUncheckedCreateWithoutClientInput[]
     connectOrCreate?: ServicesCreateOrConnectWithoutClientInput | ServicesCreateOrConnectWithoutClientInput[]
@@ -7022,6 +8716,13 @@ export namespace Prisma {
     connectOrCreate?: ProposalCreateOrConnectWithoutClientInput | ProposalCreateOrConnectWithoutClientInput[]
     createMany?: ProposalCreateManyClientInputEnvelope
     connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+  }
+
+  export type ProjectReviewUncheckedCreateNestedManyWithoutClientInput = {
+    create?: XOR<ProjectReviewCreateWithoutClientInput, ProjectReviewUncheckedCreateWithoutClientInput> | ProjectReviewCreateWithoutClientInput[] | ProjectReviewUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: ProjectReviewCreateOrConnectWithoutClientInput | ProjectReviewCreateOrConnectWithoutClientInput[]
+    createMany?: ProjectReviewCreateManyClientInputEnvelope
+    connect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -7076,6 +8777,20 @@ export namespace Prisma {
     deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
   }
 
+  export type ProjectReviewUpdateManyWithoutClientNestedInput = {
+    create?: XOR<ProjectReviewCreateWithoutClientInput, ProjectReviewUncheckedCreateWithoutClientInput> | ProjectReviewCreateWithoutClientInput[] | ProjectReviewUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: ProjectReviewCreateOrConnectWithoutClientInput | ProjectReviewCreateOrConnectWithoutClientInput[]
+    upsert?: ProjectReviewUpsertWithWhereUniqueWithoutClientInput | ProjectReviewUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: ProjectReviewCreateManyClientInputEnvelope
+    set?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    disconnect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    delete?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    connect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    update?: ProjectReviewUpdateWithWhereUniqueWithoutClientInput | ProjectReviewUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: ProjectReviewUpdateManyWithWhereWithoutClientInput | ProjectReviewUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: ProjectReviewScalarWhereInput | ProjectReviewScalarWhereInput[]
+  }
+
   export type ServicesUncheckedUpdateManyWithoutClientNestedInput = {
     create?: XOR<ServicesCreateWithoutClientInput, ServicesUncheckedCreateWithoutClientInput> | ServicesCreateWithoutClientInput[] | ServicesUncheckedCreateWithoutClientInput[]
     connectOrCreate?: ServicesCreateOrConnectWithoutClientInput | ServicesCreateOrConnectWithoutClientInput[]
@@ -7102,6 +8817,20 @@ export namespace Prisma {
     update?: ProposalUpdateWithWhereUniqueWithoutClientInput | ProposalUpdateWithWhereUniqueWithoutClientInput[]
     updateMany?: ProposalUpdateManyWithWhereWithoutClientInput | ProposalUpdateManyWithWhereWithoutClientInput[]
     deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
+  }
+
+  export type ProjectReviewUncheckedUpdateManyWithoutClientNestedInput = {
+    create?: XOR<ProjectReviewCreateWithoutClientInput, ProjectReviewUncheckedCreateWithoutClientInput> | ProjectReviewCreateWithoutClientInput[] | ProjectReviewUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: ProjectReviewCreateOrConnectWithoutClientInput | ProjectReviewCreateOrConnectWithoutClientInput[]
+    upsert?: ProjectReviewUpsertWithWhereUniqueWithoutClientInput | ProjectReviewUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: ProjectReviewCreateManyClientInputEnvelope
+    set?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    disconnect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    delete?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    connect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    update?: ProjectReviewUpdateWithWhereUniqueWithoutClientInput | ProjectReviewUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: ProjectReviewUpdateManyWithWhereWithoutClientInput | ProjectReviewUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: ProjectReviewScalarWhereInput | ProjectReviewScalarWhereInput[]
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -7163,11 +8892,25 @@ export namespace Prisma {
     connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
   }
 
+  export type ProjectReviewCreateNestedManyWithoutServiceInput = {
+    create?: XOR<ProjectReviewCreateWithoutServiceInput, ProjectReviewUncheckedCreateWithoutServiceInput> | ProjectReviewCreateWithoutServiceInput[] | ProjectReviewUncheckedCreateWithoutServiceInput[]
+    connectOrCreate?: ProjectReviewCreateOrConnectWithoutServiceInput | ProjectReviewCreateOrConnectWithoutServiceInput[]
+    createMany?: ProjectReviewCreateManyServiceInputEnvelope
+    connect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+  }
+
   export type ProposalUncheckedCreateNestedManyWithoutServiceInput = {
     create?: XOR<ProposalCreateWithoutServiceInput, ProposalUncheckedCreateWithoutServiceInput> | ProposalCreateWithoutServiceInput[] | ProposalUncheckedCreateWithoutServiceInput[]
     connectOrCreate?: ProposalCreateOrConnectWithoutServiceInput | ProposalCreateOrConnectWithoutServiceInput[]
     createMany?: ProposalCreateManyServiceInputEnvelope
     connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+  }
+
+  export type ProjectReviewUncheckedCreateNestedManyWithoutServiceInput = {
+    create?: XOR<ProjectReviewCreateWithoutServiceInput, ProjectReviewUncheckedCreateWithoutServiceInput> | ProjectReviewCreateWithoutServiceInput[] | ProjectReviewUncheckedCreateWithoutServiceInput[]
+    connectOrCreate?: ProjectReviewCreateOrConnectWithoutServiceInput | ProjectReviewCreateOrConnectWithoutServiceInput[]
+    createMany?: ProjectReviewCreateManyServiceInputEnvelope
+    connect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
   }
 
   export type EnumserviceStatusFieldUpdateOperationsInput = {
@@ -7198,6 +8941,20 @@ export namespace Prisma {
     deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
   }
 
+  export type ProjectReviewUpdateManyWithoutServiceNestedInput = {
+    create?: XOR<ProjectReviewCreateWithoutServiceInput, ProjectReviewUncheckedCreateWithoutServiceInput> | ProjectReviewCreateWithoutServiceInput[] | ProjectReviewUncheckedCreateWithoutServiceInput[]
+    connectOrCreate?: ProjectReviewCreateOrConnectWithoutServiceInput | ProjectReviewCreateOrConnectWithoutServiceInput[]
+    upsert?: ProjectReviewUpsertWithWhereUniqueWithoutServiceInput | ProjectReviewUpsertWithWhereUniqueWithoutServiceInput[]
+    createMany?: ProjectReviewCreateManyServiceInputEnvelope
+    set?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    disconnect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    delete?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    connect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    update?: ProjectReviewUpdateWithWhereUniqueWithoutServiceInput | ProjectReviewUpdateWithWhereUniqueWithoutServiceInput[]
+    updateMany?: ProjectReviewUpdateManyWithWhereWithoutServiceInput | ProjectReviewUpdateManyWithWhereWithoutServiceInput[]
+    deleteMany?: ProjectReviewScalarWhereInput | ProjectReviewScalarWhereInput[]
+  }
+
   export type ProposalUncheckedUpdateManyWithoutServiceNestedInput = {
     create?: XOR<ProposalCreateWithoutServiceInput, ProposalUncheckedCreateWithoutServiceInput> | ProposalCreateWithoutServiceInput[] | ProposalUncheckedCreateWithoutServiceInput[]
     connectOrCreate?: ProposalCreateOrConnectWithoutServiceInput | ProposalCreateOrConnectWithoutServiceInput[]
@@ -7210,6 +8967,20 @@ export namespace Prisma {
     update?: ProposalUpdateWithWhereUniqueWithoutServiceInput | ProposalUpdateWithWhereUniqueWithoutServiceInput[]
     updateMany?: ProposalUpdateManyWithWhereWithoutServiceInput | ProposalUpdateManyWithWhereWithoutServiceInput[]
     deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
+  }
+
+  export type ProjectReviewUncheckedUpdateManyWithoutServiceNestedInput = {
+    create?: XOR<ProjectReviewCreateWithoutServiceInput, ProjectReviewUncheckedCreateWithoutServiceInput> | ProjectReviewCreateWithoutServiceInput[] | ProjectReviewUncheckedCreateWithoutServiceInput[]
+    connectOrCreate?: ProjectReviewCreateOrConnectWithoutServiceInput | ProjectReviewCreateOrConnectWithoutServiceInput[]
+    upsert?: ProjectReviewUpsertWithWhereUniqueWithoutServiceInput | ProjectReviewUpsertWithWhereUniqueWithoutServiceInput[]
+    createMany?: ProjectReviewCreateManyServiceInputEnvelope
+    set?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    disconnect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    delete?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    connect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+    update?: ProjectReviewUpdateWithWhereUniqueWithoutServiceInput | ProjectReviewUpdateWithWhereUniqueWithoutServiceInput[]
+    updateMany?: ProjectReviewUpdateManyWithWhereWithoutServiceInput | ProjectReviewUpdateManyWithWhereWithoutServiceInput[]
+    deleteMany?: ProjectReviewScalarWhereInput | ProjectReviewScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutClientInput = {
@@ -7244,6 +9015,46 @@ export namespace Prisma {
     upsert?: ServicesUpsertWithoutProposalInput
     connect?: ServicesWhereUniqueInput
     update?: XOR<XOR<ServicesUpdateToOneWithWhereWithoutProposalInput, ServicesUpdateWithoutProposalInput>, ServicesUncheckedUpdateWithoutProposalInput>
+  }
+
+  export type ServicesCreateNestedOneWithoutProjectReviewInput = {
+    create?: XOR<ServicesCreateWithoutProjectReviewInput, ServicesUncheckedCreateWithoutProjectReviewInput>
+    connectOrCreate?: ServicesCreateOrConnectWithoutProjectReviewInput
+    connect?: ServicesWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutProjectReviewInput = {
+    create?: XOR<UserCreateWithoutProjectReviewInput, UserUncheckedCreateWithoutProjectReviewInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProjectReviewInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type EnumReviewStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ReviewStatus
+  }
+
+  export type ServicesUpdateOneRequiredWithoutProjectReviewNestedInput = {
+    create?: XOR<ServicesCreateWithoutProjectReviewInput, ServicesUncheckedCreateWithoutProjectReviewInput>
+    connectOrCreate?: ServicesCreateOrConnectWithoutProjectReviewInput
+    upsert?: ServicesUpsertWithoutProjectReviewInput
+    connect?: ServicesWhereUniqueInput
+    update?: XOR<XOR<ServicesUpdateToOneWithWhereWithoutProjectReviewInput, ServicesUpdateWithoutProjectReviewInput>, ServicesUncheckedUpdateWithoutProjectReviewInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutProjectReviewNestedInput = {
+    create?: XOR<UserCreateWithoutProjectReviewInput, UserUncheckedCreateWithoutProjectReviewInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProjectReviewInput
+    upsert?: UserUpsertWithoutProjectReviewInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProjectReviewInput, UserUpdateWithoutProjectReviewInput>, UserUncheckedUpdateWithoutProjectReviewInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7423,6 +9234,50 @@ export namespace Prisma {
     _max?: NestedEnumProposalStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumReviewStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReviewStatus | EnumReviewStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ReviewStatus[] | ListEnumReviewStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReviewStatus[] | ListEnumReviewStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumReviewStatusFilter<$PrismaModel> | $Enums.ReviewStatus
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumReviewStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ReviewStatus | EnumReviewStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ReviewStatus[] | ListEnumReviewStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ReviewStatus[] | ListEnumReviewStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumReviewStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReviewStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumReviewStatusFilter<$PrismaModel>
+    _max?: NestedEnumReviewStatusFilter<$PrismaModel>
+  }
+
   export type RoleCreateWithoutUsersInput = {
     id?: string
     name: string
@@ -7449,6 +9304,7 @@ export namespace Prisma {
     status: $Enums.serviceStatus
     DateCreated?: Date | string
     proposal?: ProposalCreateNestedManyWithoutServiceInput
+    ProjectReview?: ProjectReviewCreateNestedManyWithoutServiceInput
   }
 
   export type ServicesUncheckedCreateWithoutClientInput = {
@@ -7458,6 +9314,7 @@ export namespace Prisma {
     status: $Enums.serviceStatus
     DateCreated?: Date | string
     proposal?: ProposalUncheckedCreateNestedManyWithoutServiceInput
+    ProjectReview?: ProjectReviewUncheckedCreateNestedManyWithoutServiceInput
   }
 
   export type ServicesCreateOrConnectWithoutClientInput = {
@@ -7491,6 +9348,40 @@ export namespace Prisma {
 
   export type ProposalCreateManyClientInputEnvelope = {
     data: ProposalCreateManyClientInput | ProposalCreateManyClientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProjectReviewCreateWithoutClientInput = {
+    id?: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+    service: ServicesCreateNestedOneWithoutProjectReviewInput
+  }
+
+  export type ProjectReviewUncheckedCreateWithoutClientInput = {
+    id?: string
+    service_id: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+  }
+
+  export type ProjectReviewCreateOrConnectWithoutClientInput = {
+    where: ProjectReviewWhereUniqueInput
+    create: XOR<ProjectReviewCreateWithoutClientInput, ProjectReviewUncheckedCreateWithoutClientInput>
+  }
+
+  export type ProjectReviewCreateManyClientInputEnvelope = {
+    data: ProjectReviewCreateManyClientInput | ProjectReviewCreateManyClientInput[]
     skipDuplicates?: boolean
   }
 
@@ -7574,6 +9465,38 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Proposal"> | Date | string
   }
 
+  export type ProjectReviewUpsertWithWhereUniqueWithoutClientInput = {
+    where: ProjectReviewWhereUniqueInput
+    update: XOR<ProjectReviewUpdateWithoutClientInput, ProjectReviewUncheckedUpdateWithoutClientInput>
+    create: XOR<ProjectReviewCreateWithoutClientInput, ProjectReviewUncheckedCreateWithoutClientInput>
+  }
+
+  export type ProjectReviewUpdateWithWhereUniqueWithoutClientInput = {
+    where: ProjectReviewWhereUniqueInput
+    data: XOR<ProjectReviewUpdateWithoutClientInput, ProjectReviewUncheckedUpdateWithoutClientInput>
+  }
+
+  export type ProjectReviewUpdateManyWithWhereWithoutClientInput = {
+    where: ProjectReviewScalarWhereInput
+    data: XOR<ProjectReviewUpdateManyMutationInput, ProjectReviewUncheckedUpdateManyWithoutClientInput>
+  }
+
+  export type ProjectReviewScalarWhereInput = {
+    AND?: ProjectReviewScalarWhereInput | ProjectReviewScalarWhereInput[]
+    OR?: ProjectReviewScalarWhereInput[]
+    NOT?: ProjectReviewScalarWhereInput | ProjectReviewScalarWhereInput[]
+    id?: StringFilter<"ProjectReview"> | string
+    service_id?: StringFilter<"ProjectReview"> | string
+    client_id?: StringFilter<"ProjectReview"> | string
+    contract_id?: StringNullableFilter<"ProjectReview"> | string | null
+    scope?: StringFilter<"ProjectReview"> | string
+    deliverables?: StringFilter<"ProjectReview"> | string
+    timeline?: StringFilter<"ProjectReview"> | string
+    pricing?: IntFilter<"ProjectReview"> | number
+    status?: EnumReviewStatusFilter<"ProjectReview"> | $Enums.ReviewStatus
+    termsAndConditions?: StringFilter<"ProjectReview"> | string
+  }
+
   export type UserCreateWithoutRoleInput = {
     id?: string
     email?: string | null
@@ -7592,6 +9515,7 @@ export namespace Prisma {
     createdAt?: Date | string
     service?: ServicesCreateNestedManyWithoutClientInput
     client?: ProposalCreateNestedManyWithoutClientInput
+    projectReview?: ProjectReviewCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutRoleInput = {
@@ -7612,6 +9536,7 @@ export namespace Prisma {
     createdAt?: Date | string
     service?: ServicesUncheckedCreateNestedManyWithoutClientInput
     client?: ProposalUncheckedCreateNestedManyWithoutClientInput
+    projectReview?: ProjectReviewUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutRoleInput = {
@@ -7680,6 +9605,7 @@ export namespace Prisma {
     createdAt?: Date | string
     role: RoleCreateNestedOneWithoutUsersInput
     client?: ProposalCreateNestedManyWithoutClientInput
+    projectReview?: ProjectReviewCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutServiceInput = {
@@ -7700,6 +9626,7 @@ export namespace Prisma {
     roleId: string
     createdAt?: Date | string
     client?: ProposalUncheckedCreateNestedManyWithoutClientInput
+    projectReview?: ProjectReviewUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutServiceInput = {
@@ -7728,6 +9655,40 @@ export namespace Prisma {
 
   export type ProposalCreateManyServiceInputEnvelope = {
     data: ProposalCreateManyServiceInput | ProposalCreateManyServiceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProjectReviewCreateWithoutServiceInput = {
+    id?: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+    client: UserCreateNestedOneWithoutProjectReviewInput
+  }
+
+  export type ProjectReviewUncheckedCreateWithoutServiceInput = {
+    id?: string
+    client_id: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+  }
+
+  export type ProjectReviewCreateOrConnectWithoutServiceInput = {
+    where: ProjectReviewWhereUniqueInput
+    create: XOR<ProjectReviewCreateWithoutServiceInput, ProjectReviewUncheckedCreateWithoutServiceInput>
+  }
+
+  export type ProjectReviewCreateManyServiceInputEnvelope = {
+    data: ProjectReviewCreateManyServiceInput | ProjectReviewCreateManyServiceInput[]
     skipDuplicates?: boolean
   }
 
@@ -7760,6 +9721,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     client?: ProposalUpdateManyWithoutClientNestedInput
+    projectReview?: ProjectReviewUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutServiceInput = {
@@ -7780,6 +9742,7 @@ export namespace Prisma {
     roleId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: ProposalUncheckedUpdateManyWithoutClientNestedInput
+    projectReview?: ProjectReviewUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type ProposalUpsertWithWhereUniqueWithoutServiceInput = {
@@ -7796,6 +9759,22 @@ export namespace Prisma {
   export type ProposalUpdateManyWithWhereWithoutServiceInput = {
     where: ProposalScalarWhereInput
     data: XOR<ProposalUpdateManyMutationInput, ProposalUncheckedUpdateManyWithoutServiceInput>
+  }
+
+  export type ProjectReviewUpsertWithWhereUniqueWithoutServiceInput = {
+    where: ProjectReviewWhereUniqueInput
+    update: XOR<ProjectReviewUpdateWithoutServiceInput, ProjectReviewUncheckedUpdateWithoutServiceInput>
+    create: XOR<ProjectReviewCreateWithoutServiceInput, ProjectReviewUncheckedCreateWithoutServiceInput>
+  }
+
+  export type ProjectReviewUpdateWithWhereUniqueWithoutServiceInput = {
+    where: ProjectReviewWhereUniqueInput
+    data: XOR<ProjectReviewUpdateWithoutServiceInput, ProjectReviewUncheckedUpdateWithoutServiceInput>
+  }
+
+  export type ProjectReviewUpdateManyWithWhereWithoutServiceInput = {
+    where: ProjectReviewScalarWhereInput
+    data: XOR<ProjectReviewUpdateManyMutationInput, ProjectReviewUncheckedUpdateManyWithoutServiceInput>
   }
 
   export type UserCreateWithoutClientInput = {
@@ -7816,6 +9795,7 @@ export namespace Prisma {
     createdAt?: Date | string
     role: RoleCreateNestedOneWithoutUsersInput
     service?: ServicesCreateNestedManyWithoutClientInput
+    projectReview?: ProjectReviewCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutClientInput = {
@@ -7836,6 +9816,7 @@ export namespace Prisma {
     roleId: string
     createdAt?: Date | string
     service?: ServicesUncheckedCreateNestedManyWithoutClientInput
+    projectReview?: ProjectReviewUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutClientInput = {
@@ -7850,6 +9831,7 @@ export namespace Prisma {
     status: $Enums.serviceStatus
     DateCreated?: Date | string
     client?: UserCreateNestedOneWithoutServiceInput
+    ProjectReview?: ProjectReviewCreateNestedManyWithoutServiceInput
   }
 
   export type ServicesUncheckedCreateWithoutProposalInput = {
@@ -7859,6 +9841,7 @@ export namespace Prisma {
     Description: string
     status: $Enums.serviceStatus
     DateCreated?: Date | string
+    ProjectReview?: ProjectReviewUncheckedCreateNestedManyWithoutServiceInput
   }
 
   export type ServicesCreateOrConnectWithoutProposalInput = {
@@ -7895,6 +9878,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     service?: ServicesUpdateManyWithoutClientNestedInput
+    projectReview?: ProjectReviewUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutClientInput = {
@@ -7915,6 +9899,7 @@ export namespace Prisma {
     roleId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     service?: ServicesUncheckedUpdateManyWithoutClientNestedInput
+    projectReview?: ProjectReviewUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type ServicesUpsertWithoutProposalInput = {
@@ -7935,6 +9920,7 @@ export namespace Prisma {
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: UserUpdateOneWithoutServiceNestedInput
+    ProjectReview?: ProjectReviewUpdateManyWithoutServiceNestedInput
   }
 
   export type ServicesUncheckedUpdateWithoutProposalInput = {
@@ -7944,6 +9930,163 @@ export namespace Prisma {
     Description?: StringFieldUpdateOperationsInput | string
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    ProjectReview?: ProjectReviewUncheckedUpdateManyWithoutServiceNestedInput
+  }
+
+  export type ServicesCreateWithoutProjectReviewInput = {
+    id?: string
+    ServiceName: string
+    Description: string
+    status: $Enums.serviceStatus
+    DateCreated?: Date | string
+    client?: UserCreateNestedOneWithoutServiceInput
+    proposal?: ProposalCreateNestedManyWithoutServiceInput
+  }
+
+  export type ServicesUncheckedCreateWithoutProjectReviewInput = {
+    id?: string
+    clientId?: string | null
+    ServiceName: string
+    Description: string
+    status: $Enums.serviceStatus
+    DateCreated?: Date | string
+    proposal?: ProposalUncheckedCreateNestedManyWithoutServiceInput
+  }
+
+  export type ServicesCreateOrConnectWithoutProjectReviewInput = {
+    where: ServicesWhereUniqueInput
+    create: XOR<ServicesCreateWithoutProjectReviewInput, ServicesUncheckedCreateWithoutProjectReviewInput>
+  }
+
+  export type UserCreateWithoutProjectReviewInput = {
+    id?: string
+    email?: string | null
+    phone?: string | null
+    password?: string | null
+    country?: string | null
+    companyName?: string | null
+    contactPerson?: string | null
+    fullName?: string | null
+    firstName?: string | null
+    middleName?: string | null
+    lastName?: string | null
+    companyWebsite?: string | null
+    industry?: string | null
+    type?: $Enums.UserTypeEnum | null
+    createdAt?: Date | string
+    role: RoleCreateNestedOneWithoutUsersInput
+    service?: ServicesCreateNestedManyWithoutClientInput
+    client?: ProposalCreateNestedManyWithoutClientInput
+  }
+
+  export type UserUncheckedCreateWithoutProjectReviewInput = {
+    id?: string
+    email?: string | null
+    phone?: string | null
+    password?: string | null
+    country?: string | null
+    companyName?: string | null
+    contactPerson?: string | null
+    fullName?: string | null
+    firstName?: string | null
+    middleName?: string | null
+    lastName?: string | null
+    companyWebsite?: string | null
+    industry?: string | null
+    type?: $Enums.UserTypeEnum | null
+    roleId: string
+    createdAt?: Date | string
+    service?: ServicesUncheckedCreateNestedManyWithoutClientInput
+    client?: ProposalUncheckedCreateNestedManyWithoutClientInput
+  }
+
+  export type UserCreateOrConnectWithoutProjectReviewInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutProjectReviewInput, UserUncheckedCreateWithoutProjectReviewInput>
+  }
+
+  export type ServicesUpsertWithoutProjectReviewInput = {
+    update: XOR<ServicesUpdateWithoutProjectReviewInput, ServicesUncheckedUpdateWithoutProjectReviewInput>
+    create: XOR<ServicesCreateWithoutProjectReviewInput, ServicesUncheckedCreateWithoutProjectReviewInput>
+    where?: ServicesWhereInput
+  }
+
+  export type ServicesUpdateToOneWithWhereWithoutProjectReviewInput = {
+    where?: ServicesWhereInput
+    data: XOR<ServicesUpdateWithoutProjectReviewInput, ServicesUncheckedUpdateWithoutProjectReviewInput>
+  }
+
+  export type ServicesUpdateWithoutProjectReviewInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ServiceName?: StringFieldUpdateOperationsInput | string
+    Description?: StringFieldUpdateOperationsInput | string
+    status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
+    DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    client?: UserUpdateOneWithoutServiceNestedInput
+    proposal?: ProposalUpdateManyWithoutServiceNestedInput
+  }
+
+  export type ServicesUncheckedUpdateWithoutProjectReviewInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clientId?: NullableStringFieldUpdateOperationsInput | string | null
+    ServiceName?: StringFieldUpdateOperationsInput | string
+    Description?: StringFieldUpdateOperationsInput | string
+    status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
+    DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    proposal?: ProposalUncheckedUpdateManyWithoutServiceNestedInput
+  }
+
+  export type UserUpsertWithoutProjectReviewInput = {
+    update: XOR<UserUpdateWithoutProjectReviewInput, UserUncheckedUpdateWithoutProjectReviewInput>
+    create: XOR<UserCreateWithoutProjectReviewInput, UserUncheckedCreateWithoutProjectReviewInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutProjectReviewInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutProjectReviewInput, UserUncheckedUpdateWithoutProjectReviewInput>
+  }
+
+  export type UserUpdateWithoutProjectReviewInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactPerson?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    companyWebsite?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableEnumUserTypeEnumFieldUpdateOperationsInput | $Enums.UserTypeEnum | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: RoleUpdateOneRequiredWithoutUsersNestedInput
+    service?: ServicesUpdateManyWithoutClientNestedInput
+    client?: ProposalUpdateManyWithoutClientNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutProjectReviewInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactPerson?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    companyWebsite?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableEnumUserTypeEnumFieldUpdateOperationsInput | $Enums.UserTypeEnum | null
+    roleId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    service?: ServicesUncheckedUpdateManyWithoutClientNestedInput
+    client?: ProposalUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type ServicesCreateManyClientInput = {
@@ -7961,6 +10104,18 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type ProjectReviewCreateManyClientInput = {
+    id?: string
+    service_id: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+  }
+
   export type ServicesUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
     ServiceName?: StringFieldUpdateOperationsInput | string
@@ -7968,6 +10123,7 @@ export namespace Prisma {
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
     proposal?: ProposalUpdateManyWithoutServiceNestedInput
+    ProjectReview?: ProjectReviewUpdateManyWithoutServiceNestedInput
   }
 
   export type ServicesUncheckedUpdateWithoutClientInput = {
@@ -7977,6 +10133,7 @@ export namespace Prisma {
     status?: EnumserviceStatusFieldUpdateOperationsInput | $Enums.serviceStatus
     DateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
     proposal?: ProposalUncheckedUpdateManyWithoutServiceNestedInput
+    ProjectReview?: ProjectReviewUncheckedUpdateManyWithoutServiceNestedInput
   }
 
   export type ServicesUncheckedUpdateManyWithoutClientInput = {
@@ -8006,6 +10163,42 @@ export namespace Prisma {
     serviceId?: StringFieldUpdateOperationsInput | string
     proposal_status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectReviewUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
+    service?: ServicesUpdateOneRequiredWithoutProjectReviewNestedInput
+  }
+
+  export type ProjectReviewUncheckedUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    service_id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProjectReviewUncheckedUpdateManyWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    service_id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserCreateManyRoleInput = {
@@ -8044,6 +10237,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     service?: ServicesUpdateManyWithoutClientNestedInput
     client?: ProposalUpdateManyWithoutClientNestedInput
+    projectReview?: ProjectReviewUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRoleInput = {
@@ -8064,6 +10258,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     service?: ServicesUncheckedUpdateManyWithoutClientNestedInput
     client?: ProposalUncheckedUpdateManyWithoutClientNestedInput
+    projectReview?: ProjectReviewUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -8091,6 +10286,18 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type ProjectReviewCreateManyServiceInput = {
+    id?: string
+    client_id: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+  }
+
   export type ProposalUpdateWithoutServiceInput = {
     id?: StringFieldUpdateOperationsInput | string
     proposal_status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
@@ -8110,6 +10317,42 @@ export namespace Prisma {
     clientId?: StringFieldUpdateOperationsInput | string
     proposal_status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectReviewUpdateWithoutServiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
+    client?: UserUpdateOneRequiredWithoutProjectReviewNestedInput
+  }
+
+  export type ProjectReviewUncheckedUpdateWithoutServiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProjectReviewUncheckedUpdateManyWithoutServiceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
   }
 
 
