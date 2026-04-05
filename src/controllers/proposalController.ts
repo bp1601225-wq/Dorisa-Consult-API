@@ -38,7 +38,7 @@ async GetAllProposals(req:Request, res:Response){
                     type:true,
                     email:true
                 }
-            },
+            },  
 
         //   Search and filter 
             
