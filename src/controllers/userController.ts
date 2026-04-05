@@ -60,46 +60,69 @@ const PageSize = Number(req.query.PageSize) || 100;
         }
     },
 
-    async CreateUser(req: Request, res: Response) {
-        try {
-            const incomingData = req.body;
-// console.log(incomingData)
-            const { roleId, password, ...rest } = incomingData;
 
-            if (!password) {
-                return res.status(400).json({
-                    message: "Password is required",
-                });
-            }
 
-            const resolvedRoleId = await resolveRoleId(roleId);
+    // User creation
+async CreateUser(req: Request, res: Response) {
+  try {
+    const incomingData = req.body;
 
-            const newUser = await prisma.user.create({
-                data: {
-                    ...rest,
-                    password: await argon2.hash(password),
-                    role: {
-                        connect: { id: resolvedRoleId },
-                    },
-                },
-                include: {
-                    role: {
-                        select: {
-                            name: true,
-                        },
-                    },
-                },
-            });
+    const { roleId, password, email, phone, country, type, ...rest } = incomingData;
 
-            return res.status(201).json({
-                message: "User created successfully",
-                data: newUser,
-            });
-        } catch (error: any) {
-            console.error("CREATE USER ERROR:", error);
-            return res.status(400).json({
-                message: error.message,
-            });
-        }
-    },
+    if (!email || !phone || !country || !password || !type) {
+      return res.status(400).json({
+        message: "Missing required fields",
+      });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({
+        message: "Password must be at least 8 characters",
+      });
+    }
+
+    if (phone.length < 10) {
+      return res.status(400).json({
+        message: "Phone number is too short",
+      });
+    }
+
+
+    const resolvedRoleId = await resolveRoleId(roleId);
+
+    const hashedPassword = await argon2.hash(password);
+
+    const newUser = await prisma.user.create({
+      data: {
+        ...rest,
+        email,
+        phone,
+        country,
+        type,
+        password: hashedPassword,
+        role: {
+          connect: { id: resolvedRoleId },
+        },
+      },
+      include: {
+        role: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    return res.status(201).json({
+      message: "User created successfully",
+      data: newUser,
+    });
+
+  } catch (error: any) {
+    console.error("CREATE USER ERROR:", error);
+    return res.status(400).json({
+      message: error.message,
+    });
+  }
+}
 };

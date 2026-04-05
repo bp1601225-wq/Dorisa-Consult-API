@@ -117,7 +117,35 @@ data: incomingData
             })
 
         }
-    }
+    },
+
+
+
+    // Find proposal created by client themselves
+async GetReviewsById(req: Request, res: Response) {
+  try {
+    const clientId = req.params.clientId as string;
+
+    const reviews = await prisma.projectReview.findMany({
+      where: {
+        client_id: clientId,
+      },
+    });
+
+    return res.status(200).json({
+      message: "User reviews fetched successfully",
+      data: reviews,
+    });
+
+  } catch (error: any) {
+    console.log(error);
+
+    return res.status(500).json({
+      message: "Failed to fetch user reviews",
+      error: error.message,
+    });
+  }
+}
 
 
 }

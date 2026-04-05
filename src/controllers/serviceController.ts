@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../prisma/client";
+import { serviceSchema } from "../schema/schema";
 
 export const ServiceController = {
 
@@ -42,23 +43,36 @@ return res.status(500).json({
 
     //  Create services
 
-async CreateServices(req:Request, res:Response){
-    try {
-const incomingData = req.body;
+async CreateServices(req: Request, res: Response) {
+  try {
+    const incomingData = req.body;
 
+    const { error, value } = serviceSchema.validate(incomingData);
 
-const ServicesDetails = await prisma.services.create({
-    data: incomingData
-})
-
-return res.status(200).json({
-    message: "Services added to catalog",
-    data: ServicesDetails 
-})
-    } catch (error:any){
-console.error(error)
+    if (error) {
+      return res.status(400).json({
+        message: error.details[0].message,
+      });
     }
-}, 
+
+    const servicesDetails = await prisma.services.create({
+      data: value,
+    });
+
+    return res.status(201).json({
+      message: "Service added to catalog",
+      data: servicesDetails,
+    });
+
+  } catch (error: any) {
+    console.error("CREATE SERVICE ERROR:", error);
+
+    return res.status(500).json({
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+},
 
 async UpdateService(req:Request, res:Response){
 
