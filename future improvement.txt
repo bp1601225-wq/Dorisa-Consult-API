@@ -1,0 +1,6 @@
+pagination
+Redis cache
+rate limiting
+role-based filtering
+query optimization
+scalable Prisma structure

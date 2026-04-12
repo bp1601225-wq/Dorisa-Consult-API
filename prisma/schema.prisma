@@ -67,10 +67,12 @@ enum serviceStatus {
 }
 
 enum ProposalStatus {
+  PENDING
   DRAFT
   SENT
   ACCEPTED
   DECLINED
+  NEGOTIATING
  }
 
 
@@ -117,6 +119,7 @@ model Proposal {
 
 // projects review enum
 enum ReviewStatus {
+  DRAFTN
   PENDING
   APPROVED
   REJECTED

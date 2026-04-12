@@ -11,3 +11,5 @@ ProposalRoute.post("/create-proposal", ProposalController.CreateProposal)
 ProposalRoute.put("/update-proposal/:id", ProposalController.UpdateProposal)
 
 ProposalRoute.delete("/delete-proposal/:id", ProposalController.DeleteProposals)
+
+ProposalRoute.patch("/proposal/:id/status", ProposalController.UpdateProposalStatus)

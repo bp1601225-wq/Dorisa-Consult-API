@@ -210,13 +210,16 @@ exports.serviceStatus = exports.$Enums.serviceStatus = {
 };
 
 exports.ProposalStatus = exports.$Enums.ProposalStatus = {
+  PENDING: 'PENDING',
   DRAFT: 'DRAFT',
   SENT: 'SENT',
   ACCEPTED: 'ACCEPTED',
-  DECLINED: 'DECLINED'
+  DECLINED: 'DECLINED',
+  REJECTED: 'REJECTED'
 };
 
 exports.ReviewStatus = exports.$Enums.ReviewStatus = {
+  DRAFTN: 'DRAFTN',
   PENDING: 'PENDING',
   APPROVED: 'APPROVED',
   REJECTED: 'REJECTED',

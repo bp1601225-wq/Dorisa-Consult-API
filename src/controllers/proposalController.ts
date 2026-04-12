@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { prisma } from "../prisma/client";
+import { ProposalStatus } from "../generated/prisma/client";
 
 
 export const ProposalController = {
@@ -10,41 +11,40 @@ async GetAllProposals(req:Request, res:Response){
     try {
 //  Comeback later 
 
-  const AllProposals = await prisma.proposal.findMany({
-        select: {
+const AllProposals = await prisma.proposal.findMany({
+  select: {
+    id: true,
+    proposal_status: true,
+    createdAt: true,
 
-            id:true,
-            proposal_status:true,
-            createdAt:true,
+    service: {
+      select: {
+        id: true,
+        ServiceName: true,
+        Description: true,
+      },
+    },
 
-
-            service: {
-                select: {
-                    id:true,
-                    ServiceName:true,
-                    Description: true
-                }
-            },
-
-            client: {
-                select:{
-                    id:true,
-                    fullName:true,
-                    firstName:true,
-                    middleName:true,
-                    lastName:true,
-                    phone: true,
-                    country: true,
-                    type:true,
-                    email:true
-                }
-            },  
-
-        //   Search and filter 
-            
-        }
-    })
+    client: {
+      select: {
+        id: true,
+        fullName: true,
+        firstName: true,
+        middleName: true,
+        lastName: true,
+        phone: true,
+        country: true,
+        type: true,
+        email: true,
+      },
+    },
     
+  },
+
+  orderBy: {
+    createdAt: "desc", // ✅ CORRECT PLACE
+  },
+});
 
 
 
@@ -52,7 +52,7 @@ async GetAllProposals(req:Request, res:Response){
     const proposalCount =  await prisma.proposal.count()
 
 
-    console.log(AllProposals)
+    // console.log(AllProposals)
 
     return res.status(200).json({
         message: "Proposals fetched succesfully",
@@ -82,7 +82,7 @@ async CreateProposal(req:Request, res:Response){
     })
 
     return res.status(200).json({
-        message: "Proposal created succesfully",
+        message: "service request succesfull, A proposal will be sent to you",
         data: ProposalData
     })
 
@@ -147,8 +147,44 @@ async DeleteProposals(req:Request, res:Response){
         })
     }
 
-}
+},
 
+async UpdateProposalStatus(req: Request, res: Response) {
+  try {
+    const id = req.params.id as string
+    const { proposal_status } = req.body
+
+   const allowedStatuses = Object.values(ProposalStatus)
+
+    if (!allowedStatuses.includes(proposal_status)) {
+      return res.status(400).json({
+        message: "Invalid status"
+      })
+    }
+
+    const Data = await prisma.proposal.update({
+      where: { id },
+      data: {
+        proposal_status
+      }
+    })
+
+    return res.status(200).json({
+      message: "Status updated successfully",
+      data: Data
+    })
+
+  } catch (error) {
+    console.log(error)
+
+
+
+    return res.status(500).json({
+      message: "Internal server error",
+     error
+    })
+  }
+}
 
 
 

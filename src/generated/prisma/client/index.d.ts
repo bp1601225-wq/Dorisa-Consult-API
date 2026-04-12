@@ -72,10 +72,12 @@ export type serviceStatus = (typeof serviceStatus)[keyof typeof serviceStatus]
 
 
 export const ProposalStatus: {
+  PENDING: 'PENDING',
   DRAFT: 'DRAFT',
   SENT: 'SENT',
   ACCEPTED: 'ACCEPTED',
-  DECLINED: 'DECLINED'
+  DECLINED: 'DECLINED',
+  REJECTED: 'REJECTED'
 };
 
 export type ProposalStatus = (typeof ProposalStatus)[keyof typeof ProposalStatus]
@@ -91,6 +93,7 @@ export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]
 
 
 export const ReviewStatus: {
+  DRAFTN: 'DRAFTN',
   PENDING: 'PENDING',
   APPROVED: 'APPROVED',
   REJECTED: 'REJECTED',

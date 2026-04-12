@@ -1,47 +1,55 @@
+import { log } from "node:console";
 import { prisma } from "../prisma/client";
 import { Request, Response } from "express";
 
 export const ReviewController = {
 
-    async GetAllReviews (_req:Request, res:Response){
+    async GetAllReviews (req:Request, res:Response){
 try {
+const user = (req as any).user;
+
+const isAdmin = user.role === "Admin";
+
 const allReviews = await prisma.projectReview.findMany({
+  where: isAdmin
+    ? {} // admin sees everything
+    : {
+        client_id: user.id, // normal user sees only their own
+      },
 
-    select: {
-        id: true,
-        scope:true,
-        deliverables:true,
-        timeline:true,
-        pricing:true,
-        status:true,
-        termsAndConditions:true,
+  select: {
+    id: true,
+    scope: true,
+    deliverables: true,
+    timeline: true,
+    pricing: true,
+    status: true,
+    termsAndConditions: true,
 
-        service: {
-                select: {
-                    ServiceName:true,
-                    Description:true,
-                }            
-        },
-
-        client: {
-            select: {
-                phone: true,
-                email:true,
-                country:true,
-                fullName:true,
-                firstName:true,
-                middleName:true,
-                lastName:true,
-                companyName:true,
-                companyWebsite:true,
-                industry:true
-
-            }
-        }
-
+    service: {
+      select: {
+        ServiceName: true,
+        Description: true,
+      },
     },
-// Pagination
-})
+
+    client: {
+      select: {
+        id: true,
+        phone: true,
+        email: true,
+        country: true,
+        fullName: true,
+        firstName: true,
+        middleName: true,
+        lastName: true,
+        companyName: true,
+        companyWebsite: true,
+        industry: true,
+      },
+    },
+  },
+});
 
 
 //  Total number of review pages

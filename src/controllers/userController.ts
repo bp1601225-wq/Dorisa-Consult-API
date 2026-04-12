@@ -18,13 +18,36 @@ const PageSize = Number(req.query.PageSize) || 100;
 
 
             const userPayLoad = await prisma.user.findMany({
-                include: {
+
+                
+
+                select: {
+                  id:true,
+                  fullName:true,
+                  firstName:true,
+                  middleName:true,
+                  lastName:true,
+                  email:true,
+                phone:true,
+                country:true,
+                companyName:true, 
+                companyWebsite:true,
+                industry:true,
+                type:true,
+                roleId:true,
+
                     role: {
                         select: {
                             name: true,
                         },
                     },
+
+
+
+
                 },
+
+
                 skip,
                 take, 
                 orderBy: {
@@ -69,11 +92,31 @@ async CreateUser(req: Request, res: Response) {
 
     const { roleId, password, email, phone, country, type, ...rest } = incomingData;
 
-    if (!email || !phone || !country || !password || !type) {
-      return res.status(400).json({
-        message: "Missing required fields",
-      });
-    }
+ if (!email) {
+  return res.status(400).json({
+    message: "Email is required",
+  });
+}
+
+if (!phone) {
+  return res.status(400).json({
+    message: "Phone is required",
+  });
+}
+
+if (!country) {
+  return res.status(400).json({
+    message: "Country is required",
+  });
+}
+
+if (!password) {
+  return res.status(400).json({
+    message: "Password is required",
+  });
+}
+
+
 
     if (password.length < 8) {
       return res.status(400).json({
@@ -83,7 +126,7 @@ async CreateUser(req: Request, res: Response) {
 
     if (phone.length < 10) {
       return res.status(400).json({
-        message: "Phone number is too short",
+        message: "Phone number is too short, must be 10 digits",
       });
     }
 
@@ -122,6 +165,51 @@ async CreateUser(req: Request, res: Response) {
     console.error("CREATE USER ERROR:", error);
     return res.status(400).json({
       message: error.message,
+    });
+  }
+}, 
+
+
+async EditUser(req: Request, res: Response) {
+  try {
+    const id = req.params.id as string;
+    const incomingData = req.body;
+
+    const { roleId, ...rest } = incomingData;
+
+    let data: any = { ...rest };
+
+    // Only update role if provided
+    if (roleId) {
+      const resolvedRoleId = await resolveRoleId(roleId);
+
+      data.role = {
+        connect: { id: resolvedRoleId },
+      };
+    }
+
+    const user = await prisma.user.update({
+      where: { id },
+      data,
+      include: {
+        role: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    return res.status(200).json({
+      message: "User updated successfully",
+      data: user,
+    });
+
+  } catch (error: any) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Failed to update user",
+      error: error.message,
     });
   }
 }

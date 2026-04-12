@@ -11,7 +11,7 @@ export const serviceSchema = Joi.object({
   Description: Joi.string().required(),
 
   status: Joi.string()
-    .valid(...Object.values(serviceStatus)) // ✅ BEST WAY
+    .valid(...Object.values(serviceStatus)) 
     .required(),
 
   DateCreated: Joi.date().optional(),
