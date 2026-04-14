@@ -38,6 +38,11 @@ export type Proposal = $Result.DefaultSelection<Prisma.$ProposalPayload>
  * 
  */
 export type ProjectReview = $Result.DefaultSelection<Prisma.$ProjectReviewPayload>
+/**
+ * Model Negotiate
+ * 
+ */
+export type Negotiate = $Result.DefaultSelection<Prisma.$NegotiatePayload>
 
 /**
  * Enums
@@ -75,9 +80,9 @@ export const ProposalStatus: {
   PENDING: 'PENDING',
   DRAFT: 'DRAFT',
   SENT: 'SENT',
-  ACCEPTED: 'ACCEPTED',
+  APPROVED: 'APPROVED',
   DECLINED: 'DECLINED',
-  REJECTED: 'REJECTED'
+  NEGOTIATING: 'NEGOTIATING'
 };
 
 export type ProposalStatus = (typeof ProposalStatus)[keyof typeof ProposalStatus]
@@ -298,6 +303,16 @@ export class PrismaClient<
     * ```
     */
   get projectReview(): Prisma.ProjectReviewDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.negotiate`: Exposes CRUD operations for the **Negotiate** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Negotiates
+    * const negotiates = await prisma.negotiate.findMany()
+    * ```
+    */
+  get negotiate(): Prisma.NegotiateDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -736,7 +751,8 @@ export namespace Prisma {
     Role: 'Role',
     Services: 'Services',
     Proposal: 'Proposal',
-    ProjectReview: 'ProjectReview'
+    ProjectReview: 'ProjectReview',
+    Negotiate: 'Negotiate'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -752,7 +768,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "role" | "services" | "proposal" | "projectReview"
+      modelProps: "user" | "role" | "services" | "proposal" | "projectReview" | "negotiate"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1126,6 +1142,80 @@ export namespace Prisma {
           }
         }
       }
+      Negotiate: {
+        payload: Prisma.$NegotiatePayload<ExtArgs>
+        fields: Prisma.NegotiateFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NegotiateFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegotiatePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NegotiateFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegotiatePayload>
+          }
+          findFirst: {
+            args: Prisma.NegotiateFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegotiatePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NegotiateFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegotiatePayload>
+          }
+          findMany: {
+            args: Prisma.NegotiateFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegotiatePayload>[]
+          }
+          create: {
+            args: Prisma.NegotiateCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegotiatePayload>
+          }
+          createMany: {
+            args: Prisma.NegotiateCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NegotiateCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegotiatePayload>[]
+          }
+          delete: {
+            args: Prisma.NegotiateDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegotiatePayload>
+          }
+          update: {
+            args: Prisma.NegotiateUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegotiatePayload>
+          }
+          deleteMany: {
+            args: Prisma.NegotiateDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NegotiateUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.NegotiateUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegotiatePayload>[]
+          }
+          upsert: {
+            args: Prisma.NegotiateUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NegotiatePayload>
+          }
+          aggregate: {
+            args: Prisma.NegotiateAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNegotiate>
+          }
+          groupBy: {
+            args: Prisma.NegotiateGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NegotiateGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NegotiateCountArgs<ExtArgs>
+            result: $Utils.Optional<NegotiateCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1239,6 +1329,7 @@ export namespace Prisma {
     services?: ServicesOmit
     proposal?: ProposalOmit
     projectReview?: ProjectReviewOmit
+    negotiate?: NegotiateOmit
   }
 
   /* Types for Logging */
@@ -1322,12 +1413,14 @@ export namespace Prisma {
     service: number
     client: number
     projectReview: number
+    Negotiation: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     service?: boolean | UserCountOutputTypeCountServiceArgs
     client?: boolean | UserCountOutputTypeCountClientArgs
     projectReview?: boolean | UserCountOutputTypeCountProjectReviewArgs
+    Negotiation?: boolean | UserCountOutputTypeCountNegotiationArgs
   }
 
   // Custom InputTypes
@@ -1360,6 +1453,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountProjectReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProjectReviewWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountNegotiationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NegotiateWhereInput
   }
 
 
@@ -1431,6 +1531,37 @@ export namespace Prisma {
    */
   export type ServicesCountOutputTypeCountProjectReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProjectReviewWhereInput
+  }
+
+
+  /**
+   * Count Type ProjectReviewCountOutputType
+   */
+
+  export type ProjectReviewCountOutputType = {
+    Negotiate: number
+  }
+
+  export type ProjectReviewCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Negotiate?: boolean | ProjectReviewCountOutputTypeCountNegotiateArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProjectReviewCountOutputType without action
+   */
+  export type ProjectReviewCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectReviewCountOutputType
+     */
+    select?: ProjectReviewCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProjectReviewCountOutputType without action
+   */
+  export type ProjectReviewCountOutputTypeCountNegotiateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NegotiateWhereInput
   }
 
 
@@ -1694,6 +1825,7 @@ export namespace Prisma {
     service?: boolean | User$serviceArgs<ExtArgs>
     client?: boolean | User$clientArgs<ExtArgs>
     projectReview?: boolean | User$projectReviewArgs<ExtArgs>
+    Negotiation?: boolean | User$NegotiationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1762,6 +1894,7 @@ export namespace Prisma {
     service?: boolean | User$serviceArgs<ExtArgs>
     client?: boolean | User$clientArgs<ExtArgs>
     projectReview?: boolean | User$projectReviewArgs<ExtArgs>
+    Negotiation?: boolean | User$NegotiationArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1778,6 +1911,7 @@ export namespace Prisma {
       service: Prisma.$ServicesPayload<ExtArgs>[]
       client: Prisma.$ProposalPayload<ExtArgs>[]
       projectReview: Prisma.$ProjectReviewPayload<ExtArgs>[]
+      Negotiation: Prisma.$NegotiatePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2194,6 +2328,7 @@ export namespace Prisma {
     service<T extends User$serviceArgs<ExtArgs> = {}>(args?: Subset<T, User$serviceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServicesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     client<T extends User$clientArgs<ExtArgs> = {}>(args?: Subset<T, User$clientArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     projectReview<T extends User$projectReviewArgs<ExtArgs> = {}>(args?: Subset<T, User$projectReviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Negotiation<T extends User$NegotiationArgs<ExtArgs> = {}>(args?: Subset<T, User$NegotiationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2709,6 +2844,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProjectReviewScalarFieldEnum | ProjectReviewScalarFieldEnum[]
+  }
+
+  /**
+   * User.Negotiation
+   */
+  export type User$NegotiationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
+    where?: NegotiateWhereInput
+    orderBy?: NegotiateOrderByWithRelationInput | NegotiateOrderByWithRelationInput[]
+    cursor?: NegotiateWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NegotiateScalarFieldEnum | NegotiateScalarFieldEnum[]
   }
 
   /**
@@ -6275,6 +6434,8 @@ export namespace Prisma {
     termsAndConditions?: boolean
     service?: boolean | ServicesDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
+    Negotiate?: boolean | ProjectReview$NegotiateArgs<ExtArgs>
+    _count?: boolean | ProjectReviewCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["projectReview"]>
 
   export type ProjectReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6324,6 +6485,8 @@ export namespace Prisma {
   export type ProjectReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     service?: boolean | ServicesDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
+    Negotiate?: boolean | ProjectReview$NegotiateArgs<ExtArgs>
+    _count?: boolean | ProjectReviewCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProjectReviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     service?: boolean | ServicesDefaultArgs<ExtArgs>
@@ -6339,6 +6502,7 @@ export namespace Prisma {
     objects: {
       service: Prisma.$ServicesPayload<ExtArgs>
       client: Prisma.$UserPayload<ExtArgs>
+      Negotiate: Prisma.$NegotiatePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6747,6 +6911,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     service<T extends ServicesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ServicesDefaultArgs<ExtArgs>>): Prisma__ServicesClient<$Result.GetResult<Prisma.$ServicesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    Negotiate<T extends ProjectReview$NegotiateArgs<ExtArgs> = {}>(args?: Subset<T, ProjectReview$NegotiateArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7187,6 +7352,30 @@ export namespace Prisma {
   }
 
   /**
+   * ProjectReview.Negotiate
+   */
+  export type ProjectReview$NegotiateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
+    where?: NegotiateWhereInput
+    orderBy?: NegotiateOrderByWithRelationInput | NegotiateOrderByWithRelationInput[]
+    cursor?: NegotiateWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NegotiateScalarFieldEnum | NegotiateScalarFieldEnum[]
+  }
+
+  /**
    * ProjectReview without action
    */
   export type ProjectReviewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7202,6 +7391,1051 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ProjectReviewInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Negotiate
+   */
+
+  export type AggregateNegotiate = {
+    _count: NegotiateCountAggregateOutputType | null
+    _min: NegotiateMinAggregateOutputType | null
+    _max: NegotiateMaxAggregateOutputType | null
+  }
+
+  export type NegotiateMinAggregateOutputType = {
+    id: string | null
+    clientId: string | null
+    proposal_id: string | null
+  }
+
+  export type NegotiateMaxAggregateOutputType = {
+    id: string | null
+    clientId: string | null
+    proposal_id: string | null
+  }
+
+  export type NegotiateCountAggregateOutputType = {
+    id: number
+    clientId: number
+    proposal_id: number
+    _all: number
+  }
+
+
+  export type NegotiateMinAggregateInputType = {
+    id?: true
+    clientId?: true
+    proposal_id?: true
+  }
+
+  export type NegotiateMaxAggregateInputType = {
+    id?: true
+    clientId?: true
+    proposal_id?: true
+  }
+
+  export type NegotiateCountAggregateInputType = {
+    id?: true
+    clientId?: true
+    proposal_id?: true
+    _all?: true
+  }
+
+  export type NegotiateAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Negotiate to aggregate.
+     */
+    where?: NegotiateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Negotiates to fetch.
+     */
+    orderBy?: NegotiateOrderByWithRelationInput | NegotiateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NegotiateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Negotiates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Negotiates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Negotiates
+    **/
+    _count?: true | NegotiateCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NegotiateMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NegotiateMaxAggregateInputType
+  }
+
+  export type GetNegotiateAggregateType<T extends NegotiateAggregateArgs> = {
+        [P in keyof T & keyof AggregateNegotiate]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNegotiate[P]>
+      : GetScalarType<T[P], AggregateNegotiate[P]>
+  }
+
+
+
+
+  export type NegotiateGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NegotiateWhereInput
+    orderBy?: NegotiateOrderByWithAggregationInput | NegotiateOrderByWithAggregationInput[]
+    by: NegotiateScalarFieldEnum[] | NegotiateScalarFieldEnum
+    having?: NegotiateScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NegotiateCountAggregateInputType | true
+    _min?: NegotiateMinAggregateInputType
+    _max?: NegotiateMaxAggregateInputType
+  }
+
+  export type NegotiateGroupByOutputType = {
+    id: string
+    clientId: string
+    proposal_id: string
+    _count: NegotiateCountAggregateOutputType | null
+    _min: NegotiateMinAggregateOutputType | null
+    _max: NegotiateMaxAggregateOutputType | null
+  }
+
+  type GetNegotiateGroupByPayload<T extends NegotiateGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NegotiateGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NegotiateGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NegotiateGroupByOutputType[P]>
+            : GetScalarType<T[P], NegotiateGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NegotiateSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clientId?: boolean
+    proposal_id?: boolean
+    client?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProjectReviewDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["negotiate"]>
+
+  export type NegotiateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clientId?: boolean
+    proposal_id?: boolean
+    client?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProjectReviewDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["negotiate"]>
+
+  export type NegotiateSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clientId?: boolean
+    proposal_id?: boolean
+    client?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProjectReviewDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["negotiate"]>
+
+  export type NegotiateSelectScalar = {
+    id?: boolean
+    clientId?: boolean
+    proposal_id?: boolean
+  }
+
+  export type NegotiateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientId" | "proposal_id", ExtArgs["result"]["negotiate"]>
+  export type NegotiateInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProjectReviewDefaultArgs<ExtArgs>
+  }
+  export type NegotiateIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProjectReviewDefaultArgs<ExtArgs>
+  }
+  export type NegotiateIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | UserDefaultArgs<ExtArgs>
+    proposal?: boolean | ProjectReviewDefaultArgs<ExtArgs>
+  }
+
+  export type $NegotiatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Negotiate"
+    objects: {
+      client: Prisma.$UserPayload<ExtArgs>
+      proposal: Prisma.$ProjectReviewPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      clientId: string
+      proposal_id: string
+    }, ExtArgs["result"]["negotiate"]>
+    composites: {}
+  }
+
+  type NegotiateGetPayload<S extends boolean | null | undefined | NegotiateDefaultArgs> = $Result.GetResult<Prisma.$NegotiatePayload, S>
+
+  type NegotiateCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<NegotiateFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: NegotiateCountAggregateInputType | true
+    }
+
+  export interface NegotiateDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Negotiate'], meta: { name: 'Negotiate' } }
+    /**
+     * Find zero or one Negotiate that matches the filter.
+     * @param {NegotiateFindUniqueArgs} args - Arguments to find a Negotiate
+     * @example
+     * // Get one Negotiate
+     * const negotiate = await prisma.negotiate.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NegotiateFindUniqueArgs>(args: SelectSubset<T, NegotiateFindUniqueArgs<ExtArgs>>): Prisma__NegotiateClient<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Negotiate that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {NegotiateFindUniqueOrThrowArgs} args - Arguments to find a Negotiate
+     * @example
+     * // Get one Negotiate
+     * const negotiate = await prisma.negotiate.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NegotiateFindUniqueOrThrowArgs>(args: SelectSubset<T, NegotiateFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NegotiateClient<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Negotiate that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegotiateFindFirstArgs} args - Arguments to find a Negotiate
+     * @example
+     * // Get one Negotiate
+     * const negotiate = await prisma.negotiate.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NegotiateFindFirstArgs>(args?: SelectSubset<T, NegotiateFindFirstArgs<ExtArgs>>): Prisma__NegotiateClient<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Negotiate that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegotiateFindFirstOrThrowArgs} args - Arguments to find a Negotiate
+     * @example
+     * // Get one Negotiate
+     * const negotiate = await prisma.negotiate.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NegotiateFindFirstOrThrowArgs>(args?: SelectSubset<T, NegotiateFindFirstOrThrowArgs<ExtArgs>>): Prisma__NegotiateClient<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Negotiates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegotiateFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Negotiates
+     * const negotiates = await prisma.negotiate.findMany()
+     * 
+     * // Get first 10 Negotiates
+     * const negotiates = await prisma.negotiate.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const negotiateWithIdOnly = await prisma.negotiate.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NegotiateFindManyArgs>(args?: SelectSubset<T, NegotiateFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Negotiate.
+     * @param {NegotiateCreateArgs} args - Arguments to create a Negotiate.
+     * @example
+     * // Create one Negotiate
+     * const Negotiate = await prisma.negotiate.create({
+     *   data: {
+     *     // ... data to create a Negotiate
+     *   }
+     * })
+     * 
+     */
+    create<T extends NegotiateCreateArgs>(args: SelectSubset<T, NegotiateCreateArgs<ExtArgs>>): Prisma__NegotiateClient<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Negotiates.
+     * @param {NegotiateCreateManyArgs} args - Arguments to create many Negotiates.
+     * @example
+     * // Create many Negotiates
+     * const negotiate = await prisma.negotiate.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NegotiateCreateManyArgs>(args?: SelectSubset<T, NegotiateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Negotiates and returns the data saved in the database.
+     * @param {NegotiateCreateManyAndReturnArgs} args - Arguments to create many Negotiates.
+     * @example
+     * // Create many Negotiates
+     * const negotiate = await prisma.negotiate.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Negotiates and only return the `id`
+     * const negotiateWithIdOnly = await prisma.negotiate.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends NegotiateCreateManyAndReturnArgs>(args?: SelectSubset<T, NegotiateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Negotiate.
+     * @param {NegotiateDeleteArgs} args - Arguments to delete one Negotiate.
+     * @example
+     * // Delete one Negotiate
+     * const Negotiate = await prisma.negotiate.delete({
+     *   where: {
+     *     // ... filter to delete one Negotiate
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NegotiateDeleteArgs>(args: SelectSubset<T, NegotiateDeleteArgs<ExtArgs>>): Prisma__NegotiateClient<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Negotiate.
+     * @param {NegotiateUpdateArgs} args - Arguments to update one Negotiate.
+     * @example
+     * // Update one Negotiate
+     * const negotiate = await prisma.negotiate.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NegotiateUpdateArgs>(args: SelectSubset<T, NegotiateUpdateArgs<ExtArgs>>): Prisma__NegotiateClient<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Negotiates.
+     * @param {NegotiateDeleteManyArgs} args - Arguments to filter Negotiates to delete.
+     * @example
+     * // Delete a few Negotiates
+     * const { count } = await prisma.negotiate.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NegotiateDeleteManyArgs>(args?: SelectSubset<T, NegotiateDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Negotiates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegotiateUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Negotiates
+     * const negotiate = await prisma.negotiate.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NegotiateUpdateManyArgs>(args: SelectSubset<T, NegotiateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Negotiates and returns the data updated in the database.
+     * @param {NegotiateUpdateManyAndReturnArgs} args - Arguments to update many Negotiates.
+     * @example
+     * // Update many Negotiates
+     * const negotiate = await prisma.negotiate.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Negotiates and only return the `id`
+     * const negotiateWithIdOnly = await prisma.negotiate.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends NegotiateUpdateManyAndReturnArgs>(args: SelectSubset<T, NegotiateUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Negotiate.
+     * @param {NegotiateUpsertArgs} args - Arguments to update or create a Negotiate.
+     * @example
+     * // Update or create a Negotiate
+     * const negotiate = await prisma.negotiate.upsert({
+     *   create: {
+     *     // ... data to create a Negotiate
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Negotiate we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NegotiateUpsertArgs>(args: SelectSubset<T, NegotiateUpsertArgs<ExtArgs>>): Prisma__NegotiateClient<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Negotiates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegotiateCountArgs} args - Arguments to filter Negotiates to count.
+     * @example
+     * // Count the number of Negotiates
+     * const count = await prisma.negotiate.count({
+     *   where: {
+     *     // ... the filter for the Negotiates we want to count
+     *   }
+     * })
+    **/
+    count<T extends NegotiateCountArgs>(
+      args?: Subset<T, NegotiateCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NegotiateCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Negotiate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegotiateAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NegotiateAggregateArgs>(args: Subset<T, NegotiateAggregateArgs>): Prisma.PrismaPromise<GetNegotiateAggregateType<T>>
+
+    /**
+     * Group by Negotiate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NegotiateGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NegotiateGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NegotiateGroupByArgs['orderBy'] }
+        : { orderBy?: NegotiateGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NegotiateGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNegotiateGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Negotiate model
+   */
+  readonly fields: NegotiateFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Negotiate.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NegotiateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    proposal<T extends ProjectReviewDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectReviewDefaultArgs<ExtArgs>>): Prisma__ProjectReviewClient<$Result.GetResult<Prisma.$ProjectReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Negotiate model
+   */
+  interface NegotiateFieldRefs {
+    readonly id: FieldRef<"Negotiate", 'String'>
+    readonly clientId: FieldRef<"Negotiate", 'String'>
+    readonly proposal_id: FieldRef<"Negotiate", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Negotiate findUnique
+   */
+  export type NegotiateFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
+    /**
+     * Filter, which Negotiate to fetch.
+     */
+    where: NegotiateWhereUniqueInput
+  }
+
+  /**
+   * Negotiate findUniqueOrThrow
+   */
+  export type NegotiateFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
+    /**
+     * Filter, which Negotiate to fetch.
+     */
+    where: NegotiateWhereUniqueInput
+  }
+
+  /**
+   * Negotiate findFirst
+   */
+  export type NegotiateFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
+    /**
+     * Filter, which Negotiate to fetch.
+     */
+    where?: NegotiateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Negotiates to fetch.
+     */
+    orderBy?: NegotiateOrderByWithRelationInput | NegotiateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Negotiates.
+     */
+    cursor?: NegotiateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Negotiates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Negotiates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Negotiates.
+     */
+    distinct?: NegotiateScalarFieldEnum | NegotiateScalarFieldEnum[]
+  }
+
+  /**
+   * Negotiate findFirstOrThrow
+   */
+  export type NegotiateFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
+    /**
+     * Filter, which Negotiate to fetch.
+     */
+    where?: NegotiateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Negotiates to fetch.
+     */
+    orderBy?: NegotiateOrderByWithRelationInput | NegotiateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Negotiates.
+     */
+    cursor?: NegotiateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Negotiates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Negotiates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Negotiates.
+     */
+    distinct?: NegotiateScalarFieldEnum | NegotiateScalarFieldEnum[]
+  }
+
+  /**
+   * Negotiate findMany
+   */
+  export type NegotiateFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
+    /**
+     * Filter, which Negotiates to fetch.
+     */
+    where?: NegotiateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Negotiates to fetch.
+     */
+    orderBy?: NegotiateOrderByWithRelationInput | NegotiateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Negotiates.
+     */
+    cursor?: NegotiateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Negotiates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Negotiates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Negotiates.
+     */
+    distinct?: NegotiateScalarFieldEnum | NegotiateScalarFieldEnum[]
+  }
+
+  /**
+   * Negotiate create
+   */
+  export type NegotiateCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Negotiate.
+     */
+    data: XOR<NegotiateCreateInput, NegotiateUncheckedCreateInput>
+  }
+
+  /**
+   * Negotiate createMany
+   */
+  export type NegotiateCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Negotiates.
+     */
+    data: NegotiateCreateManyInput | NegotiateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Negotiate createManyAndReturn
+   */
+  export type NegotiateCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * The data used to create many Negotiates.
+     */
+    data: NegotiateCreateManyInput | NegotiateCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Negotiate update
+   */
+  export type NegotiateUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Negotiate.
+     */
+    data: XOR<NegotiateUpdateInput, NegotiateUncheckedUpdateInput>
+    /**
+     * Choose, which Negotiate to update.
+     */
+    where: NegotiateWhereUniqueInput
+  }
+
+  /**
+   * Negotiate updateMany
+   */
+  export type NegotiateUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Negotiates.
+     */
+    data: XOR<NegotiateUpdateManyMutationInput, NegotiateUncheckedUpdateManyInput>
+    /**
+     * Filter which Negotiates to update
+     */
+    where?: NegotiateWhereInput
+    /**
+     * Limit how many Negotiates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Negotiate updateManyAndReturn
+   */
+  export type NegotiateUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * The data used to update Negotiates.
+     */
+    data: XOR<NegotiateUpdateManyMutationInput, NegotiateUncheckedUpdateManyInput>
+    /**
+     * Filter which Negotiates to update
+     */
+    where?: NegotiateWhereInput
+    /**
+     * Limit how many Negotiates to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Negotiate upsert
+   */
+  export type NegotiateUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Negotiate to update in case it exists.
+     */
+    where: NegotiateWhereUniqueInput
+    /**
+     * In case the Negotiate found by the `where` argument doesn't exist, create a new Negotiate with this data.
+     */
+    create: XOR<NegotiateCreateInput, NegotiateUncheckedCreateInput>
+    /**
+     * In case the Negotiate was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NegotiateUpdateInput, NegotiateUncheckedUpdateInput>
+  }
+
+  /**
+   * Negotiate delete
+   */
+  export type NegotiateDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
+    /**
+     * Filter which Negotiate to delete.
+     */
+    where: NegotiateWhereUniqueInput
+  }
+
+  /**
+   * Negotiate deleteMany
+   */
+  export type NegotiateDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Negotiates to delete
+     */
+    where?: NegotiateWhereInput
+    /**
+     * Limit how many Negotiates to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Negotiate without action
+   */
+  export type NegotiateDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Negotiate
+     */
+    select?: NegotiateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Negotiate
+     */
+    omit?: NegotiateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NegotiateInclude<ExtArgs> | null
   }
 
 
@@ -7288,6 +8522,15 @@ export namespace Prisma {
   };
 
   export type ProjectReviewScalarFieldEnum = (typeof ProjectReviewScalarFieldEnum)[keyof typeof ProjectReviewScalarFieldEnum]
+
+
+  export const NegotiateScalarFieldEnum: {
+    id: 'id',
+    clientId: 'clientId',
+    proposal_id: 'proposal_id'
+  };
+
+  export type NegotiateScalarFieldEnum = (typeof NegotiateScalarFieldEnum)[keyof typeof NegotiateScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -7472,6 +8715,7 @@ export namespace Prisma {
     service?: ServicesListRelationFilter
     client?: ProposalListRelationFilter
     projectReview?: ProjectReviewListRelationFilter
+    Negotiation?: NegotiateListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7495,6 +8739,7 @@ export namespace Prisma {
     service?: ServicesOrderByRelationAggregateInput
     client?: ProposalOrderByRelationAggregateInput
     projectReview?: ProjectReviewOrderByRelationAggregateInput
+    Negotiation?: NegotiateOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7521,6 +8766,7 @@ export namespace Prisma {
     service?: ServicesListRelationFilter
     client?: ProposalListRelationFilter
     projectReview?: ProjectReviewListRelationFilter
+    Negotiation?: NegotiateListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -7757,6 +9003,7 @@ export namespace Prisma {
     termsAndConditions?: StringFilter<"ProjectReview"> | string
     service?: XOR<ServicesScalarRelationFilter, ServicesWhereInput>
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
+    Negotiate?: NegotiateListRelationFilter
   }
 
   export type ProjectReviewOrderByWithRelationInput = {
@@ -7772,6 +9019,7 @@ export namespace Prisma {
     termsAndConditions?: SortOrder
     service?: ServicesOrderByWithRelationInput
     client?: UserOrderByWithRelationInput
+    Negotiate?: NegotiateOrderByRelationAggregateInput
   }
 
   export type ProjectReviewWhereUniqueInput = Prisma.AtLeast<{
@@ -7790,6 +9038,7 @@ export namespace Prisma {
     termsAndConditions?: StringFilter<"ProjectReview"> | string
     service?: XOR<ServicesScalarRelationFilter, ServicesWhereInput>
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
+    Negotiate?: NegotiateListRelationFilter
   }, "id">
 
   export type ProjectReviewOrderByWithAggregationInput = {
@@ -7826,6 +9075,54 @@ export namespace Prisma {
     termsAndConditions?: StringWithAggregatesFilter<"ProjectReview"> | string
   }
 
+  export type NegotiateWhereInput = {
+    AND?: NegotiateWhereInput | NegotiateWhereInput[]
+    OR?: NegotiateWhereInput[]
+    NOT?: NegotiateWhereInput | NegotiateWhereInput[]
+    id?: StringFilter<"Negotiate"> | string
+    clientId?: StringFilter<"Negotiate"> | string
+    proposal_id?: StringFilter<"Negotiate"> | string
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+    proposal?: XOR<ProjectReviewScalarRelationFilter, ProjectReviewWhereInput>
+  }
+
+  export type NegotiateOrderByWithRelationInput = {
+    id?: SortOrder
+    clientId?: SortOrder
+    proposal_id?: SortOrder
+    client?: UserOrderByWithRelationInput
+    proposal?: ProjectReviewOrderByWithRelationInput
+  }
+
+  export type NegotiateWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: NegotiateWhereInput | NegotiateWhereInput[]
+    OR?: NegotiateWhereInput[]
+    NOT?: NegotiateWhereInput | NegotiateWhereInput[]
+    clientId?: StringFilter<"Negotiate"> | string
+    proposal_id?: StringFilter<"Negotiate"> | string
+    client?: XOR<UserScalarRelationFilter, UserWhereInput>
+    proposal?: XOR<ProjectReviewScalarRelationFilter, ProjectReviewWhereInput>
+  }, "id">
+
+  export type NegotiateOrderByWithAggregationInput = {
+    id?: SortOrder
+    clientId?: SortOrder
+    proposal_id?: SortOrder
+    _count?: NegotiateCountOrderByAggregateInput
+    _max?: NegotiateMaxOrderByAggregateInput
+    _min?: NegotiateMinOrderByAggregateInput
+  }
+
+  export type NegotiateScalarWhereWithAggregatesInput = {
+    AND?: NegotiateScalarWhereWithAggregatesInput | NegotiateScalarWhereWithAggregatesInput[]
+    OR?: NegotiateScalarWhereWithAggregatesInput[]
+    NOT?: NegotiateScalarWhereWithAggregatesInput | NegotiateScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Negotiate"> | string
+    clientId?: StringWithAggregatesFilter<"Negotiate"> | string
+    proposal_id?: StringWithAggregatesFilter<"Negotiate"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email?: string | null
@@ -7846,6 +9143,7 @@ export namespace Prisma {
     service?: ServicesCreateNestedManyWithoutClientInput
     client?: ProposalCreateNestedManyWithoutClientInput
     projectReview?: ProjectReviewCreateNestedManyWithoutClientInput
+    Negotiation?: NegotiateCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7868,6 +9166,7 @@ export namespace Prisma {
     service?: ServicesUncheckedCreateNestedManyWithoutClientInput
     client?: ProposalUncheckedCreateNestedManyWithoutClientInput
     projectReview?: ProjectReviewUncheckedCreateNestedManyWithoutClientInput
+    Negotiation?: NegotiateUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserUpdateInput = {
@@ -7890,6 +9189,7 @@ export namespace Prisma {
     service?: ServicesUpdateManyWithoutClientNestedInput
     client?: ProposalUpdateManyWithoutClientNestedInput
     projectReview?: ProjectReviewUpdateManyWithoutClientNestedInput
+    Negotiation?: NegotiateUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7912,6 +9212,7 @@ export namespace Prisma {
     service?: ServicesUncheckedUpdateManyWithoutClientNestedInput
     client?: ProposalUncheckedUpdateManyWithoutClientNestedInput
     projectReview?: ProjectReviewUncheckedUpdateManyWithoutClientNestedInput
+    Negotiation?: NegotiateUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -8158,6 +9459,7 @@ export namespace Prisma {
     termsAndConditions: string
     service: ServicesCreateNestedOneWithoutProjectReviewInput
     client: UserCreateNestedOneWithoutProjectReviewInput
+    Negotiate?: NegotiateCreateNestedManyWithoutProposalInput
   }
 
   export type ProjectReviewUncheckedCreateInput = {
@@ -8171,6 +9473,7 @@ export namespace Prisma {
     pricing: number
     status: $Enums.ReviewStatus
     termsAndConditions: string
+    Negotiate?: NegotiateUncheckedCreateNestedManyWithoutProposalInput
   }
 
   export type ProjectReviewUpdateInput = {
@@ -8184,6 +9487,7 @@ export namespace Prisma {
     termsAndConditions?: StringFieldUpdateOperationsInput | string
     service?: ServicesUpdateOneRequiredWithoutProjectReviewNestedInput
     client?: UserUpdateOneRequiredWithoutProjectReviewNestedInput
+    Negotiate?: NegotiateUpdateManyWithoutProposalNestedInput
   }
 
   export type ProjectReviewUncheckedUpdateInput = {
@@ -8197,6 +9501,7 @@ export namespace Prisma {
     pricing?: IntFieldUpdateOperationsInput | number
     status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
+    Negotiate?: NegotiateUncheckedUpdateManyWithoutProposalNestedInput
   }
 
   export type ProjectReviewCreateManyInput = {
@@ -8234,6 +9539,46 @@ export namespace Prisma {
     pricing?: IntFieldUpdateOperationsInput | number
     status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NegotiateCreateInput = {
+    id?: string
+    client: UserCreateNestedOneWithoutNegotiationInput
+    proposal: ProjectReviewCreateNestedOneWithoutNegotiateInput
+  }
+
+  export type NegotiateUncheckedCreateInput = {
+    id?: string
+    clientId: string
+    proposal_id: string
+  }
+
+  export type NegotiateUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    client?: UserUpdateOneRequiredWithoutNegotiationNestedInput
+    proposal?: ProjectReviewUpdateOneRequiredWithoutNegotiateNestedInput
+  }
+
+  export type NegotiateUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+    proposal_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NegotiateCreateManyInput = {
+    id?: string
+    clientId: string
+    proposal_id: string
+  }
+
+  export type NegotiateUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NegotiateUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+    proposal_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -8307,6 +9652,12 @@ export namespace Prisma {
     none?: ProjectReviewWhereInput
   }
 
+  export type NegotiateListRelationFilter = {
+    every?: NegotiateWhereInput
+    some?: NegotiateWhereInput
+    none?: NegotiateWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -8321,6 +9672,10 @@ export namespace Prisma {
   }
 
   export type ProjectReviewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type NegotiateOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -8680,6 +10035,29 @@ export namespace Prisma {
     _max?: NestedEnumReviewStatusFilter<$PrismaModel>
   }
 
+  export type ProjectReviewScalarRelationFilter = {
+    is?: ProjectReviewWhereInput
+    isNot?: ProjectReviewWhereInput
+  }
+
+  export type NegotiateCountOrderByAggregateInput = {
+    id?: SortOrder
+    clientId?: SortOrder
+    proposal_id?: SortOrder
+  }
+
+  export type NegotiateMaxOrderByAggregateInput = {
+    id?: SortOrder
+    clientId?: SortOrder
+    proposal_id?: SortOrder
+  }
+
+  export type NegotiateMinOrderByAggregateInput = {
+    id?: SortOrder
+    clientId?: SortOrder
+    proposal_id?: SortOrder
+  }
+
   export type RoleCreateNestedOneWithoutUsersInput = {
     create?: XOR<RoleCreateWithoutUsersInput, RoleUncheckedCreateWithoutUsersInput>
     connectOrCreate?: RoleCreateOrConnectWithoutUsersInput
@@ -8707,6 +10085,13 @@ export namespace Prisma {
     connect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
   }
 
+  export type NegotiateCreateNestedManyWithoutClientInput = {
+    create?: XOR<NegotiateCreateWithoutClientInput, NegotiateUncheckedCreateWithoutClientInput> | NegotiateCreateWithoutClientInput[] | NegotiateUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: NegotiateCreateOrConnectWithoutClientInput | NegotiateCreateOrConnectWithoutClientInput[]
+    createMany?: NegotiateCreateManyClientInputEnvelope
+    connect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+  }
+
   export type ServicesUncheckedCreateNestedManyWithoutClientInput = {
     create?: XOR<ServicesCreateWithoutClientInput, ServicesUncheckedCreateWithoutClientInput> | ServicesCreateWithoutClientInput[] | ServicesUncheckedCreateWithoutClientInput[]
     connectOrCreate?: ServicesCreateOrConnectWithoutClientInput | ServicesCreateOrConnectWithoutClientInput[]
@@ -8726,6 +10111,13 @@ export namespace Prisma {
     connectOrCreate?: ProjectReviewCreateOrConnectWithoutClientInput | ProjectReviewCreateOrConnectWithoutClientInput[]
     createMany?: ProjectReviewCreateManyClientInputEnvelope
     connect?: ProjectReviewWhereUniqueInput | ProjectReviewWhereUniqueInput[]
+  }
+
+  export type NegotiateUncheckedCreateNestedManyWithoutClientInput = {
+    create?: XOR<NegotiateCreateWithoutClientInput, NegotiateUncheckedCreateWithoutClientInput> | NegotiateCreateWithoutClientInput[] | NegotiateUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: NegotiateCreateOrConnectWithoutClientInput | NegotiateCreateOrConnectWithoutClientInput[]
+    createMany?: NegotiateCreateManyClientInputEnvelope
+    connect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -8794,6 +10186,20 @@ export namespace Prisma {
     deleteMany?: ProjectReviewScalarWhereInput | ProjectReviewScalarWhereInput[]
   }
 
+  export type NegotiateUpdateManyWithoutClientNestedInput = {
+    create?: XOR<NegotiateCreateWithoutClientInput, NegotiateUncheckedCreateWithoutClientInput> | NegotiateCreateWithoutClientInput[] | NegotiateUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: NegotiateCreateOrConnectWithoutClientInput | NegotiateCreateOrConnectWithoutClientInput[]
+    upsert?: NegotiateUpsertWithWhereUniqueWithoutClientInput | NegotiateUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: NegotiateCreateManyClientInputEnvelope
+    set?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    disconnect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    delete?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    connect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    update?: NegotiateUpdateWithWhereUniqueWithoutClientInput | NegotiateUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: NegotiateUpdateManyWithWhereWithoutClientInput | NegotiateUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: NegotiateScalarWhereInput | NegotiateScalarWhereInput[]
+  }
+
   export type ServicesUncheckedUpdateManyWithoutClientNestedInput = {
     create?: XOR<ServicesCreateWithoutClientInput, ServicesUncheckedCreateWithoutClientInput> | ServicesCreateWithoutClientInput[] | ServicesUncheckedCreateWithoutClientInput[]
     connectOrCreate?: ServicesCreateOrConnectWithoutClientInput | ServicesCreateOrConnectWithoutClientInput[]
@@ -8834,6 +10240,20 @@ export namespace Prisma {
     update?: ProjectReviewUpdateWithWhereUniqueWithoutClientInput | ProjectReviewUpdateWithWhereUniqueWithoutClientInput[]
     updateMany?: ProjectReviewUpdateManyWithWhereWithoutClientInput | ProjectReviewUpdateManyWithWhereWithoutClientInput[]
     deleteMany?: ProjectReviewScalarWhereInput | ProjectReviewScalarWhereInput[]
+  }
+
+  export type NegotiateUncheckedUpdateManyWithoutClientNestedInput = {
+    create?: XOR<NegotiateCreateWithoutClientInput, NegotiateUncheckedCreateWithoutClientInput> | NegotiateCreateWithoutClientInput[] | NegotiateUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: NegotiateCreateOrConnectWithoutClientInput | NegotiateCreateOrConnectWithoutClientInput[]
+    upsert?: NegotiateUpsertWithWhereUniqueWithoutClientInput | NegotiateUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: NegotiateCreateManyClientInputEnvelope
+    set?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    disconnect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    delete?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    connect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    update?: NegotiateUpdateWithWhereUniqueWithoutClientInput | NegotiateUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: NegotiateUpdateManyWithWhereWithoutClientInput | NegotiateUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: NegotiateScalarWhereInput | NegotiateScalarWhereInput[]
   }
 
   export type UserCreateNestedManyWithoutRoleInput = {
@@ -9032,6 +10452,20 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type NegotiateCreateNestedManyWithoutProposalInput = {
+    create?: XOR<NegotiateCreateWithoutProposalInput, NegotiateUncheckedCreateWithoutProposalInput> | NegotiateCreateWithoutProposalInput[] | NegotiateUncheckedCreateWithoutProposalInput[]
+    connectOrCreate?: NegotiateCreateOrConnectWithoutProposalInput | NegotiateCreateOrConnectWithoutProposalInput[]
+    createMany?: NegotiateCreateManyProposalInputEnvelope
+    connect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+  }
+
+  export type NegotiateUncheckedCreateNestedManyWithoutProposalInput = {
+    create?: XOR<NegotiateCreateWithoutProposalInput, NegotiateUncheckedCreateWithoutProposalInput> | NegotiateCreateWithoutProposalInput[] | NegotiateUncheckedCreateWithoutProposalInput[]
+    connectOrCreate?: NegotiateCreateOrConnectWithoutProposalInput | NegotiateCreateOrConnectWithoutProposalInput[]
+    createMany?: NegotiateCreateManyProposalInputEnvelope
+    connect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -9058,6 +10492,62 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutProjectReviewInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProjectReviewInput, UserUpdateWithoutProjectReviewInput>, UserUncheckedUpdateWithoutProjectReviewInput>
+  }
+
+  export type NegotiateUpdateManyWithoutProposalNestedInput = {
+    create?: XOR<NegotiateCreateWithoutProposalInput, NegotiateUncheckedCreateWithoutProposalInput> | NegotiateCreateWithoutProposalInput[] | NegotiateUncheckedCreateWithoutProposalInput[]
+    connectOrCreate?: NegotiateCreateOrConnectWithoutProposalInput | NegotiateCreateOrConnectWithoutProposalInput[]
+    upsert?: NegotiateUpsertWithWhereUniqueWithoutProposalInput | NegotiateUpsertWithWhereUniqueWithoutProposalInput[]
+    createMany?: NegotiateCreateManyProposalInputEnvelope
+    set?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    disconnect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    delete?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    connect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    update?: NegotiateUpdateWithWhereUniqueWithoutProposalInput | NegotiateUpdateWithWhereUniqueWithoutProposalInput[]
+    updateMany?: NegotiateUpdateManyWithWhereWithoutProposalInput | NegotiateUpdateManyWithWhereWithoutProposalInput[]
+    deleteMany?: NegotiateScalarWhereInput | NegotiateScalarWhereInput[]
+  }
+
+  export type NegotiateUncheckedUpdateManyWithoutProposalNestedInput = {
+    create?: XOR<NegotiateCreateWithoutProposalInput, NegotiateUncheckedCreateWithoutProposalInput> | NegotiateCreateWithoutProposalInput[] | NegotiateUncheckedCreateWithoutProposalInput[]
+    connectOrCreate?: NegotiateCreateOrConnectWithoutProposalInput | NegotiateCreateOrConnectWithoutProposalInput[]
+    upsert?: NegotiateUpsertWithWhereUniqueWithoutProposalInput | NegotiateUpsertWithWhereUniqueWithoutProposalInput[]
+    createMany?: NegotiateCreateManyProposalInputEnvelope
+    set?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    disconnect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    delete?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    connect?: NegotiateWhereUniqueInput | NegotiateWhereUniqueInput[]
+    update?: NegotiateUpdateWithWhereUniqueWithoutProposalInput | NegotiateUpdateWithWhereUniqueWithoutProposalInput[]
+    updateMany?: NegotiateUpdateManyWithWhereWithoutProposalInput | NegotiateUpdateManyWithWhereWithoutProposalInput[]
+    deleteMany?: NegotiateScalarWhereInput | NegotiateScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutNegotiationInput = {
+    create?: XOR<UserCreateWithoutNegotiationInput, UserUncheckedCreateWithoutNegotiationInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNegotiationInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ProjectReviewCreateNestedOneWithoutNegotiateInput = {
+    create?: XOR<ProjectReviewCreateWithoutNegotiateInput, ProjectReviewUncheckedCreateWithoutNegotiateInput>
+    connectOrCreate?: ProjectReviewCreateOrConnectWithoutNegotiateInput
+    connect?: ProjectReviewWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutNegotiationNestedInput = {
+    create?: XOR<UserCreateWithoutNegotiationInput, UserUncheckedCreateWithoutNegotiationInput>
+    connectOrCreate?: UserCreateOrConnectWithoutNegotiationInput
+    upsert?: UserUpsertWithoutNegotiationInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNegotiationInput, UserUpdateWithoutNegotiationInput>, UserUncheckedUpdateWithoutNegotiationInput>
+  }
+
+  export type ProjectReviewUpdateOneRequiredWithoutNegotiateNestedInput = {
+    create?: XOR<ProjectReviewCreateWithoutNegotiateInput, ProjectReviewUncheckedCreateWithoutNegotiateInput>
+    connectOrCreate?: ProjectReviewCreateOrConnectWithoutNegotiateInput
+    upsert?: ProjectReviewUpsertWithoutNegotiateInput
+    connect?: ProjectReviewWhereUniqueInput
+    update?: XOR<XOR<ProjectReviewUpdateToOneWithWhereWithoutNegotiateInput, ProjectReviewUpdateWithoutNegotiateInput>, ProjectReviewUncheckedUpdateWithoutNegotiateInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -9364,6 +10854,7 @@ export namespace Prisma {
     status: $Enums.ReviewStatus
     termsAndConditions: string
     service: ServicesCreateNestedOneWithoutProjectReviewInput
+    Negotiate?: NegotiateCreateNestedManyWithoutProposalInput
   }
 
   export type ProjectReviewUncheckedCreateWithoutClientInput = {
@@ -9376,6 +10867,7 @@ export namespace Prisma {
     pricing: number
     status: $Enums.ReviewStatus
     termsAndConditions: string
+    Negotiate?: NegotiateUncheckedCreateNestedManyWithoutProposalInput
   }
 
   export type ProjectReviewCreateOrConnectWithoutClientInput = {
@@ -9385,6 +10877,26 @@ export namespace Prisma {
 
   export type ProjectReviewCreateManyClientInputEnvelope = {
     data: ProjectReviewCreateManyClientInput | ProjectReviewCreateManyClientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NegotiateCreateWithoutClientInput = {
+    id?: string
+    proposal: ProjectReviewCreateNestedOneWithoutNegotiateInput
+  }
+
+  export type NegotiateUncheckedCreateWithoutClientInput = {
+    id?: string
+    proposal_id: string
+  }
+
+  export type NegotiateCreateOrConnectWithoutClientInput = {
+    where: NegotiateWhereUniqueInput
+    create: XOR<NegotiateCreateWithoutClientInput, NegotiateUncheckedCreateWithoutClientInput>
+  }
+
+  export type NegotiateCreateManyClientInputEnvelope = {
+    data: NegotiateCreateManyClientInput | NegotiateCreateManyClientInput[]
     skipDuplicates?: boolean
   }
 
@@ -9500,6 +11012,31 @@ export namespace Prisma {
     termsAndConditions?: StringFilter<"ProjectReview"> | string
   }
 
+  export type NegotiateUpsertWithWhereUniqueWithoutClientInput = {
+    where: NegotiateWhereUniqueInput
+    update: XOR<NegotiateUpdateWithoutClientInput, NegotiateUncheckedUpdateWithoutClientInput>
+    create: XOR<NegotiateCreateWithoutClientInput, NegotiateUncheckedCreateWithoutClientInput>
+  }
+
+  export type NegotiateUpdateWithWhereUniqueWithoutClientInput = {
+    where: NegotiateWhereUniqueInput
+    data: XOR<NegotiateUpdateWithoutClientInput, NegotiateUncheckedUpdateWithoutClientInput>
+  }
+
+  export type NegotiateUpdateManyWithWhereWithoutClientInput = {
+    where: NegotiateScalarWhereInput
+    data: XOR<NegotiateUpdateManyMutationInput, NegotiateUncheckedUpdateManyWithoutClientInput>
+  }
+
+  export type NegotiateScalarWhereInput = {
+    AND?: NegotiateScalarWhereInput | NegotiateScalarWhereInput[]
+    OR?: NegotiateScalarWhereInput[]
+    NOT?: NegotiateScalarWhereInput | NegotiateScalarWhereInput[]
+    id?: StringFilter<"Negotiate"> | string
+    clientId?: StringFilter<"Negotiate"> | string
+    proposal_id?: StringFilter<"Negotiate"> | string
+  }
+
   export type UserCreateWithoutRoleInput = {
     id?: string
     email?: string | null
@@ -9519,6 +11056,7 @@ export namespace Prisma {
     service?: ServicesCreateNestedManyWithoutClientInput
     client?: ProposalCreateNestedManyWithoutClientInput
     projectReview?: ProjectReviewCreateNestedManyWithoutClientInput
+    Negotiation?: NegotiateCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutRoleInput = {
@@ -9540,6 +11078,7 @@ export namespace Prisma {
     service?: ServicesUncheckedCreateNestedManyWithoutClientInput
     client?: ProposalUncheckedCreateNestedManyWithoutClientInput
     projectReview?: ProjectReviewUncheckedCreateNestedManyWithoutClientInput
+    Negotiation?: NegotiateUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutRoleInput = {
@@ -9609,6 +11148,7 @@ export namespace Prisma {
     role: RoleCreateNestedOneWithoutUsersInput
     client?: ProposalCreateNestedManyWithoutClientInput
     projectReview?: ProjectReviewCreateNestedManyWithoutClientInput
+    Negotiation?: NegotiateCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutServiceInput = {
@@ -9630,6 +11170,7 @@ export namespace Prisma {
     createdAt?: Date | string
     client?: ProposalUncheckedCreateNestedManyWithoutClientInput
     projectReview?: ProjectReviewUncheckedCreateNestedManyWithoutClientInput
+    Negotiation?: NegotiateUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutServiceInput = {
@@ -9671,6 +11212,7 @@ export namespace Prisma {
     status: $Enums.ReviewStatus
     termsAndConditions: string
     client: UserCreateNestedOneWithoutProjectReviewInput
+    Negotiate?: NegotiateCreateNestedManyWithoutProposalInput
   }
 
   export type ProjectReviewUncheckedCreateWithoutServiceInput = {
@@ -9683,6 +11225,7 @@ export namespace Prisma {
     pricing: number
     status: $Enums.ReviewStatus
     termsAndConditions: string
+    Negotiate?: NegotiateUncheckedCreateNestedManyWithoutProposalInput
   }
 
   export type ProjectReviewCreateOrConnectWithoutServiceInput = {
@@ -9725,6 +11268,7 @@ export namespace Prisma {
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     client?: ProposalUpdateManyWithoutClientNestedInput
     projectReview?: ProjectReviewUpdateManyWithoutClientNestedInput
+    Negotiation?: NegotiateUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutServiceInput = {
@@ -9746,6 +11290,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: ProposalUncheckedUpdateManyWithoutClientNestedInput
     projectReview?: ProjectReviewUncheckedUpdateManyWithoutClientNestedInput
+    Negotiation?: NegotiateUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type ProposalUpsertWithWhereUniqueWithoutServiceInput = {
@@ -9799,6 +11344,7 @@ export namespace Prisma {
     role: RoleCreateNestedOneWithoutUsersInput
     service?: ServicesCreateNestedManyWithoutClientInput
     projectReview?: ProjectReviewCreateNestedManyWithoutClientInput
+    Negotiation?: NegotiateCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutClientInput = {
@@ -9820,6 +11366,7 @@ export namespace Prisma {
     createdAt?: Date | string
     service?: ServicesUncheckedCreateNestedManyWithoutClientInput
     projectReview?: ProjectReviewUncheckedCreateNestedManyWithoutClientInput
+    Negotiation?: NegotiateUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutClientInput = {
@@ -9882,6 +11429,7 @@ export namespace Prisma {
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     service?: ServicesUpdateManyWithoutClientNestedInput
     projectReview?: ProjectReviewUpdateManyWithoutClientNestedInput
+    Negotiation?: NegotiateUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutClientInput = {
@@ -9903,6 +11451,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     service?: ServicesUncheckedUpdateManyWithoutClientNestedInput
     projectReview?: ProjectReviewUncheckedUpdateManyWithoutClientNestedInput
+    Negotiation?: NegotiateUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type ServicesUpsertWithoutProposalInput = {
@@ -9980,6 +11529,7 @@ export namespace Prisma {
     role: RoleCreateNestedOneWithoutUsersInput
     service?: ServicesCreateNestedManyWithoutClientInput
     client?: ProposalCreateNestedManyWithoutClientInput
+    Negotiation?: NegotiateCreateNestedManyWithoutClientInput
   }
 
   export type UserUncheckedCreateWithoutProjectReviewInput = {
@@ -10001,11 +11551,32 @@ export namespace Prisma {
     createdAt?: Date | string
     service?: ServicesUncheckedCreateNestedManyWithoutClientInput
     client?: ProposalUncheckedCreateNestedManyWithoutClientInput
+    Negotiation?: NegotiateUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type UserCreateOrConnectWithoutProjectReviewInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutProjectReviewInput, UserUncheckedCreateWithoutProjectReviewInput>
+  }
+
+  export type NegotiateCreateWithoutProposalInput = {
+    id?: string
+    client: UserCreateNestedOneWithoutNegotiationInput
+  }
+
+  export type NegotiateUncheckedCreateWithoutProposalInput = {
+    id?: string
+    clientId: string
+  }
+
+  export type NegotiateCreateOrConnectWithoutProposalInput = {
+    where: NegotiateWhereUniqueInput
+    create: XOR<NegotiateCreateWithoutProposalInput, NegotiateUncheckedCreateWithoutProposalInput>
+  }
+
+  export type NegotiateCreateManyProposalInputEnvelope = {
+    data: NegotiateCreateManyProposalInput | NegotiateCreateManyProposalInput[]
+    skipDuplicates?: boolean
   }
 
   export type ServicesUpsertWithoutProjectReviewInput = {
@@ -10069,6 +11640,7 @@ export namespace Prisma {
     role?: RoleUpdateOneRequiredWithoutUsersNestedInput
     service?: ServicesUpdateManyWithoutClientNestedInput
     client?: ProposalUpdateManyWithoutClientNestedInput
+    Negotiation?: NegotiateUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProjectReviewInput = {
@@ -10090,6 +11662,195 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     service?: ServicesUncheckedUpdateManyWithoutClientNestedInput
     client?: ProposalUncheckedUpdateManyWithoutClientNestedInput
+    Negotiation?: NegotiateUncheckedUpdateManyWithoutClientNestedInput
+  }
+
+  export type NegotiateUpsertWithWhereUniqueWithoutProposalInput = {
+    where: NegotiateWhereUniqueInput
+    update: XOR<NegotiateUpdateWithoutProposalInput, NegotiateUncheckedUpdateWithoutProposalInput>
+    create: XOR<NegotiateCreateWithoutProposalInput, NegotiateUncheckedCreateWithoutProposalInput>
+  }
+
+  export type NegotiateUpdateWithWhereUniqueWithoutProposalInput = {
+    where: NegotiateWhereUniqueInput
+    data: XOR<NegotiateUpdateWithoutProposalInput, NegotiateUncheckedUpdateWithoutProposalInput>
+  }
+
+  export type NegotiateUpdateManyWithWhereWithoutProposalInput = {
+    where: NegotiateScalarWhereInput
+    data: XOR<NegotiateUpdateManyMutationInput, NegotiateUncheckedUpdateManyWithoutProposalInput>
+  }
+
+  export type UserCreateWithoutNegotiationInput = {
+    id?: string
+    email?: string | null
+    phone?: string | null
+    password?: string | null
+    country?: string | null
+    companyName?: string | null
+    contactPerson?: string | null
+    fullName?: string | null
+    firstName?: string | null
+    middleName?: string | null
+    lastName?: string | null
+    companyWebsite?: string | null
+    industry?: string | null
+    type?: $Enums.UserTypeEnum | null
+    createdAt?: Date | string
+    role: RoleCreateNestedOneWithoutUsersInput
+    service?: ServicesCreateNestedManyWithoutClientInput
+    client?: ProposalCreateNestedManyWithoutClientInput
+    projectReview?: ProjectReviewCreateNestedManyWithoutClientInput
+  }
+
+  export type UserUncheckedCreateWithoutNegotiationInput = {
+    id?: string
+    email?: string | null
+    phone?: string | null
+    password?: string | null
+    country?: string | null
+    companyName?: string | null
+    contactPerson?: string | null
+    fullName?: string | null
+    firstName?: string | null
+    middleName?: string | null
+    lastName?: string | null
+    companyWebsite?: string | null
+    industry?: string | null
+    type?: $Enums.UserTypeEnum | null
+    roleId: string
+    createdAt?: Date | string
+    service?: ServicesUncheckedCreateNestedManyWithoutClientInput
+    client?: ProposalUncheckedCreateNestedManyWithoutClientInput
+    projectReview?: ProjectReviewUncheckedCreateNestedManyWithoutClientInput
+  }
+
+  export type UserCreateOrConnectWithoutNegotiationInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutNegotiationInput, UserUncheckedCreateWithoutNegotiationInput>
+  }
+
+  export type ProjectReviewCreateWithoutNegotiateInput = {
+    id?: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+    service: ServicesCreateNestedOneWithoutProjectReviewInput
+    client: UserCreateNestedOneWithoutProjectReviewInput
+  }
+
+  export type ProjectReviewUncheckedCreateWithoutNegotiateInput = {
+    id?: string
+    service_id: string
+    client_id: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ReviewStatus
+    termsAndConditions: string
+  }
+
+  export type ProjectReviewCreateOrConnectWithoutNegotiateInput = {
+    where: ProjectReviewWhereUniqueInput
+    create: XOR<ProjectReviewCreateWithoutNegotiateInput, ProjectReviewUncheckedCreateWithoutNegotiateInput>
+  }
+
+  export type UserUpsertWithoutNegotiationInput = {
+    update: XOR<UserUpdateWithoutNegotiationInput, UserUncheckedUpdateWithoutNegotiationInput>
+    create: XOR<UserCreateWithoutNegotiationInput, UserUncheckedCreateWithoutNegotiationInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutNegotiationInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutNegotiationInput, UserUncheckedUpdateWithoutNegotiationInput>
+  }
+
+  export type UserUpdateWithoutNegotiationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactPerson?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    companyWebsite?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableEnumUserTypeEnumFieldUpdateOperationsInput | $Enums.UserTypeEnum | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: RoleUpdateOneRequiredWithoutUsersNestedInput
+    service?: ServicesUpdateManyWithoutClientNestedInput
+    client?: ProposalUpdateManyWithoutClientNestedInput
+    projectReview?: ProjectReviewUpdateManyWithoutClientNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutNegotiationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    companyName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactPerson?: NullableStringFieldUpdateOperationsInput | string | null
+    fullName?: NullableStringFieldUpdateOperationsInput | string | null
+    firstName?: NullableStringFieldUpdateOperationsInput | string | null
+    middleName?: NullableStringFieldUpdateOperationsInput | string | null
+    lastName?: NullableStringFieldUpdateOperationsInput | string | null
+    companyWebsite?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableEnumUserTypeEnumFieldUpdateOperationsInput | $Enums.UserTypeEnum | null
+    roleId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    service?: ServicesUncheckedUpdateManyWithoutClientNestedInput
+    client?: ProposalUncheckedUpdateManyWithoutClientNestedInput
+    projectReview?: ProjectReviewUncheckedUpdateManyWithoutClientNestedInput
+  }
+
+  export type ProjectReviewUpsertWithoutNegotiateInput = {
+    update: XOR<ProjectReviewUpdateWithoutNegotiateInput, ProjectReviewUncheckedUpdateWithoutNegotiateInput>
+    create: XOR<ProjectReviewCreateWithoutNegotiateInput, ProjectReviewUncheckedCreateWithoutNegotiateInput>
+    where?: ProjectReviewWhereInput
+  }
+
+  export type ProjectReviewUpdateToOneWithWhereWithoutNegotiateInput = {
+    where?: ProjectReviewWhereInput
+    data: XOR<ProjectReviewUpdateWithoutNegotiateInput, ProjectReviewUncheckedUpdateWithoutNegotiateInput>
+  }
+
+  export type ProjectReviewUpdateWithoutNegotiateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
+    service?: ServicesUpdateOneRequiredWithoutProjectReviewNestedInput
+    client?: UserUpdateOneRequiredWithoutProjectReviewNestedInput
+  }
+
+  export type ProjectReviewUncheckedUpdateWithoutNegotiateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    service_id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
   }
 
   export type ServicesCreateManyClientInput = {
@@ -10117,6 +11878,11 @@ export namespace Prisma {
     pricing: number
     status: $Enums.ReviewStatus
     termsAndConditions: string
+  }
+
+  export type NegotiateCreateManyClientInput = {
+    id?: string
+    proposal_id: string
   }
 
   export type ServicesUpdateWithoutClientInput = {
@@ -10178,6 +11944,7 @@ export namespace Prisma {
     status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
     service?: ServicesUpdateOneRequiredWithoutProjectReviewNestedInput
+    Negotiate?: NegotiateUpdateManyWithoutProposalNestedInput
   }
 
   export type ProjectReviewUncheckedUpdateWithoutClientInput = {
@@ -10190,6 +11957,7 @@ export namespace Prisma {
     pricing?: IntFieldUpdateOperationsInput | number
     status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
+    Negotiate?: NegotiateUncheckedUpdateManyWithoutProposalNestedInput
   }
 
   export type ProjectReviewUncheckedUpdateManyWithoutClientInput = {
@@ -10202,6 +11970,21 @@ export namespace Prisma {
     pricing?: IntFieldUpdateOperationsInput | number
     status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NegotiateUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proposal?: ProjectReviewUpdateOneRequiredWithoutNegotiateNestedInput
+  }
+
+  export type NegotiateUncheckedUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proposal_id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NegotiateUncheckedUpdateManyWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    proposal_id?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserCreateManyRoleInput = {
@@ -10241,6 +12024,7 @@ export namespace Prisma {
     service?: ServicesUpdateManyWithoutClientNestedInput
     client?: ProposalUpdateManyWithoutClientNestedInput
     projectReview?: ProjectReviewUpdateManyWithoutClientNestedInput
+    Negotiation?: NegotiateUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRoleInput = {
@@ -10262,6 +12046,7 @@ export namespace Prisma {
     service?: ServicesUncheckedUpdateManyWithoutClientNestedInput
     client?: ProposalUncheckedUpdateManyWithoutClientNestedInput
     projectReview?: ProjectReviewUncheckedUpdateManyWithoutClientNestedInput
+    Negotiation?: NegotiateUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -10332,6 +12117,7 @@ export namespace Prisma {
     status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
     client?: UserUpdateOneRequiredWithoutProjectReviewNestedInput
+    Negotiate?: NegotiateUpdateManyWithoutProposalNestedInput
   }
 
   export type ProjectReviewUncheckedUpdateWithoutServiceInput = {
@@ -10344,6 +12130,7 @@ export namespace Prisma {
     pricing?: IntFieldUpdateOperationsInput | number
     status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
+    Negotiate?: NegotiateUncheckedUpdateManyWithoutProposalNestedInput
   }
 
   export type ProjectReviewUncheckedUpdateManyWithoutServiceInput = {
@@ -10356,6 +12143,26 @@ export namespace Prisma {
     pricing?: IntFieldUpdateOperationsInput | number
     status?: EnumReviewStatusFieldUpdateOperationsInput | $Enums.ReviewStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NegotiateCreateManyProposalInput = {
+    id?: string
+    clientId: string
+  }
+
+  export type NegotiateUpdateWithoutProposalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    client?: UserUpdateOneRequiredWithoutNegotiationNestedInput
+  }
+
+  export type NegotiateUncheckedUpdateWithoutProposalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NegotiateUncheckedUpdateManyWithoutProposalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
   }
 
 

@@ -32,7 +32,9 @@ model User {
   service       Services[]
   client        Proposal[]      @relation("clientProposal")
   projectReview ProjectReview[]
-  createdAt     DateTime        @default(now())
+  Negotiation   Negotiate[]     @relation("ClientNegotiation")
+
+  createdAt DateTime @default(now())
 }
 
 enum UserTypeEnum {
@@ -69,9 +71,9 @@ enum ProposalStatus {
   PENDING
   DRAFT
   SENT
-  ACCEPTED
+  APPROVED
   DECLINED
-  REJECTED
+  NEGOTIATING
 }
 
 enum ProjectStatus {
@@ -129,8 +131,9 @@ model ProjectReview {
   service_id String
   client_id  String
 
-  service Services @relation("clientReview", fields: [service_id], references: [id])
-  client  User     @relation(fields: [client_id], references: [id])
+  service   Services    @relation("clientReview", fields: [service_id], references: [id])
+  client    User        @relation(fields: [client_id], references: [id])
+  Negotiate Negotiate[] @relation("Project Negotiation")
 
   contract_id        String?
   scope              String
@@ -139,4 +142,13 @@ model ProjectReview {
   pricing            Int
   status             ReviewStatus
   termsAndConditions String
+}
+
+model Negotiate {
+  id       String @id @default(uuid())
+  clientId String
+  client   User   @relation("ClientNegotiation", fields: [clientId], references: [id])
+
+  proposal_id String
+  proposal    ProjectReview @relation("Project Negotiation", fields: [proposal_id], references: [id])
 }

@@ -12,6 +12,7 @@ export const authMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+  
   const authHeader = req.headers.authorization;
 
 // console.log("Auth header:", authHeader);
@@ -25,7 +26,7 @@ export const authMiddleware = (
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
 
-    console.log("Decoded user:", decoded);
+    // console.log("Decoded user:", decoded);
 
     req.user = decoded; // ✅ THIS is what you need
     next();

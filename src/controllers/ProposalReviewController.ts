@@ -1,6 +1,6 @@
-import { log } from "node:console";
 import { prisma } from "../prisma/client";
 import { Request, Response } from "express";
+import { RoleBasedFetched } from "../utils/helperFunctions";
 
 export const ReviewController = {
 
@@ -8,21 +8,20 @@ export const ReviewController = {
 try {
 const user = (req as any).user;
 
-const isAdmin = user.role === "Admin";
+// const isAdmin = user.role === "Admin";
+
+console.log(user.role)
 
 const allReviews = await prisma.projectReview.findMany({
-  where: isAdmin
-    ? {} // admin sees everything
-    : {
-        client_id: user.id, // normal user sees only their own
-      },
+
+    where: RoleBasedFetched.BuildReviewsWhere(user),
 
   select: {
     id: true,
     scope: true,
     deliverables: true,
     timeline: true,
-    pricing: true,
+    pricing: true, 
     status: true,
     termsAndConditions: true,
 
@@ -152,6 +151,16 @@ async GetReviewsById(req: Request, res: Response) {
       message: "Failed to fetch user reviews",
       error: error.message,
     });
+  }
+}, 
+
+async NegotiateProposals (req:Request, res:Response) {
+  try {
+
+        
+    
+  } catch (error){
+
   }
 }
 

@@ -1,18 +1,29 @@
 import { Request, Response } from "express";
 import { prisma } from "../prisma/client";
 import { ProposalStatus } from "../generated/prisma/client";
+import { RoleBasedFetched } from "../utils/helperFunctions";
 
+
+
+
+//  Controller file for a client requesting for a service
 
 export const ProposalController = {
     // Fetch all proposal
 async GetAllProposals(req:Request, res:Response){
 
+const user = (req as any).user
 
+console.log(user.role)
     try {
 //  Comeback later 
 
+
 const AllProposals = await prisma.proposal.findMany({
-  select: {
+
+where: RoleBasedFetched.BuildProposalServiceWhere(user),
+
+  select: { 
     id: true,
     proposal_status: true,
     createdAt: true,
@@ -44,6 +55,8 @@ const AllProposals = await prisma.proposal.findMany({
   orderBy: {
     createdAt: "desc", // ✅ CORRECT PLACE
   },
+
+
 });
 
 

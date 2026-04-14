@@ -1,10 +1,13 @@
 import {Router} from "express"
 import { ProposalController } from "../controllers/proposalController"
+import { authMiddleware } from "../middleware/AutthenticationChecker"
 
+
+//  When a client request a services points up to this file
 
 export const ProposalRoute = Router()
 
-ProposalRoute.get("/get-all-proposals", ProposalController.GetAllProposals )
+ProposalRoute.get("/get-all-proposals", authMiddleware,  ProposalController.GetAllProposals )
 
 ProposalRoute.post("/create-proposal", ProposalController.CreateProposal)
 

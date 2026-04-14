@@ -2,215 +2,218 @@ import { prisma } from "../prisma/client";
 import { Request, Response } from "express";
 import argon2 from "argon2";
 import { resolveRoleId } from "../utils/roleHelpers";
+import { RoleBasedFetched } from "../utils/helperFunctions";
 
 export const UserController = {
-    async GetAllUsers(req: Request, res: Response) {
+async GetAllUsers(req: Request, res: Response) {
 
-         
-        try {
+const user = (req as any).user
+    
+  try {
 
-            // Pagination
+
+      // Pagination
 const page = Number(req.query.page) || 1;
 const PageSize = Number(req.query.PageSize) || 100;
 
-            const skip = (page - 1) * PageSize
-            const take = PageSize
+      const skip = (page - 1) * PageSize
+      const take = PageSize
 
 
-            const userPayLoad = await prisma.user.findMany({
+      const userPayLoad = await prisma.user.findMany({
 
-                
+          where: RoleBasedFetched.FetchRolesForAdminOnly(user),
 
-                select: {
-                  id:true,
-                  fullName:true,
-                  firstName:true,
-                  middleName:true,
-                  lastName:true,
-                  email:true,
-                phone:true,
-                country:true,
-                companyName:true, 
-                companyWebsite:true,
-                industry:true,
-                type:true,
-                roleId:true,
+          select: {
+            id:true,
+            fullName:true,
+            firstName:true,
+            middleName:true,
+            lastName:true,
+            email:true,
+          phone:true,
+          country:true,
+          companyName:true, 
+          companyWebsite:true,
+          industry:true,
+          type:true,
+          roleId:true,
 
-                    role: {
-                        select: {
-                            name: true,
-                        },
-                    },
-
-
-
-
-                },
-
-
-                skip,
-                take, 
-                orderBy: {
-                    createdAt: 'desc'
-                }
-            });
-
-
-  const flattenedUsers = userPayLoad.map(user => ({
-    ...user,
-    role: user.role?.name || null,
-  }));
-
-
-            // console.log(flattenedUsers)
-
-  const totalUsers = await prisma.user.count()
-
-        
-            return res.status(200).json({
-                message: "Users fetched successfully",
-                data: flattenedUsers,
-                total:totalUsers,
-                page,
-                PageSize
-            });
-        } catch (error: any) {
-            console.error("GET ALL USERS ERROR:", error);
-            return res.status(500).json({
-                message: "Failed to fetch users",
-                error: error.message,
-            });
-        }
-    },
+              role: {
+                  select: {
+                      name: true,
+                  },
+              },
 
 
 
-    // User creation
+
+          },
+
+
+          skip,
+          take, 
+          orderBy: {
+              createdAt: 'desc'
+          }
+      });
+
+
+const flattenedUsers = userPayLoad.map(user => ({
+...user,
+role: user.role?.name || null,
+}));
+
+
+      // console.log(flattenedUsers)
+
+const totalUsers = await prisma.user.count()
+
+  
+      return res.status(200).json({
+          message: "Users fetched successfully",
+          data: flattenedUsers,
+          total:totalUsers,
+          page,
+          PageSize
+      });
+  } catch (error: any) {
+      console.error("GET ALL USERS ERROR:", error);
+      return res.status(500).json({
+          message: "Failed to fetch users",
+          error: error.message,
+      });
+  }
+},
+
+
+
+// User creation
 async CreateUser(req: Request, res: Response) {
-  try {
-    const incomingData = req.body;
+try {
+const incomingData = req.body;
 
-    const { roleId, password, email, phone, country, type, ...rest } = incomingData;
+const { roleId, password, email, phone, country, type, ...rest } = incomingData;
 
- if (!email) {
-  return res.status(400).json({
-    message: "Email is required",
-  });
+if (!email) {
+return res.status(400).json({
+message: "Email is required",
+});
 }
 
 if (!phone) {
-  return res.status(400).json({
-    message: "Phone is required",
-  });
+return res.status(400).json({
+message: "Phone is required",
+});
 }
 
 if (!country) {
-  return res.status(400).json({
-    message: "Country is required",
-  });
+return res.status(400).json({
+message: "Country is required",
+});
 }
 
 if (!password) {
-  return res.status(400).json({
-    message: "Password is required",
-  });
+return res.status(400).json({
+message: "Password is required",
+});
 }
 
 
 
-    if (password.length < 8) {
-      return res.status(400).json({
-        message: "Password must be at least 8 characters",
-      });
-    }
+if (password.length < 8) {
+return res.status(400).json({
+  message: "Password must be at least 8 characters",
+});
+}
 
-    if (phone.length < 10) {
-      return res.status(400).json({
-        message: "Phone number is too short, must be 10 digits",
-      });
-    }
+if (phone.length < 10) {
+return res.status(400).json({
+  message: "Phone number is too short, must be 10 digits",
+});
+}
 
 
-    const resolvedRoleId = await resolveRoleId(roleId);
+const resolvedRoleId = await resolveRoleId(roleId);
 
-    const hashedPassword = await argon2.hash(password);
+const hashedPassword = await argon2.hash(password);
 
-    const newUser = await prisma.user.create({
-      data: {
-        ...rest,
-        email,
-        phone,
-        country,
-        type,
-        password: hashedPassword,
-        role: {
-          connect: { id: resolvedRoleId },
-        },
-      },
-      include: {
-        role: {
-          select: {
-            name: true,
-          },
-        },
-      },
-    });
+const newUser = await prisma.user.create({
+data: {
+  ...rest,
+  email,
+  phone,
+  country,
+  type,
+  password: hashedPassword,
+  role: {
+    connect: { id: resolvedRoleId },
+  },
+},
+include: {
+  role: {
+    select: {
+      name: true,
+    },
+  },
+},
+});
 
-    return res.status(201).json({
-      message: "User created successfully",
-      data: newUser,
-    });
+return res.status(201).json({
+message: "User created successfully",
+data: newUser,
+});
 
-  } catch (error: any) {
-    console.error("CREATE USER ERROR:", error);
-    return res.status(400).json({
-      message: error.message,
-    });
-  }
+} catch (error: any) {
+console.error("CREATE USER ERROR:", error);
+return res.status(400).json({
+message: error.message,
+});
+}
 }, 
 
 
 async EditUser(req: Request, res: Response) {
-  try {
-    const id = req.params.id as string;
-    const incomingData = req.body;
+try {
+const id = req.params.id as string;
+const incomingData = req.body;
 
-    const { roleId, ...rest } = incomingData;
+const { roleId, ...rest } = incomingData;
 
-    let data: any = { ...rest };
+let data: any = { ...rest };
 
-    // Only update role if provided
-    if (roleId) {
-      const resolvedRoleId = await resolveRoleId(roleId);
+// Only update role if provided
+if (roleId) {
+const resolvedRoleId = await resolveRoleId(roleId);
 
-      data.role = {
-        connect: { id: resolvedRoleId },
-      };
-    }
+data.role = {
+  connect: { id: resolvedRoleId },
+};
+}
 
-    const user = await prisma.user.update({
-      where: { id },
-      data,
-      include: {
-        role: {
-          select: {
-            name: true,
-          },
-        },
-      },
-    });
+const user = await prisma.user.update({
+where: { id },
+data,
+include: {
+  role: {
+    select: {
+      name: true,
+    },
+  },
+},
+});
 
-    return res.status(200).json({
-      message: "User updated successfully",
-      data: user,
-    });
+return res.status(200).json({
+message: "User updated successfully",
+data: user,
+});
 
-  } catch (error: any) {
-    console.error(error);
-    return res.status(500).json({
-      message: "Failed to update user",
-      error: error.message,
-    });
-  }
+} catch (error: any) {
+console.error(error);
+return res.status(500).json({
+message: "Failed to update user",
+error: error.message,
+});
+}
 }
 };

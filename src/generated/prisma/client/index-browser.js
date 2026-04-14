@@ -176,6 +176,12 @@ exports.Prisma.ProjectReviewScalarFieldEnum = {
   termsAndConditions: 'termsAndConditions'
 };
 
+exports.Prisma.NegotiateScalarFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
+  proposal_id: 'proposal_id'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -213,9 +219,9 @@ exports.ProposalStatus = exports.$Enums.ProposalStatus = {
   PENDING: 'PENDING',
   DRAFT: 'DRAFT',
   SENT: 'SENT',
-  ACCEPTED: 'ACCEPTED',
+  APPROVED: 'APPROVED',
   DECLINED: 'DECLINED',
-  REJECTED: 'REJECTED'
+  NEGOTIATING: 'NEGOTIATING'
 };
 
 exports.ReviewStatus = exports.$Enums.ReviewStatus = {
@@ -231,7 +237,8 @@ exports.Prisma.ModelName = {
   Role: 'Role',
   Services: 'Services',
   Proposal: 'Proposal',
-  ProjectReview: 'ProjectReview'
+  ProjectReview: 'ProjectReview',
+  Negotiate: 'Negotiate'
 };
 
 /**
