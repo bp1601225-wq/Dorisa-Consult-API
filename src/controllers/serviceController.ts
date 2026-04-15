@@ -1,28 +1,13 @@
 import { Request, Response } from "express";
-import { prisma } from "../prisma/client";
-import { serviceSchema } from "../schema/schema";
+import { ServiceCatalogService } from "../services/serviceCatalog.service";
+import { isHttpError } from "../services/errors";
 
 export const ServiceController = {
 
     async getAllServices(_req:Request, res:Response){
 
       try {
-const getAllServices = await prisma.services.findMany({
-    include:{
-        client: {
-            select: {
-               email: true,
-               phone: true,
-               country:true,
-               type: true,
-               fullName: true 
-            }
-        }
-    }, orderBy: {
-      DateCreated: "asc"
-    }
-}
-)
+const getAllServices = await ServiceCatalogService.getAllServices()
 
 return res.status(200).json({
     message: "All Services loaded Succesfully",
@@ -45,19 +30,7 @@ return res.status(500).json({
 
 async CreateServices(req: Request, res: Response) {
   try {
-    const incomingData = req.body;
-
-    const { error, value } = serviceSchema.validate(incomingData);
-
-    if (error) {
-      return res.status(400).json({
-        message: error.details[0].message,
-      });
-    }
-
-    const servicesDetails = await prisma.services.create({
-      data: value,
-    });
+    const servicesDetails = await ServiceCatalogService.createService(req.body);
 
     return res.status(201).json({
       message: "Service added to catalog",
@@ -66,6 +39,9 @@ async CreateServices(req: Request, res: Response) {
 
   } catch (error: any) {
     console.error("CREATE SERVICE ERROR:", error);
+    if (isHttpError(error)) {
+      return res.status(error.statusCode).json({ message: error.message });
+    }
 
     return res.status(500).json({
       message: "Internal server error",
@@ -77,24 +53,8 @@ async CreateServices(req: Request, res: Response) {
 async UpdateService(req:Request, res:Response){
 
     try {
-         const id = req.params.id as string
-const incomingData = req.body
-
-const { ServiceName , Description, status} = incomingData
-
-  const services = await prisma.services.update({
-    where: {
-            id        
-    },
-    
-    data: {
-        ServiceName,
-        Description,
-        status
-    }
-
-   
-  })
+          const id = req.params.id as string
+const services = await ServiceCatalogService.updateService(id, req.body)
 
 
   return res.status(200).json({
@@ -116,14 +76,10 @@ const { ServiceName , Description, status} = incomingData
 async DeleteService(req:Request, res:Response){
 
     try {
-         const id = req.params.id as string
+          const id = req.params.id as string
 
 
-         await prisma.services.delete({
-    where: {
-            id        
-    }
-  })
+         await ServiceCatalogService.deleteService(id)
 
 
   return res.status(200).json({

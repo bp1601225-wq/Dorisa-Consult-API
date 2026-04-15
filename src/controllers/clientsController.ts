@@ -1,39 +1,12 @@
-import { Request, Response, NextFunction } from "express";
-import argon2 from "argon2";
-import { prisma } from "../prisma/client";
-import { resolveRoleId } from "../utils/roleHelpers";
+import { Request, Response } from "express";
+import { ClientsService } from "../services/clients.service";
+import { isHttpError } from "../services/errors";
 
 const clientsController = {
 
-  async CreateClients(req: Request, res: Response, next: NextFunction) {
+  async CreateClients(req: Request, res: Response) {
     try {
-      const incomingData = req.body;
-      const { password, roleId, ...rest } = incomingData;
-
-      if (!password) {
-        return res.status(400).json({ message: "Password is required" });
-      }
-
-      const resolvedRoleId = await resolveRoleId(roleId);
-      const hashedPassword = await argon2.hash(password);
-
-      const newClient = await prisma.user.create({
-        data: {
-          ...rest,
-          type: "CORPORATE",
-          password: hashedPassword,
-          role: {
-            connect: { id: resolvedRoleId },
-          },
-        },
-        include: {
-          role: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      });
+      const newClient = await ClientsService.createClient(req.body);
 
       return res.status(201).json({
         message: "Client created successfully",
@@ -41,30 +14,21 @@ const clientsController = {
       });
     } catch (error: any) {
       console.error("CREATE CLIENT ERROR:", error);
-      return res.status(400).json({
-        message: error.message,
-      });
+      if (isHttpError(error)) {
+        return res.status(error.statusCode).json({ message: error.message });
+      }
+      return res.status(400).json({ message: error.message });
     }
   },
 
-  async GetAllClients(_req: Request, res: Response, next: NextFunction) {
+  async GetAllClients(_req: Request, res: Response) {
     try {
-      const clients = await prisma.user.findMany({
-        where: { type: "CORPORATE" },
-        include: {
-          role: {
-            select: {
-              name: true,
-            },
-          },
-        },
-        orderBy: { createdAt: "desc" },
-      });
+      const clients = await ClientsService.getAllClients();
 
       return res.status(200).json(clients);
     } catch (error) {
       console.error("GET ALL CLIENTS ERROR:", error);
-      next(error);
+      return res.status(500).json({ message: "Internal server error" });
     }
   },
 };

@@ -1,108 +1,76 @@
-import { Request, Response, NextFunction } from "express";
-import type { Role } from "../generated/prisma/client";
-import { prisma } from "../prisma/client";
-
-const readableDateFormatter = new Intl.DateTimeFormat("en-US", {
-  dateStyle: "medium",
-  timeStyle: "short",
-});
-
-type RoleWithReadableDate = Role & { createdAtReadable: string };
-
-const addReadableDate = (role: Role): RoleWithReadableDate => ({
-  ...role,
-  createdAtReadable: readableDateFormatter.format(role.createdAt),
-});
-
-const mapRoleWithReadableDate = (role: Role | null): RoleWithReadableDate | null =>
-  role ? addReadableDate(role) : null;
+import { Request, Response } from "express";
+import { RolesService } from "../services/roles.service";
+import { isHttpError } from "../services/errors";
 
 //  Roles Controller for Basic Crud
 const RolesController = {
-async GetAllRoles(_req: Request, res: Response, next: NextFunction) { 
+async GetAllRoles(_req: Request, res: Response) { 
 try {
-const roles = await prisma.role.findMany();
+const roles = await RolesService.getAllRoles();
 res.status(200).json({
     message: "Roles Fetched Successfully",
-    data: roles.map(addReadableDate),
+    data: roles,
 })
 
 } catch (error: any) {
-next(error);
+console.error(error);
+return res.status(500).json({ message: "Internal server error" });
 }
 },
 
-async CreateRoles(req:Request, res:Response, next:NextFunction
-) {
+async CreateRoles(req:Request, res:Response) {
     
 try {
 
-const incomingData = req.body
-
-    if (!incomingData.name) {
-        return res.status(200).json({
-            message: "name must include a text"
-        })
-    }
-
-const role = await prisma.role.create({
-    data:incomingData
-})
+const role = await RolesService.createRole(req.body)
 return res.status(200).json({
     message: "Roles created successfully",
-    data: addReadableDate(role)
+    data: role
 })
 } catch (error:any) {
-next(error)
+if (isHttpError(error)) {
+  return res.status(error.statusCode).json({ message: error.message });
+}
+console.error(error);
+return res.status(500).json({ message: "Internal server error" });
 }
 },
 
-async DeleteRoles(req:Request, res:Response, next:NextFunction) {
+async DeleteRoles(req:Request, res:Response) {
 try {
 const id = req.params.id as string;
-await prisma.role.delete({
-    where: {
-        id
-    }
-})
+await RolesService.deleteRole(id)
 return res.status(200).json({
     message: "Roles deleted successfully",
 })
 } catch (error:any) {
-next(error)
+console.error(error);
+return res.status(500).json({ message: "Internal server error" });
 }       
 },
 
-async UpdateRoles(req:Request, res:Response, next:NextFunction) {
+async UpdateRoles(req:Request, res:Response) {
 try {
 const id = req.params.id as string;
-const incomingData = req.body
-const role = await prisma.role.update({
-    where: {
-        id
-    },
-    data: incomingData
-})
+const role = await RolesService.updateRole(id, req.body)
 return res.status(200).json({
     message: "Roles updated successfully",
-    data: addReadableDate(role)
+    data: role
 })     
 } catch (error:any) {
-next(error)
+console.error(error);
+return res.status(500).json({ message: "Internal server error" });
 }
 },           
 
-async GetRolesById(req:Request, res:Response, next:NextFunction) {
+async GetRolesById(req:Request, res:Response) {
 try {
 const id = req.params.id as string;
-const role = await prisma.role.findUnique({
-    where: {
-        id
-    }
-})
-return res.status(200).json(mapRoleWithReadableDate(role))              
+const role = await RolesService.getRoleById(id)
+return res.status(200).json(role)              
 } catch (error:any) {
-next(error)
+console.error(error);
+return res.status(500).json({ message: "Internal server error" });
 }
 }           
 

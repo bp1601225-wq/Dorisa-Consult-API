@@ -1,88 +1,29 @@
-import { prisma } from "../prisma/client";
 import { Request, Response } from "express";
-import argon2 from "argon2";
-import { resolveRoleId } from "../utils/roleHelpers";
-import { RoleBasedFetched } from "../utils/helperFunctions";
+import { UserService } from "../services/user.service";
+import { isHttpError } from "../services/errors";
 
 export const UserController = {
 async GetAllUsers(req: Request, res: Response) {
 
-const user = (req as any).user
+ const user = (req as any).user
     
   try {
+    const result = await UserService.getAllUsers(user, req.query);
 
-
-      // Pagination
-const page = Number(req.query.page) || 1;
-const PageSize = Number(req.query.PageSize) || 100;
-
-      const skip = (page - 1) * PageSize
-      const take = PageSize
-
-
-      const userPayLoad = await prisma.user.findMany({
-
-          where: RoleBasedFetched.FetchRolesForAdminOnly(user),
-
-          select: {
-            id:true,
-            fullName:true,
-            firstName:true,
-            middleName:true,
-            lastName:true,
-            email:true,
-          phone:true,
-          country:true,
-          companyName:true, 
-          companyWebsite:true,
-          industry:true,
-          type:true,
-          roleId:true,
-
-              role: {
-                  select: {
-                      name: true,
-                  },
-              },
-
-
-
-
-          },
-
-
-          skip,
-          take, 
-          orderBy: {
-              createdAt: 'desc'
-          }
-      });
-
-
-const flattenedUsers = userPayLoad.map(user => ({
-...user,
-role: user.role?.name || null,
-}));
-
-
-      // console.log(flattenedUsers)
-
-const totalUsers = await prisma.user.count()
-
-  
-      return res.status(200).json({
-          message: "Users fetched successfully",
-          data: flattenedUsers,
-          total:totalUsers,
-          page,
-          PageSize
-      });
+   
+       return res.status(200).json({
+           message: "Users fetched successfully",
+           data: result.data,
+           total: result.total,
+           page: result.page,
+           PageSize: result.PageSize
+       });
   } catch (error: any) {
       console.error("GET ALL USERS ERROR:", error);
       return res.status(500).json({
-          message: "Failed to fetch users",
-          error: error.message,
-      });
+           message: "Failed to fetch users",
+           error: error.message,
+       });
   }
 },
 
@@ -91,73 +32,7 @@ const totalUsers = await prisma.user.count()
 // User creation
 async CreateUser(req: Request, res: Response) {
 try {
-const incomingData = req.body;
-
-const { roleId, password, email, phone, country, type, ...rest } = incomingData;
-
-if (!email) {
-return res.status(400).json({
-message: "Email is required",
-});
-}
-
-if (!phone) {
-return res.status(400).json({
-message: "Phone is required",
-});
-}
-
-if (!country) {
-return res.status(400).json({
-message: "Country is required",
-});
-}
-
-if (!password) {
-return res.status(400).json({
-message: "Password is required",
-});
-}
-
-
-
-if (password.length < 8) {
-return res.status(400).json({
-  message: "Password must be at least 8 characters",
-});
-}
-
-if (phone.length < 10) {
-return res.status(400).json({
-  message: "Phone number is too short, must be 10 digits",
-});
-}
-
-
-const resolvedRoleId = await resolveRoleId(roleId);
-
-const hashedPassword = await argon2.hash(password);
-
-const newUser = await prisma.user.create({
-data: {
-  ...rest,
-  email,
-  phone,
-  country,
-  type,
-  password: hashedPassword,
-  role: {
-    connect: { id: resolvedRoleId },
-  },
-},
-include: {
-  role: {
-    select: {
-      name: true,
-    },
-  },
-},
-});
+const newUser = await UserService.createUser(req.body);
 
 return res.status(201).json({
 message: "User created successfully",
@@ -166,6 +41,9 @@ data: newUser,
 
 } catch (error: any) {
 console.error("CREATE USER ERROR:", error);
+if (isHttpError(error)) {
+  return res.status(error.statusCode).json({ message: error.message });
+}
 return res.status(400).json({
 message: error.message,
 });
@@ -176,32 +54,7 @@ message: error.message,
 async EditUser(req: Request, res: Response) {
 try {
 const id = req.params.id as string;
-const incomingData = req.body;
-
-const { roleId, ...rest } = incomingData;
-
-let data: any = { ...rest };
-
-// Only update role if provided
-if (roleId) {
-const resolvedRoleId = await resolveRoleId(roleId);
-
-data.role = {
-  connect: { id: resolvedRoleId },
-};
-}
-
-const user = await prisma.user.update({
-where: { id },
-data,
-include: {
-  role: {
-    select: {
-      name: true,
-    },
-  },
-},
-});
+const user = await UserService.editUser(id, req.body);
 
 return res.status(200).json({
 message: "User updated successfully",
@@ -210,6 +63,9 @@ data: user,
 
 } catch (error: any) {
 console.error(error);
+if (isHttpError(error)) {
+  return res.status(error.statusCode).json({ message: error.message });
+}
 return res.status(500).json({
 message: "Failed to update user",
 error: error.message,

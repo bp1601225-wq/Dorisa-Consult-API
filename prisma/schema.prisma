@@ -96,6 +96,8 @@ model Services {
   Description String
   status serviceStatus
 
+  Negotiation Negotiate[] @relation("Negotiated Service")
+
   proposal Proposal[] @relation("ServiceProposal")
   ProjectReview ProjectReview[] @relation("clientReview")
   DateCreated DateTime @default(now())
@@ -121,7 +123,7 @@ model Proposal {
 
 // projects review enum
 enum ReviewStatus {
-  DRAFTN
+  DRAFT
   PENDING
   APPROVED
   REJECTED
@@ -159,4 +161,10 @@ model Negotiate {
   
   proposal_id   String
   proposal    ProjectReview @relation("Project Negotiation", fields: [proposal_id], references: [id])
+
+  serviceId  String
+  service   Services  @relation("Negotiated Service", fields: [serviceId], references: [id])
+
+  NegotiatingText     String 
 }
+

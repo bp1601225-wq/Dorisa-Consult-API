@@ -1,65 +1,25 @@
-import { prisma } from "../prisma/client";
-import { Request, Response } from "express";
-import { RoleBasedFetched } from "../utils/helperFunctions";
+import { Request, response, Response } from "express";
+import { ReviewService } from "../services/review.service";
 
 export const ReviewController = {
 
+
+
+    //  fetch all reviews
+
     async GetAllReviews (req:Request, res:Response){
-try {
-const user = (req as any).user;
-
-// const isAdmin = user.role === "Admin";
-
-console.log(user.role)
-
-const allReviews = await prisma.projectReview.findMany({
-
-    where: RoleBasedFetched.BuildReviewsWhere(user),
-
-  select: {
-    id: true,
-    scope: true,
-    deliverables: true,
-    timeline: true,
-    pricing: true, 
-    status: true,
-    termsAndConditions: true,
-
-    service: {
-      select: {
-        ServiceName: true,
-        Description: true,
-      },
-    },
-
-    client: {
-      select: {
-        id: true,
-        phone: true,
-        email: true,
-        country: true,
-        fullName: true,
-        firstName: true,
-        middleName: true,
-        lastName: true,
-        companyName: true,
-        companyWebsite: true,
-        industry: true,
-      },
-    },
-  },
-});
+ try {
+ const user = (req as any).user;
 
 
-//  Total number of review pages
-const reviewCount = await prisma.projectReview.count()
-
-
-return res.status(200).json({
-    message: "All reviews fetched succesfully",
-    data: allReviews,
-    total: reviewCount
-})
+ const result = await ReviewService.getAllReviews(user);
+ 
+ 
+ return res.status(200).json({
+     message: "All reviews fetched succesfully",
+     data: result.data,
+     total: result.total
+ })
 
 
     } catch (error:any) {
@@ -72,18 +32,14 @@ return res.status(200).json({
 
     }, 
 
-    async CreateReviews (req:Request, res:Response){
-
-        try {
-const incomingData = req.body
-
-const gatheredData = await prisma.projectReview.create({
-    data:incomingData
-})
-
-return res.status(200).json({
-    message: "reviews created successfully",
-    data: gatheredData
+     async CreateReviews (req:Request, res:Response){
+ 
+         try {
+ const gatheredData = await ReviewService.createReview(req.body)
+ 
+ return res.status(200).json({
+     message: "reviews created successfully",
+     data: gatheredData
 })
 
         } catch (error:any){
@@ -97,22 +53,15 @@ return res.status(200).json({
 
     },
 
-    async EditReviews (req:Request, res:Response){
-        try {
-
-            const id = req.params.id as string
-            const incomingData = req.body
-
-
-            const EditedReviews = await prisma.projectReview.update({
-where: {id},
-data: incomingData
-
-            })
-
-            return res.status(200).json({
-                message: "review updated",
-                data: EditedReviews
+     async EditReviews (req:Request, res:Response){
+         try {
+ 
+             const id = req.params.id as string
+             const EditedReviews = await ReviewService.editReview(id, req.body)
+ 
+             return res.status(200).json({
+                 message: "review updated",
+                 data: EditedReviews
             })
 
 
@@ -129,20 +78,16 @@ data: incomingData
 
 
     // Find proposal created by client themselves
-async GetReviewsById(req: Request, res: Response) {
-  try {
-    const clientId = req.params.clientId as string;
-
-    const reviews = await prisma.projectReview.findMany({
-      where: {
-        client_id: clientId,
-      },
-    });
-
-    return res.status(200).json({
-      message: "User reviews fetched successfully",
-      data: reviews,
-    });
+ async GetReviewsById(req: Request, res: Response) {
+   try {
+     const clientId = (req.params.clientId ?? req.params.id) as string;
+ 
+     const reviews = await ReviewService.getReviewsByClientId(clientId);
+ 
+     return res.status(200).json({
+       message: "User reviews fetched successfully",
+       data: reviews,
+     });
 
   } catch (error: any) {
     console.log(error);
@@ -152,17 +97,69 @@ async GetReviewsById(req: Request, res: Response) {
       error: error.message,
     });
   }
-}, 
+ },
 
-async NegotiateProposals (req:Request, res:Response) {
-  try {
+ // When client negotiates a proposal review
+async NegotiateProposalReview(req:Request, res:Response){
 
-        
+    const incomingData = req.body
+
+    try {
+
+ const {clientId, proposal_id, NegotiatingText} = incomingData
+
+const negotiationData = ReviewService.NegotiateProposalReview({
+    clientId,
+    proposal_id,
+    NegotiatingText
+})
+
+return res.status(200).json({
+    message: "Negotiation succesful",
+    data: negotiationData
+})
+    } 
     
-  } catch (error){
+    
+    catch (error:any){
 
-  }
+        console.log(error)
+
+        return res.status(500).json({
+            message: "Negotiaion failed",
+            error: error.message
+        })
+    }
+
+    
+   
+
+
+},
+
+// fetch all negotiated by clients
+async fetchClientsNegotiationDetails(_req:Request, res:Response){
+try {
+    const AllNegotiatingText = ReviewService.fetchAllClientsNegotatedDetails()
+
+return res.status(200).json({
+message: "All negotiating fetched succesfully",
+data: AllNegotiatingText
+})
+
+} catch (error:any) {
+console.log(error)
+
+return res.status(401).json({
+    message: "Failed to fetch negotiation",
+    error: error.message
+})
+}
+
 }
 
 
-}
+
+
+ 
+ }

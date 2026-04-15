@@ -1,8 +1,8 @@
 import "dotenv/config";
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import type { TestRoutesDependencies } from "./testRoutesController";
-import { createTestRouteEntry, fetchTestRoutes } from "./testRoutesController";
+import type { TestRoutesDependencies } from "../services/testRoutes.service";
+import { createTestRouteEntry, fetchTestRoutes } from "../services/testRoutes.service";
 
 type FindManyArgs = Parameters<TestRoutesDependencies["testRoute"]["findMany"]>[0];
 type CreateArgs = Parameters<TestRoutesDependencies["testRoute"]["create"]>[0];

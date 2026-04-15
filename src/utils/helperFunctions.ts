@@ -1,6 +1,6 @@
 const allowedRoles = ["Admin", "ProjectLead", "Consultant"];
 
-import type { UserWhereInput } from "@prisma/client";
+import type { Prisma } from "../generated/prisma/client";
 
 export const RoleBasedFetched = {
 
@@ -26,7 +26,7 @@ export const RoleBasedFetched = {
 
 
   //  fetch users for admin only not other roles
-  FetchRolesForAdminOnly(user: { id: string; role: string }): UserWhereInput {
+  FetchRolesForAdminOnly(user: { id: string; role: string }): Prisma.UserWhereInput {
     const allowedAdmin = "Admin";
 
     if (user.role === allowedAdmin) {
