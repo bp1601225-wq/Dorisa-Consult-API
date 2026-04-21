@@ -20,7 +20,9 @@ export const RoleBasedFetched = {
     }
 
     return {
-      client_id: user.id,
+      request: {
+        clientId: user.id,
+      },
     };
   },
 

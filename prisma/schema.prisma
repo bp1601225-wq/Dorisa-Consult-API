@@ -2,136 +2,137 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma/client"
-  engineType = "client"
+provider = "prisma-client-js"
+output   = "../src/generated/prisma/client"
+engineType = "client"
 }
 
 datasource db {
-  provider = "postgresql"
+provider = "postgresql"
 }
 
 model User {
-  id             String   @id @default(uuid())
-  email          String?   @unique
-  phone          String?
-  password       String?
-  country        String?
-  companyName    String?
-  contactPerson  String?
-  fullName       String?
-  firstName      String?
-  middleName     String?
-  lastName       String?
-  companyWebsite String?
-  industry       String?
-  type           UserTypeEnum?
+id             String   @id @default(uuid())
+email          String?   @unique
+phone          String?
+password       String?
+country        String?
+companyName    String?
+contactPerson  String?
+fullName       String?
+firstName      String?
+middleName     String?
+lastName       String?
+companyWebsite String?
+industry       String?
+type           UserTypeEnum?
 
-  roleId         String
-  role           Role     @relation(fields: [roleId], references: [id])
-  service       Services[]
-  client        Proposal[] @relation("clientProposal")
-  projectReview ProjectReview[]
-  Negotiation     Negotiate[] @relation("ClientNegotiation")
+roleId         String
+role           Role     @relation(fields: [roleId], references: [id])
+service       Services[]
+client        ClientRequest[] @relation("client Request")
+Proposal Proposal[]
+Negotiation     Negotiate[] @relation("ClientNegotiation")
 
-  createdAt      DateTime @default(now())
+project Project[] @relation("Client Project")
+createdAt      DateTime @default(now())
 }
 
 enum UserTypeEnum {
-  INDIVIDUAL
-  CORPORATE
+INDIVIDUAL
+CORPORATE
 }
 
 model Role {
-  id        String   @id @default(uuid())
-  name      String   
-  status    Status   @default(Active)
-  createdAt DateTime @default(now())
+id        String   @id @default(uuid())
+name      String   
+status    Status   @default(Active)
+createdAt DateTime @default(now())
 
-  users     User[]
+users     User[]
 }
 
-
+// role status
 enum Status {
-  Active
-  InActive
+Active
+InActive
 }
 
-//  enum status for propsoals stages
 
+// creating of services to display
 enum serviceStatus {
-  ACTIVE
-  INACTIVE
-  REQUESTED
-  IN_PROGRESS
-  COMPLETED
-  CANCELLED
+ACTIVE
+INACTIVE 
 }
 
-enum ProposalStatus {
-  PENDING
+enum ClientRequestStatus {
   DRAFT
-  SENT
-  APPROVED
-  DECLINED
-  NEGOTIATING
- }
-
-
-enum ProjectStatus {
-  NOT_STARTED
-  IN_PROGRESS
-  COMPLETED
+  PENDING
 }
 
-// Entry Point Service Models
+
+// CLIENTS REQUESTED REVIEW AND PROPOSAL UPDATED STATUS
+enum ProposalStatus {
+APPROVED
+DECLINED
+NEGOTIATING
+ACCEPTED
+}
+
+
+// Entry Point Service Models example business advisory, human resource
 
 model Services {
-  id String @id @default(uuid())
+id String @id @default(uuid())
 
-  clientId String?
-  client   User? @relation(fields: [clientId], references: [id])
+clientId String?
+client   User? @relation(fields: [clientId], references: [id])
 
-  ServiceName String  
-  Description String
-  status serviceStatus
+ServiceName String  
+Description String
+status serviceStatus
 
-  Negotiation Negotiate[] @relation("Negotiated Service")
+createdAt DateTime @default(now())
 
-  proposal Proposal[] @relation("ServiceProposal")
-  ProjectReview ProjectReview[] @relation("clientReview")
-  DateCreated DateTime @default(now())
+Negotiation Negotiate[] @relation("Negotiated Service")
+
+clientRequest ClientRequest[] @relation("ServiceProposal")
+
+Proposal Proposal[] @relation("clientReview")
+
+Project Project[] @relation("Project Services")
+
+
+
+
+
+DateCreated DateTime @default(now())
 }
+
+
+
+//  Client requesting for a service 
+model ClientRequest {
+
+id String @id @default(uuid())
+
+serviceId String 
+clientId  String 
+
+// relations
+client User? @relation("client Request", fields: [clientId], references: [id])
+
+service Services?  @relation("ServiceProposal", fields: [serviceId], references: [id])
+
+request_status ClientRequestStatus
+
+createdAt DateTime @default(now())
+}
+
+
+//  Clients to review what proposal Admin sent (IF accepts, becomes a Proposal)
 
 model Proposal {
-  id String @id @default(uuid())
-
-  serviceId String 
-  clientId  String 
-
-  // relations
-  client User? @relation("clientProposal", fields: [clientId], references: [id])
-
-  service Services @relation("ServiceProposal", fields: [serviceId], references: [id])
-   
-  proposal_status ProposalStatus
-
-  createdAt DateTime @default(now())
-}
-
-
-
-// projects review enum
-enum ReviewStatus {
-  DRAFT
-  PENDING
-  APPROVED
-  REJECTED
-  NEGOTIATING
-}
-
-//  Clients to review what proposal Admin sent
-model ProjectReview {
 id  String @id @default(uuid())
 
 service_id  String
@@ -139,32 +140,69 @@ client_id   String
 
 service Services @relation("clientReview", fields: [service_id], references: [id])
 client User @relation(fields: [client_id], references: [id])
-Negotiate Negotiate[] @relation("Project Negotiation")
+Negotiate Negotiate[] @relation("Proposal Negotiation")
 
-
+Project Project[] @relation("Derived Proposal")
 
 contract_id String?
 scope String
 deliverables  String
 timeline    String
 pricing     Int
-status  ReviewStatus
+status  ProposalStatus
 termsAndConditions   String
-
-
 }
+
+
 
 model Negotiate {
-  id   String @id  @default(uuid())
-  clientId String
-  client  User @relation( "ClientNegotiation", fields: [clientId], references: [id])
-  
-  proposal_id   String
-  proposal    ProjectReview @relation("Project Negotiation", fields: [proposal_id], references: [id])
+id   String @id  @default(uuid())
+clientId String 
 
-  serviceId  String
-  service   Services  @relation("Negotiated Service", fields: [serviceId], references: [id])
 
-  NegotiatingText     String 
+client  User @relation( "ClientNegotiation", fields: [clientId], references: [id])
+
+proposal_id   String 
+proposal    Proposal @relation("Proposal Negotiation", fields: [proposal_id], references: [id])
+
+serviceId  String
+service   Services  @relation("Negotiated Service", fields: [serviceId], references: [id])
+
+NegotiatingText     String 
 }
+
+
+model Project {
+  id          String @id @default(uuid())
+
+  service_id  String
+  proposal_id String @unique
+  client_id   String
+
+  title       String? // optional snapshot (recommended for speed)
+
+  service     Services @relation("Project Services", fields: [service_id], references: [id])
+  proposal    Proposal @relation("Derived Proposal", fields: [proposal_id], references: [id])
+  client      User @relation("Client Project", fields: [client_id], references: [id])
+
+  projectStatus ProjectStatus @default(PLANNING)
+
+  endDate     DateTime?
+
+  progress Int @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum ProjectStatus {
+  PLANNING
+  IN_PROGRESS
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+
+
 

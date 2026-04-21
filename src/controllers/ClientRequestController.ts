@@ -1,0 +1,135 @@
+import { Request, Response } from "express";
+import { clientRequestService } from "../services/ClientRequestService";
+import { isHttpError } from "../services/errors";
+import { ClientsService } from "../services/clients.service";
+import { globalErrorHandler } from "../middleware/errorhandler";
+
+/**
+ * `ClientRequestController.ts`
+ *
+ * Step 1 of your flow: Client submits a Service Request.
+ *
+ * This controller:
+ * - reads the logged-in user from `req.user` (set by `authMiddleware`)
+ * - calls `clientRequestService` to write/read from the database
+ * - returns JSON responses to the frontend/website
+ */
+export const clientRequestController = {
+
+  // Fetch all client requests
+  async getAllClientRequests(req: Request, res: Response) {
+
+const data = await clientRequestService.getAllClientRequests()
+return res.status(200).json({
+  message: "all request fetched succesfully",
+  data:data
+})
+  },
+
+  // Create a client request
+  async createClientRequest(req: Request, res: Response) {
+    try {
+    
+      const incomingData = req.body
+
+      const finaldata = await clientRequestService.createClientRequest(incomingData)
+
+      return res.status(200).json({
+        message: "requested sucesfully submitted",
+        data:finaldata
+      })
+
+  } catch (error:any){
+    console.log(error)
+    return res.status(500).json({
+      message: "internal server error",
+      error:error.message
+
+    })
+
+  }
+},
+
+  // Update full client request
+  async updateClientRequest(req: Request, res: Response) {
+    try {
+      const id = req.params.id as string;
+
+  const { proposal_status } = req.body;
+
+
+  if (!proposal_status) {
+  return res.status(400).json({ message: "proposal_status is required" });
+}
+
+  console.log("BODY RECEIVED:", req.body);
+console.log("STATUS:", proposal_status);
+
+const updated = await clientRequestService.updateClientRequestStatus(
+  id,
+  proposal_status
+);
+
+      return res.status(200).json({
+        message: "Client request updated successfully",
+        data: updated,
+      });
+    } catch (error: any) {
+      console.error(error);
+      return res.status(500).json({
+        message: "Internal server error",
+        error: error?.message ?? error,
+      });
+    }
+  },
+
+  // Delete client request
+  async deleteClientRequest(req: Request, res: Response) {
+    try {
+      const id = req.params.id as string;
+
+      await clientRequestService.deleteClientRequest(id);
+
+      return res.status(200).json({
+        message: "Client request deleted successfully",
+      });
+    } catch (error: any) {
+      console.error(error);
+      return res.status(500).json({
+        message: "Failed to delete client request",
+        error: error?.message ?? error,
+      });
+    }
+  },
+
+  // Update only status
+  async updateClientRequestStatus(req: Request, res: Response) {
+    try {
+      const id = req.params.id as string;
+      const { proposal_status } = req.body;
+
+      const data = await clientRequestService.updateClientRequestStatus(
+        id,
+        proposal_status
+        
+      );
+
+      return res.status(200).json({
+        message: "Status updated successfully",
+        data,
+      });
+    } catch (error: any) {
+      console.log(error);
+
+      if (isHttpError(error)) {
+        return res.status(error.statusCode).json({ message: error.message });
+      }
+
+      return res.status(500).json({
+        message: "Internal server error",
+        error: error?.message ?? error,
+      });
+
+    }
+  },
+};

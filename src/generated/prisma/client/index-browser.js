@@ -24,11 +24,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.6.0
+ * Prisma Client JS version: 7.7.0
  * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
  */
 Prisma.prismaVersion = {
-  client: "7.6.0",
+  client: "7.7.0",
   engine: "75cbdc1eb7150937890ad5465d861175c6624711"
 }
 
@@ -152,18 +152,19 @@ exports.Prisma.ServicesScalarFieldEnum = {
   ServiceName: 'ServiceName',
   Description: 'Description',
   status: 'status',
+  createdAt: 'createdAt',
   DateCreated: 'DateCreated'
 };
 
-exports.Prisma.ProposalScalarFieldEnum = {
+exports.Prisma.ClientRequestScalarFieldEnum = {
   id: 'id',
   serviceId: 'serviceId',
   clientId: 'clientId',
-  proposal_status: 'proposal_status',
+  request_status: 'request_status',
   createdAt: 'createdAt'
 };
 
-exports.Prisma.ProjectReviewScalarFieldEnum = {
+exports.Prisma.ProposalScalarFieldEnum = {
   id: 'id',
   service_id: 'service_id',
   client_id: 'client_id',
@@ -179,7 +180,22 @@ exports.Prisma.ProjectReviewScalarFieldEnum = {
 exports.Prisma.NegotiateScalarFieldEnum = {
   id: 'id',
   clientId: 'clientId',
-  proposal_id: 'proposal_id'
+  proposal_id: 'proposal_id',
+  serviceId: 'serviceId',
+  NegotiatingText: 'NegotiatingText'
+};
+
+exports.Prisma.ProjectScalarFieldEnum = {
+  id: 'id',
+  service_id: 'service_id',
+  proposal_id: 'proposal_id',
+  client_id: 'client_id',
+  title: 'title',
+  projectStatus: 'projectStatus',
+  endDate: 'endDate',
+  progress: 'progress',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -208,37 +224,37 @@ exports.Status = exports.$Enums.Status = {
 
 exports.serviceStatus = exports.$Enums.serviceStatus = {
   ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE',
-  REQUESTED: 'REQUESTED',
-  IN_PROGRESS: 'IN_PROGRESS',
-  COMPLETED: 'COMPLETED',
-  CANCELLED: 'CANCELLED'
+  INACTIVE: 'INACTIVE'
+};
+
+exports.ClientRequestStatus = exports.$Enums.ClientRequestStatus = {
+  DRAFT: 'DRAFT',
+  PENDING: 'PENDING'
 };
 
 exports.ProposalStatus = exports.$Enums.ProposalStatus = {
-  PENDING: 'PENDING',
-  DRAFT: 'DRAFT',
-  SENT: 'SENT',
   APPROVED: 'APPROVED',
   DECLINED: 'DECLINED',
-  NEGOTIATING: 'NEGOTIATING'
+  NEGOTIATING: 'NEGOTIATING',
+  ACCEPTED: 'ACCEPTED'
 };
 
-exports.ReviewStatus = exports.$Enums.ReviewStatus = {
-  DRAFTN: 'DRAFTN',
-  PENDING: 'PENDING',
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED',
-  NEGOTIATING: 'NEGOTIATING'
+exports.ProjectStatus = exports.$Enums.ProjectStatus = {
+  PLANNING: 'PLANNING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  ON_HOLD: 'ON_HOLD',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
 };
 
 exports.Prisma.ModelName = {
   User: 'User',
   Role: 'Role',
   Services: 'Services',
+  ClientRequest: 'ClientRequest',
   Proposal: 'Proposal',
-  ProjectReview: 'ProjectReview',
-  Negotiate: 'Negotiate'
+  Negotiate: 'Negotiate',
+  Project: 'Project'
 };
 
 /**

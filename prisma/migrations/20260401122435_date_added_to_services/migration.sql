@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Services" ALTER COLUMN "DateCreated" SET DEFAULT CURRENT_TIMESTAMP;

@@ -3,7 +3,10 @@ import { prisma } from "../prisma/client";
 import { resolveRoleId } from "../utils/roleHelpers";
 import { HttpError } from "./errors";
 
+
+//  CREATE CLIENT OR USER
 export const ClientsService = {
+
   async createClient(incomingData: any) {
     const { password, roleId, ...rest } = incomingData ?? {};
 
@@ -35,7 +38,6 @@ export const ClientsService = {
 
   async getAllClients() {
     return prisma.user.findMany({
-      where: { type: "CORPORATE" },
       include: {
         role: {
           select: {
@@ -46,5 +48,21 @@ export const ClientsService = {
       orderBy: { createdAt: "desc" },
     });
   },
+
+  async updateClient(id:string, data:any){
+    return prisma.user.update({
+      where: {id},
+      data
+    })
+  },
+
+
+  async DeleteClient(id:string) {
+    return prisma.user.delete({
+      where: {id}
+    })
+  }
+
+
 };
 
