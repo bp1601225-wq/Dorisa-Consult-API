@@ -1,5 +1,5 @@
 import { prisma } from "../prisma/client";
-import { ClientRequestStatus, ProposalStatus } from "../generated/prisma/client";
+import { ClientRequestStatus } from "../generated/prisma/client";
 
 
 /**
@@ -26,6 +26,8 @@ export const clientRequestService = {
   return prisma.clientRequest.findMany({
     select: {
       id:true,
+      createdAt:true,
+      
       
 request_status:true,
 
@@ -49,6 +51,7 @@ request_status:true,
         }
       }
 
+      
 
     },
  
@@ -102,5 +105,92 @@ async createClientRequest(incomingData: any) {
      where: { id },
      data: { request_status: status },
    });
- }
+ },
+
+
+
+//  Get specific Id
+ async GetClientRequestById(id:string){
+
+
+  return prisma.clientRequest.findUnique({
+    where: {id},
+
+    select: {
+      id:true,
+      createdAt:true,
+      
+      
+request_status:true,
+
+      service: {
+        select: {
+          id:true,
+          ServiceName:true,
+          Description:true,
+        }
+      },
+
+      client: {
+        select: {
+          id:true,
+          email:true,
+          phone:true,
+          firstName:true,
+          fullName:true,
+          middleName:true,
+          lastName:true,
+          country:true
+        }
+      }
+
+      
+
+    }
+  })
+ },
+
+
+//  Filter by status  
+
+async FilterByStatus(status: any) {
+
+  if (!status || status === "ALL") {
+    return clientRequestService.getAllClientRequests();
+  }
+
+  return prisma.clientRequest.findMany({
+    where: {
+      request_status: status.toUpperCase() as ClientRequestStatus,
+    },
+
+    select: {
+      id: true,
+      createdAt: true,
+      request_status: true,
+
+      service: {
+        select: {
+          id: true,
+          ServiceName: true,
+          Description: true,
+        },
+      },
+
+      client: {
+        select: {
+          id: true,
+          email: true,
+          phone: true,
+          firstName: true,
+          fullName: true,
+          middleName: true,
+          lastName: true,
+        },
+      },
+    },
+  });
+}
+
+
 };

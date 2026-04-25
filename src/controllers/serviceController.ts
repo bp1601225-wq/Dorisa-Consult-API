@@ -29,6 +29,8 @@ return res.status(500).json({
     //  Create services
 
 async CreateServices(req: Request, res: Response) {
+
+  
   try {
     const servicesDetails = await ServiceCatalogService.createService(req.body);
 
@@ -52,9 +54,22 @@ async CreateServices(req: Request, res: Response) {
 
 async UpdateService(req:Request, res:Response){
 
+
+
+
+
+
     try {
           const id = req.params.id as string
-const services = await ServiceCatalogService.updateService(id, req.body)
+
+const incomingData = req.body
+
+
+// const data = {
+//   id, 
+//   incomingData
+// }
+const services = await ServiceCatalogService.updateService(id, incomingData)
 
 
   return res.status(200).json({

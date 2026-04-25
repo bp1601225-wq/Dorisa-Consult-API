@@ -1,11 +1,10 @@
 import argon2 from "argon2";
 import { prisma } from "../prisma/client";
-import { RoleBasedFetched } from "../utils/helperFunctions";
 import { resolveRoleId } from "../utils/roleHelpers";
 import { HttpError } from "./errors";
 
 export const UserService = {
-  async getAllUsers(user: any, query: any) {
+  async getAllUsers( query: any) {
     const page = Number(query?.page) || 1;
     const PageSize = Number(query?.PageSize) || 100;
 
@@ -13,7 +12,6 @@ export const UserService = {
     const take = PageSize;
 
     const userPayLoad = await prisma.user.findMany({
-      where: RoleBasedFetched.FetchRolesForAdminOnly(user),
       select: {
         id: true,
         fullName: true,
@@ -122,5 +120,13 @@ export const UserService = {
       },
     });
   },
+
+  async deleteUser(id:string){
+    await prisma.user.delete({
+      where:{
+        id
+      }
+    })
+  }
 };
 

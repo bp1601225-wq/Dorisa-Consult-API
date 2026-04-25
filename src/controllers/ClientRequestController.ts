@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { clientRequestService } from "../services/ClientRequestService";
 import { isHttpError } from "../services/errors";
-import { ClientsService } from "../services/clients.service";
-import { globalErrorHandler } from "../middleware/errorhandler";
+
 
 /**
  * `ClientRequestController.ts`
@@ -17,13 +16,13 @@ import { globalErrorHandler } from "../middleware/errorhandler";
 export const clientRequestController = {
 
   // Fetch all client requests
-  async getAllClientRequests(req: Request, res: Response) {
-
-const data = await clientRequestService.getAllClientRequests()
-return res.status(200).json({
-  message: "all request fetched succesfully",
-  data:data
-})
+  async getAllClientRequests(_req: Request, res: Response) {
+ 
+ const data = await clientRequestService.getAllClientRequests()
+ return res.status(200).json({
+   message: "all request fetched succesfully",
+   data:data
+ })
   },
 
   // Create a client request
@@ -102,7 +101,7 @@ const updated = await clientRequestService.updateClientRequestStatus(
     }
   },
 
-  // Update only status
+  // update only status of a client request
   async updateClientRequestStatus(req: Request, res: Response) {
     try {
       const id = req.params.id as string;
@@ -130,6 +129,88 @@ const updated = await clientRequestService.updateClientRequestStatus(
         error: error?.message ?? error,
       });
 
+    }
+  },
+
+
+  // get clientes requets by Id
+  async getClientRequestById(req: Request, res: Response){
+try {
+
+  const id = req.params.id as string
+
+
+  const data =await clientRequestService.GetClientRequestById(id)
+
+
+return res.status(200).json({
+  message: "clients succesfully fetched by the specific id",
+  data
+})
+
+} catch (error:any){
+  console.log(error)
+
+  return res.status(500).json({
+    message: "failed to fetch clients request id details",
+error: error.message
+  })
+}
+
+  },
+
+//  filter by Either pending or draft
+async FilterByStatusController(req: Request, res: Response) {
+  try {
+    const status = req.query.status as string;
+
+    const requestedData = await clientRequestService.FilterByStatus(status);
+
+    return res.status(200).json({
+      message: "filter operation successful",
+      data: requestedData,
+    });
+
+  } catch (error: any) {
+    console.log(error);
+
+    return res.status(500).json({
+      message: "something went wrong",
+      error: error.message,
+    });
+  }
+},
+
+  // Dev helper: seed ~20 client requests for quick testing.
+  async seedClientRequests(req: Request, res: Response) {
+    try {
+      if (process.env.ALLOW_SEED !== "true") {
+        return res.status(403).json({
+          message: "Seeding is disabled. Set ALLOW_SEED=true to enable this endpoint.",
+        });
+      }
+
+      const raw = (req.body?.count ?? req.query?.count ?? 20) as any;
+      const count = Number(raw);
+
+      if (!Number.isFinite(count) || count < 1 || count > 200) {
+        return res.status(400).json({
+          message: "count must be a number between 1 and 200",
+        });
+      }
+
+      const data = await clientRequestService.seedClientRequests(count);
+
+      return res.status(201).json({
+        message: `Seeded ${data.length} client requests`,
+        data,
+      });
+    } catch (error: any) {
+      console.error(error);
+      return res.status(500).json({
+        message: "Failed to seed client requests",
+        error: error?.message ?? error,
+      });
     }
   },
 };

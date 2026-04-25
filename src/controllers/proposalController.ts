@@ -66,7 +66,7 @@ return res.status(500).json({
 
   },
 
-  // update a proposal
+  // update a proposal details
 
   async UpdateProposal(req:Request, res:Response){
 

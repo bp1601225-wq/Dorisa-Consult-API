@@ -43,6 +43,7 @@ INDIVIDUAL
 CORPORATE
 }
 
+
 model Role {
 id        String   @id @default(uuid())
 name      String   
@@ -51,6 +52,7 @@ createdAt DateTime @default(now())
 
 users     User[]
 }
+
 
 // role status
 enum Status {
@@ -68,11 +70,13 @@ INACTIVE
 enum ClientRequestStatus {
   DRAFT
   PENDING
+  ALL
 }
 
 
 // CLIENTS REQUESTED REVIEW AND PROPOSAL UPDATED STATUS
 enum ProposalStatus {
+PENDING
 APPROVED
 DECLINED
 NEGOTIATING
@@ -80,7 +84,6 @@ ACCEPTED
 }
 
 
-// Entry Point Service Models example business advisory, human resource
 
 model Services {
 id String @id @default(uuid())
@@ -102,10 +105,6 @@ Proposal Proposal[] @relation("clientReview")
 
 Project Project[] @relation("Project Services")
 
-
-
-
-
 DateCreated DateTime @default(now())
 }
 
@@ -124,19 +123,28 @@ client User? @relation("client Request", fields: [clientId], references: [id])
 
 service Services?  @relation("ServiceProposal", fields: [serviceId], references: [id])
 
+// proposals
+proposals Proposal[] @relation("Client Request")
+
 request_status ClientRequestStatus
 
 createdAt DateTime @default(now())
 }
 
 
-//  Clients to review what proposal Admin sent (IF accepts, becomes a Proposal)
 
 model Proposal {
 id  String @id @default(uuid())
 
+
+// the clientRequest table
+client_request_id String
+
+clientRequest ClientRequest @relation("Client Request", fields: [client_request_id], references: [id])
+
 service_id  String
 client_id   String
+
 
 service Services @relation("clientReview", fields: [service_id], references: [id])
 client User @relation(fields: [client_id], references: [id])
@@ -152,7 +160,6 @@ pricing     Int
 status  ProposalStatus
 termsAndConditions   String
 }
-
 
 
 model Negotiate {

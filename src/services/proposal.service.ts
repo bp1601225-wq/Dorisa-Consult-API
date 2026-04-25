@@ -1,7 +1,6 @@
 import {
 } from "../generated/prisma/client";
 import { prisma } from "../prisma/client";
-import { ProposalStatus } from "../generated/prisma/client";
 
 /**
  * `proposal.service.ts`
@@ -20,7 +19,6 @@ export const ProposalService = {
   return prisma.proposal.findMany({
 select: {
   id:true,
-
 
   service: {
     select: {
@@ -44,17 +42,30 @@ select: {
   },  
 
 
-  // create proposal
- async CreateProposal(data: any) {
+  // create proposal and change status from draft to pending
+async CreateProposal(data: any) {
+  const { client_request_id, ...rest } = data;
 
-  return prisma.proposal.create({
-    data
-  })
- 
+  return prisma.$transaction(async (tx) => {
+
+    await tx.clientRequest.update({
+      where: { id: client_request_id },
+      data: {
+        request_status: "PENDING"
+      }
+    });
+
+    return tx.proposal.create({
+      data: {
+        ...rest,
+        client_request_id
+      }
+    });
+  });
 },
 
-  // when client request negotiatioin
 
+  // when client request needs some changes 
   async UpdateProposal(id:string, data:any){
     return prisma.proposal.update({
       where: {id},
@@ -62,13 +73,40 @@ select: {
     })
   },
 
+
+
+
 // clients negotiating a proposal
-async ChangeProposalStatus(id:string, status:ProposalStatus){
+async ChangeProposalStatus( data:any){
 
-  return prisma.proposal.update({
-    where: {id},
-    data: {status}
-  })
+const { id, ...rest } = data;
+ 
+  return prisma.$transaction(async (tx) => {
 
-}
+    // update proposal when client clicks approved
+    await tx.proposal.update({
+      where: { id },
+      data: { status: "APPROVED" }
+    });
+
+    // if status is APPROVED then you create a project
+
+    if (status === "APPROVED"){
+    const project = await tx.project.create({
+      data: {
+        proposal_id: id,
+        ...rest
+      }
+    });
+
+    return project;
+    }
+
+
+  });
+
+},
+
+
+
 };

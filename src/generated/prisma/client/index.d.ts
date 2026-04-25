@@ -79,13 +79,15 @@ export type serviceStatus = (typeof serviceStatus)[keyof typeof serviceStatus]
 
 export const ClientRequestStatus: {
   DRAFT: 'DRAFT',
-  PENDING: 'PENDING'
+  PENDING: 'PENDING',
+  ALL: 'ALL'
 };
 
 export type ClientRequestStatus = (typeof ClientRequestStatus)[keyof typeof ClientRequestStatus]
 
 
 export const ProposalStatus: {
+  PENDING: 'PENDING',
   APPROVED: 'APPROVED',
   DECLINED: 'DECLINED',
   NEGOTIATING: 'NEGOTIATING',
@@ -244,7 +246,7 @@ export class PrismaClient<
    * 
    * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
@@ -371,8 +373,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.7.0
-   * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
+   * Prisma Client JS version: 7.8.0
+   * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
    */
   export type PrismaVersion = {
     client: string
@@ -1642,6 +1644,37 @@ export namespace Prisma {
    */
   export type ServicesCountOutputTypeCountProjectArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProjectWhereInput
+  }
+
+
+  /**
+   * Count Type ClientRequestCountOutputType
+   */
+
+  export type ClientRequestCountOutputType = {
+    proposals: number
+  }
+
+  export type ClientRequestCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    proposals?: boolean | ClientRequestCountOutputTypeCountProposalsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ClientRequestCountOutputType without action
+   */
+  export type ClientRequestCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClientRequestCountOutputType
+     */
+    select?: ClientRequestCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ClientRequestCountOutputType without action
+   */
+  export type ClientRequestCountOutputTypeCountProposalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProposalWhereInput
   }
 
 
@@ -5487,6 +5520,8 @@ export namespace Prisma {
     createdAt?: boolean
     client?: boolean | ClientRequest$clientArgs<ExtArgs>
     service?: boolean | ClientRequest$serviceArgs<ExtArgs>
+    proposals?: boolean | ClientRequest$proposalsArgs<ExtArgs>
+    _count?: boolean | ClientRequestCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["clientRequest"]>
 
   export type ClientRequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5521,6 +5556,8 @@ export namespace Prisma {
   export type ClientRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | ClientRequest$clientArgs<ExtArgs>
     service?: boolean | ClientRequest$serviceArgs<ExtArgs>
+    proposals?: boolean | ClientRequest$proposalsArgs<ExtArgs>
+    _count?: boolean | ClientRequestCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClientRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | ClientRequest$clientArgs<ExtArgs>
@@ -5536,6 +5573,7 @@ export namespace Prisma {
     objects: {
       client: Prisma.$UserPayload<ExtArgs> | null
       service: Prisma.$ServicesPayload<ExtArgs> | null
+      proposals: Prisma.$ProposalPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5939,6 +5977,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     client<T extends ClientRequest$clientArgs<ExtArgs> = {}>(args?: Subset<T, ClientRequest$clientArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     service<T extends ClientRequest$serviceArgs<ExtArgs> = {}>(args?: Subset<T, ClientRequest$serviceArgs<ExtArgs>>): Prisma__ServicesClient<$Result.GetResult<Prisma.$ServicesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    proposals<T extends ClientRequest$proposalsArgs<ExtArgs> = {}>(args?: Subset<T, ClientRequest$proposalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6412,6 +6451,30 @@ export namespace Prisma {
   }
 
   /**
+   * ClientRequest.proposals
+   */
+  export type ClientRequest$proposalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Proposal
+     */
+    select?: ProposalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Proposal
+     */
+    omit?: ProposalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProposalInclude<ExtArgs> | null
+    where?: ProposalWhereInput
+    orderBy?: ProposalOrderByWithRelationInput | ProposalOrderByWithRelationInput[]
+    cursor?: ProposalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProposalScalarFieldEnum | ProposalScalarFieldEnum[]
+  }
+
+  /**
    * ClientRequest without action
    */
   export type ClientRequestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6452,6 +6515,7 @@ export namespace Prisma {
 
   export type ProposalMinAggregateOutputType = {
     id: string | null
+    client_request_id: string | null
     service_id: string | null
     client_id: string | null
     contract_id: string | null
@@ -6465,6 +6529,7 @@ export namespace Prisma {
 
   export type ProposalMaxAggregateOutputType = {
     id: string | null
+    client_request_id: string | null
     service_id: string | null
     client_id: string | null
     contract_id: string | null
@@ -6478,6 +6543,7 @@ export namespace Prisma {
 
   export type ProposalCountAggregateOutputType = {
     id: number
+    client_request_id: number
     service_id: number
     client_id: number
     contract_id: number
@@ -6501,6 +6567,7 @@ export namespace Prisma {
 
   export type ProposalMinAggregateInputType = {
     id?: true
+    client_request_id?: true
     service_id?: true
     client_id?: true
     contract_id?: true
@@ -6514,6 +6581,7 @@ export namespace Prisma {
 
   export type ProposalMaxAggregateInputType = {
     id?: true
+    client_request_id?: true
     service_id?: true
     client_id?: true
     contract_id?: true
@@ -6527,6 +6595,7 @@ export namespace Prisma {
 
   export type ProposalCountAggregateInputType = {
     id?: true
+    client_request_id?: true
     service_id?: true
     client_id?: true
     contract_id?: true
@@ -6627,6 +6696,7 @@ export namespace Prisma {
 
   export type ProposalGroupByOutputType = {
     id: string
+    client_request_id: string
     service_id: string
     client_id: string
     contract_id: string | null
@@ -6659,6 +6729,7 @@ export namespace Prisma {
 
   export type ProposalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    client_request_id?: boolean
     service_id?: boolean
     client_id?: boolean
     contract_id?: boolean
@@ -6668,6 +6739,7 @@ export namespace Prisma {
     pricing?: boolean
     status?: boolean
     termsAndConditions?: boolean
+    clientRequest?: boolean | ClientRequestDefaultArgs<ExtArgs>
     service?: boolean | ServicesDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
     Negotiate?: boolean | Proposal$NegotiateArgs<ExtArgs>
@@ -6677,6 +6749,7 @@ export namespace Prisma {
 
   export type ProposalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    client_request_id?: boolean
     service_id?: boolean
     client_id?: boolean
     contract_id?: boolean
@@ -6686,12 +6759,14 @@ export namespace Prisma {
     pricing?: boolean
     status?: boolean
     termsAndConditions?: boolean
+    clientRequest?: boolean | ClientRequestDefaultArgs<ExtArgs>
     service?: boolean | ServicesDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["proposal"]>
 
   export type ProposalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    client_request_id?: boolean
     service_id?: boolean
     client_id?: boolean
     contract_id?: boolean
@@ -6701,12 +6776,14 @@ export namespace Prisma {
     pricing?: boolean
     status?: boolean
     termsAndConditions?: boolean
+    clientRequest?: boolean | ClientRequestDefaultArgs<ExtArgs>
     service?: boolean | ServicesDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["proposal"]>
 
   export type ProposalSelectScalar = {
     id?: boolean
+    client_request_id?: boolean
     service_id?: boolean
     client_id?: boolean
     contract_id?: boolean
@@ -6718,8 +6795,9 @@ export namespace Prisma {
     termsAndConditions?: boolean
   }
 
-  export type ProposalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "service_id" | "client_id" | "contract_id" | "scope" | "deliverables" | "timeline" | "pricing" | "status" | "termsAndConditions", ExtArgs["result"]["proposal"]>
+  export type ProposalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "client_request_id" | "service_id" | "client_id" | "contract_id" | "scope" | "deliverables" | "timeline" | "pricing" | "status" | "termsAndConditions", ExtArgs["result"]["proposal"]>
   export type ProposalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clientRequest?: boolean | ClientRequestDefaultArgs<ExtArgs>
     service?: boolean | ServicesDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
     Negotiate?: boolean | Proposal$NegotiateArgs<ExtArgs>
@@ -6727,10 +6805,12 @@ export namespace Prisma {
     _count?: boolean | ProposalCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProposalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clientRequest?: boolean | ClientRequestDefaultArgs<ExtArgs>
     service?: boolean | ServicesDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type ProposalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clientRequest?: boolean | ClientRequestDefaultArgs<ExtArgs>
     service?: boolean | ServicesDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -6738,6 +6818,7 @@ export namespace Prisma {
   export type $ProposalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Proposal"
     objects: {
+      clientRequest: Prisma.$ClientRequestPayload<ExtArgs>
       service: Prisma.$ServicesPayload<ExtArgs>
       client: Prisma.$UserPayload<ExtArgs>
       Negotiate: Prisma.$NegotiatePayload<ExtArgs>[]
@@ -6745,6 +6826,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      client_request_id: string
       service_id: string
       client_id: string
       contract_id: string | null
@@ -7148,6 +7230,7 @@ export namespace Prisma {
    */
   export interface Prisma__ProposalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    clientRequest<T extends ClientRequestDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientRequestDefaultArgs<ExtArgs>>): Prisma__ClientRequestClient<$Result.GetResult<Prisma.$ClientRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     service<T extends ServicesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ServicesDefaultArgs<ExtArgs>>): Prisma__ServicesClient<$Result.GetResult<Prisma.$ServicesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     Negotiate<T extends Proposal$NegotiateArgs<ExtArgs> = {}>(args?: Subset<T, Proposal$NegotiateArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NegotiatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -7182,6 +7265,7 @@ export namespace Prisma {
    */
   interface ProposalFieldRefs {
     readonly id: FieldRef<"Proposal", 'String'>
+    readonly client_request_id: FieldRef<"Proposal", 'String'>
     readonly service_id: FieldRef<"Proposal", 'String'>
     readonly client_id: FieldRef<"Proposal", 'String'>
     readonly contract_id: FieldRef<"Proposal", 'String'>
@@ -9987,6 +10071,7 @@ export namespace Prisma {
 
   export const ProposalScalarFieldEnum: {
     id: 'id',
+    client_request_id: 'client_request_id',
     service_id: 'service_id',
     client_id: 'client_id',
     contract_id: 'contract_id',
@@ -10463,6 +10548,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"ClientRequest"> | Date | string
     client?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     service?: XOR<ServicesNullableScalarRelationFilter, ServicesWhereInput> | null
+    proposals?: ProposalListRelationFilter
   }
 
   export type ClientRequestOrderByWithRelationInput = {
@@ -10473,6 +10559,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     client?: UserOrderByWithRelationInput
     service?: ServicesOrderByWithRelationInput
+    proposals?: ProposalOrderByRelationAggregateInput
   }
 
   export type ClientRequestWhereUniqueInput = Prisma.AtLeast<{
@@ -10486,6 +10573,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"ClientRequest"> | Date | string
     client?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     service?: XOR<ServicesNullableScalarRelationFilter, ServicesWhereInput> | null
+    proposals?: ProposalListRelationFilter
   }, "id">
 
   export type ClientRequestOrderByWithAggregationInput = {
@@ -10515,6 +10603,7 @@ export namespace Prisma {
     OR?: ProposalWhereInput[]
     NOT?: ProposalWhereInput | ProposalWhereInput[]
     id?: StringFilter<"Proposal"> | string
+    client_request_id?: StringFilter<"Proposal"> | string
     service_id?: StringFilter<"Proposal"> | string
     client_id?: StringFilter<"Proposal"> | string
     contract_id?: StringNullableFilter<"Proposal"> | string | null
@@ -10524,6 +10613,7 @@ export namespace Prisma {
     pricing?: IntFilter<"Proposal"> | number
     status?: EnumProposalStatusFilter<"Proposal"> | $Enums.ProposalStatus
     termsAndConditions?: StringFilter<"Proposal"> | string
+    clientRequest?: XOR<ClientRequestScalarRelationFilter, ClientRequestWhereInput>
     service?: XOR<ServicesScalarRelationFilter, ServicesWhereInput>
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
     Negotiate?: NegotiateListRelationFilter
@@ -10532,6 +10622,7 @@ export namespace Prisma {
 
   export type ProposalOrderByWithRelationInput = {
     id?: SortOrder
+    client_request_id?: SortOrder
     service_id?: SortOrder
     client_id?: SortOrder
     contract_id?: SortOrderInput | SortOrder
@@ -10541,6 +10632,7 @@ export namespace Prisma {
     pricing?: SortOrder
     status?: SortOrder
     termsAndConditions?: SortOrder
+    clientRequest?: ClientRequestOrderByWithRelationInput
     service?: ServicesOrderByWithRelationInput
     client?: UserOrderByWithRelationInput
     Negotiate?: NegotiateOrderByRelationAggregateInput
@@ -10552,6 +10644,7 @@ export namespace Prisma {
     AND?: ProposalWhereInput | ProposalWhereInput[]
     OR?: ProposalWhereInput[]
     NOT?: ProposalWhereInput | ProposalWhereInput[]
+    client_request_id?: StringFilter<"Proposal"> | string
     service_id?: StringFilter<"Proposal"> | string
     client_id?: StringFilter<"Proposal"> | string
     contract_id?: StringNullableFilter<"Proposal"> | string | null
@@ -10561,6 +10654,7 @@ export namespace Prisma {
     pricing?: IntFilter<"Proposal"> | number
     status?: EnumProposalStatusFilter<"Proposal"> | $Enums.ProposalStatus
     termsAndConditions?: StringFilter<"Proposal"> | string
+    clientRequest?: XOR<ClientRequestScalarRelationFilter, ClientRequestWhereInput>
     service?: XOR<ServicesScalarRelationFilter, ServicesWhereInput>
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
     Negotiate?: NegotiateListRelationFilter
@@ -10569,6 +10663,7 @@ export namespace Prisma {
 
   export type ProposalOrderByWithAggregationInput = {
     id?: SortOrder
+    client_request_id?: SortOrder
     service_id?: SortOrder
     client_id?: SortOrder
     contract_id?: SortOrderInput | SortOrder
@@ -10590,6 +10685,7 @@ export namespace Prisma {
     OR?: ProposalScalarWhereWithAggregatesInput[]
     NOT?: ProposalScalarWhereWithAggregatesInput | ProposalScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Proposal"> | string
+    client_request_id?: StringWithAggregatesFilter<"Proposal"> | string
     service_id?: StringWithAggregatesFilter<"Proposal"> | string
     client_id?: StringWithAggregatesFilter<"Proposal"> | string
     contract_id?: StringNullableWithAggregatesFilter<"Proposal"> | string | null
@@ -11046,6 +11142,7 @@ export namespace Prisma {
     createdAt?: Date | string
     client?: UserCreateNestedOneWithoutClientInput
     service?: ServicesCreateNestedOneWithoutClientRequestInput
+    proposals?: ProposalCreateNestedManyWithoutClientRequestInput
   }
 
   export type ClientRequestUncheckedCreateInput = {
@@ -11054,6 +11151,7 @@ export namespace Prisma {
     clientId: string
     request_status: $Enums.ClientRequestStatus
     createdAt?: Date | string
+    proposals?: ProposalUncheckedCreateNestedManyWithoutClientRequestInput
   }
 
   export type ClientRequestUpdateInput = {
@@ -11062,6 +11160,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: UserUpdateOneWithoutClientNestedInput
     service?: ServicesUpdateOneWithoutClientRequestNestedInput
+    proposals?: ProposalUpdateManyWithoutClientRequestNestedInput
   }
 
   export type ClientRequestUncheckedUpdateInput = {
@@ -11070,6 +11169,7 @@ export namespace Prisma {
     clientId?: StringFieldUpdateOperationsInput | string
     request_status?: EnumClientRequestStatusFieldUpdateOperationsInput | $Enums.ClientRequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    proposals?: ProposalUncheckedUpdateManyWithoutClientRequestNestedInput
   }
 
   export type ClientRequestCreateManyInput = {
@@ -11103,6 +11203,7 @@ export namespace Prisma {
     pricing: number
     status: $Enums.ProposalStatus
     termsAndConditions: string
+    clientRequest: ClientRequestCreateNestedOneWithoutProposalsInput
     service: ServicesCreateNestedOneWithoutProposalInput
     client: UserCreateNestedOneWithoutProposalInput
     Negotiate?: NegotiateCreateNestedManyWithoutProposalInput
@@ -11111,6 +11212,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedCreateInput = {
     id?: string
+    client_request_id: string
     service_id: string
     client_id: string
     contract_id?: string | null
@@ -11133,6 +11235,7 @@ export namespace Prisma {
     pricing?: IntFieldUpdateOperationsInput | number
     status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
+    clientRequest?: ClientRequestUpdateOneRequiredWithoutProposalsNestedInput
     service?: ServicesUpdateOneRequiredWithoutProposalNestedInput
     client?: UserUpdateOneRequiredWithoutProposalNestedInput
     Negotiate?: NegotiateUpdateManyWithoutProposalNestedInput
@@ -11141,6 +11244,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    client_request_id?: StringFieldUpdateOperationsInput | string
     service_id?: StringFieldUpdateOperationsInput | string
     client_id?: StringFieldUpdateOperationsInput | string
     contract_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -11156,6 +11260,7 @@ export namespace Prisma {
 
   export type ProposalCreateManyInput = {
     id?: string
+    client_request_id: string
     service_id: string
     client_id: string
     contract_id?: string | null
@@ -11180,6 +11285,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    client_request_id?: StringFieldUpdateOperationsInput | string
     service_id?: StringFieldUpdateOperationsInput | string
     client_id?: StringFieldUpdateOperationsInput | string
     contract_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -11721,6 +11827,11 @@ export namespace Prisma {
     not?: NestedEnumProposalStatusFilter<$PrismaModel> | $Enums.ProposalStatus
   }
 
+  export type ClientRequestScalarRelationFilter = {
+    is?: ClientRequestWhereInput
+    isNot?: ClientRequestWhereInput
+  }
+
   export type ServicesScalarRelationFilter = {
     is?: ServicesWhereInput
     isNot?: ServicesWhereInput
@@ -11733,6 +11844,7 @@ export namespace Prisma {
 
   export type ProposalCountOrderByAggregateInput = {
     id?: SortOrder
+    client_request_id?: SortOrder
     service_id?: SortOrder
     client_id?: SortOrder
     contract_id?: SortOrder
@@ -11750,6 +11862,7 @@ export namespace Prisma {
 
   export type ProposalMaxOrderByAggregateInput = {
     id?: SortOrder
+    client_request_id?: SortOrder
     service_id?: SortOrder
     client_id?: SortOrder
     contract_id?: SortOrder
@@ -11763,6 +11876,7 @@ export namespace Prisma {
 
   export type ProposalMinOrderByAggregateInput = {
     id?: SortOrder
+    client_request_id?: SortOrder
     service_id?: SortOrder
     client_id?: SortOrder
     contract_id?: SortOrder
@@ -12408,6 +12522,20 @@ export namespace Prisma {
     connect?: ServicesWhereUniqueInput
   }
 
+  export type ProposalCreateNestedManyWithoutClientRequestInput = {
+    create?: XOR<ProposalCreateWithoutClientRequestInput, ProposalUncheckedCreateWithoutClientRequestInput> | ProposalCreateWithoutClientRequestInput[] | ProposalUncheckedCreateWithoutClientRequestInput[]
+    connectOrCreate?: ProposalCreateOrConnectWithoutClientRequestInput | ProposalCreateOrConnectWithoutClientRequestInput[]
+    createMany?: ProposalCreateManyClientRequestInputEnvelope
+    connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+  }
+
+  export type ProposalUncheckedCreateNestedManyWithoutClientRequestInput = {
+    create?: XOR<ProposalCreateWithoutClientRequestInput, ProposalUncheckedCreateWithoutClientRequestInput> | ProposalCreateWithoutClientRequestInput[] | ProposalUncheckedCreateWithoutClientRequestInput[]
+    connectOrCreate?: ProposalCreateOrConnectWithoutClientRequestInput | ProposalCreateOrConnectWithoutClientRequestInput[]
+    createMany?: ProposalCreateManyClientRequestInputEnvelope
+    connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+  }
+
   export type EnumClientRequestStatusFieldUpdateOperationsInput = {
     set?: $Enums.ClientRequestStatus
   }
@@ -12430,6 +12558,40 @@ export namespace Prisma {
     delete?: ServicesWhereInput | boolean
     connect?: ServicesWhereUniqueInput
     update?: XOR<XOR<ServicesUpdateToOneWithWhereWithoutClientRequestInput, ServicesUpdateWithoutClientRequestInput>, ServicesUncheckedUpdateWithoutClientRequestInput>
+  }
+
+  export type ProposalUpdateManyWithoutClientRequestNestedInput = {
+    create?: XOR<ProposalCreateWithoutClientRequestInput, ProposalUncheckedCreateWithoutClientRequestInput> | ProposalCreateWithoutClientRequestInput[] | ProposalUncheckedCreateWithoutClientRequestInput[]
+    connectOrCreate?: ProposalCreateOrConnectWithoutClientRequestInput | ProposalCreateOrConnectWithoutClientRequestInput[]
+    upsert?: ProposalUpsertWithWhereUniqueWithoutClientRequestInput | ProposalUpsertWithWhereUniqueWithoutClientRequestInput[]
+    createMany?: ProposalCreateManyClientRequestInputEnvelope
+    set?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+    disconnect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+    delete?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+    connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+    update?: ProposalUpdateWithWhereUniqueWithoutClientRequestInput | ProposalUpdateWithWhereUniqueWithoutClientRequestInput[]
+    updateMany?: ProposalUpdateManyWithWhereWithoutClientRequestInput | ProposalUpdateManyWithWhereWithoutClientRequestInput[]
+    deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
+  }
+
+  export type ProposalUncheckedUpdateManyWithoutClientRequestNestedInput = {
+    create?: XOR<ProposalCreateWithoutClientRequestInput, ProposalUncheckedCreateWithoutClientRequestInput> | ProposalCreateWithoutClientRequestInput[] | ProposalUncheckedCreateWithoutClientRequestInput[]
+    connectOrCreate?: ProposalCreateOrConnectWithoutClientRequestInput | ProposalCreateOrConnectWithoutClientRequestInput[]
+    upsert?: ProposalUpsertWithWhereUniqueWithoutClientRequestInput | ProposalUpsertWithWhereUniqueWithoutClientRequestInput[]
+    createMany?: ProposalCreateManyClientRequestInputEnvelope
+    set?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+    disconnect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+    delete?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+    connect?: ProposalWhereUniqueInput | ProposalWhereUniqueInput[]
+    update?: ProposalUpdateWithWhereUniqueWithoutClientRequestInput | ProposalUpdateWithWhereUniqueWithoutClientRequestInput[]
+    updateMany?: ProposalUpdateManyWithWhereWithoutClientRequestInput | ProposalUpdateManyWithWhereWithoutClientRequestInput[]
+    deleteMany?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
+  }
+
+  export type ClientRequestCreateNestedOneWithoutProposalsInput = {
+    create?: XOR<ClientRequestCreateWithoutProposalsInput, ClientRequestUncheckedCreateWithoutProposalsInput>
+    connectOrCreate?: ClientRequestCreateOrConnectWithoutProposalsInput
+    connect?: ClientRequestWhereUniqueInput
   }
 
   export type ServicesCreateNestedOneWithoutProposalInput = {
@@ -12482,6 +12644,14 @@ export namespace Prisma {
 
   export type EnumProposalStatusFieldUpdateOperationsInput = {
     set?: $Enums.ProposalStatus
+  }
+
+  export type ClientRequestUpdateOneRequiredWithoutProposalsNestedInput = {
+    create?: XOR<ClientRequestCreateWithoutProposalsInput, ClientRequestUncheckedCreateWithoutProposalsInput>
+    connectOrCreate?: ClientRequestCreateOrConnectWithoutProposalsInput
+    upsert?: ClientRequestUpsertWithoutProposalsInput
+    connect?: ClientRequestWhereUniqueInput
+    update?: XOR<XOR<ClientRequestUpdateToOneWithWhereWithoutProposalsInput, ClientRequestUpdateWithoutProposalsInput>, ClientRequestUncheckedUpdateWithoutProposalsInput>
   }
 
   export type ServicesUpdateOneRequiredWithoutProposalNestedInput = {
@@ -12971,6 +13141,7 @@ export namespace Prisma {
     request_status: $Enums.ClientRequestStatus
     createdAt?: Date | string
     service?: ServicesCreateNestedOneWithoutClientRequestInput
+    proposals?: ProposalCreateNestedManyWithoutClientRequestInput
   }
 
   export type ClientRequestUncheckedCreateWithoutClientInput = {
@@ -12978,6 +13149,7 @@ export namespace Prisma {
     serviceId: string
     request_status: $Enums.ClientRequestStatus
     createdAt?: Date | string
+    proposals?: ProposalUncheckedCreateNestedManyWithoutClientRequestInput
   }
 
   export type ClientRequestCreateOrConnectWithoutClientInput = {
@@ -12999,6 +13171,7 @@ export namespace Prisma {
     pricing: number
     status: $Enums.ProposalStatus
     termsAndConditions: string
+    clientRequest: ClientRequestCreateNestedOneWithoutProposalsInput
     service: ServicesCreateNestedOneWithoutProposalInput
     Negotiate?: NegotiateCreateNestedManyWithoutProposalInput
     Project?: ProjectCreateNestedManyWithoutProposalInput
@@ -13006,6 +13179,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedCreateWithoutClientInput = {
     id?: string
+    client_request_id: string
     service_id: string
     contract_id?: string | null
     scope: string
@@ -13188,6 +13362,7 @@ export namespace Prisma {
     OR?: ProposalScalarWhereInput[]
     NOT?: ProposalScalarWhereInput | ProposalScalarWhereInput[]
     id?: StringFilter<"Proposal"> | string
+    client_request_id?: StringFilter<"Proposal"> | string
     service_id?: StringFilter<"Proposal"> | string
     client_id?: StringFilter<"Proposal"> | string
     contract_id?: StringNullableFilter<"Proposal"> | string | null
@@ -13432,6 +13607,7 @@ export namespace Prisma {
     request_status: $Enums.ClientRequestStatus
     createdAt?: Date | string
     client?: UserCreateNestedOneWithoutClientInput
+    proposals?: ProposalCreateNestedManyWithoutClientRequestInput
   }
 
   export type ClientRequestUncheckedCreateWithoutServiceInput = {
@@ -13439,6 +13615,7 @@ export namespace Prisma {
     clientId: string
     request_status: $Enums.ClientRequestStatus
     createdAt?: Date | string
+    proposals?: ProposalUncheckedCreateNestedManyWithoutClientRequestInput
   }
 
   export type ClientRequestCreateOrConnectWithoutServiceInput = {
@@ -13460,6 +13637,7 @@ export namespace Prisma {
     pricing: number
     status: $Enums.ProposalStatus
     termsAndConditions: string
+    clientRequest: ClientRequestCreateNestedOneWithoutProposalsInput
     client: UserCreateNestedOneWithoutProposalInput
     Negotiate?: NegotiateCreateNestedManyWithoutProposalInput
     Project?: ProjectCreateNestedManyWithoutProposalInput
@@ -13467,6 +13645,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedCreateWithoutServiceInput = {
     id?: string
+    client_request_id: string
     client_id: string
     contract_id?: string | null
     scope: string
@@ -13726,6 +13905,46 @@ export namespace Prisma {
     create: XOR<ServicesCreateWithoutClientRequestInput, ServicesUncheckedCreateWithoutClientRequestInput>
   }
 
+  export type ProposalCreateWithoutClientRequestInput = {
+    id?: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ProposalStatus
+    termsAndConditions: string
+    service: ServicesCreateNestedOneWithoutProposalInput
+    client: UserCreateNestedOneWithoutProposalInput
+    Negotiate?: NegotiateCreateNestedManyWithoutProposalInput
+    Project?: ProjectCreateNestedManyWithoutProposalInput
+  }
+
+  export type ProposalUncheckedCreateWithoutClientRequestInput = {
+    id?: string
+    service_id: string
+    client_id: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ProposalStatus
+    termsAndConditions: string
+    Negotiate?: NegotiateUncheckedCreateNestedManyWithoutProposalInput
+    Project?: ProjectUncheckedCreateNestedManyWithoutProposalInput
+  }
+
+  export type ProposalCreateOrConnectWithoutClientRequestInput = {
+    where: ProposalWhereUniqueInput
+    create: XOR<ProposalCreateWithoutClientRequestInput, ProposalUncheckedCreateWithoutClientRequestInput>
+  }
+
+  export type ProposalCreateManyClientRequestInputEnvelope = {
+    data: ProposalCreateManyClientRequestInput | ProposalCreateManyClientRequestInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutClientInput = {
     update: XOR<UserUpdateWithoutClientInput, UserUncheckedUpdateWithoutClientInput>
     create: XOR<UserCreateWithoutClientInput, UserUncheckedCreateWithoutClientInput>
@@ -13818,6 +14037,43 @@ export namespace Prisma {
     Negotiation?: NegotiateUncheckedUpdateManyWithoutServiceNestedInput
     Proposal?: ProposalUncheckedUpdateManyWithoutServiceNestedInput
     Project?: ProjectUncheckedUpdateManyWithoutServiceNestedInput
+  }
+
+  export type ProposalUpsertWithWhereUniqueWithoutClientRequestInput = {
+    where: ProposalWhereUniqueInput
+    update: XOR<ProposalUpdateWithoutClientRequestInput, ProposalUncheckedUpdateWithoutClientRequestInput>
+    create: XOR<ProposalCreateWithoutClientRequestInput, ProposalUncheckedCreateWithoutClientRequestInput>
+  }
+
+  export type ProposalUpdateWithWhereUniqueWithoutClientRequestInput = {
+    where: ProposalWhereUniqueInput
+    data: XOR<ProposalUpdateWithoutClientRequestInput, ProposalUncheckedUpdateWithoutClientRequestInput>
+  }
+
+  export type ProposalUpdateManyWithWhereWithoutClientRequestInput = {
+    where: ProposalScalarWhereInput
+    data: XOR<ProposalUpdateManyMutationInput, ProposalUncheckedUpdateManyWithoutClientRequestInput>
+  }
+
+  export type ClientRequestCreateWithoutProposalsInput = {
+    id?: string
+    request_status: $Enums.ClientRequestStatus
+    createdAt?: Date | string
+    client?: UserCreateNestedOneWithoutClientInput
+    service?: ServicesCreateNestedOneWithoutClientRequestInput
+  }
+
+  export type ClientRequestUncheckedCreateWithoutProposalsInput = {
+    id?: string
+    serviceId: string
+    clientId: string
+    request_status: $Enums.ClientRequestStatus
+    createdAt?: Date | string
+  }
+
+  export type ClientRequestCreateOrConnectWithoutProposalsInput = {
+    where: ClientRequestWhereUniqueInput
+    create: XOR<ClientRequestCreateWithoutProposalsInput, ClientRequestUncheckedCreateWithoutProposalsInput>
   }
 
   export type ServicesCreateWithoutProposalInput = {
@@ -13958,6 +14214,33 @@ export namespace Prisma {
   export type ProjectCreateManyProposalInputEnvelope = {
     data: ProjectCreateManyProposalInput | ProjectCreateManyProposalInput[]
     skipDuplicates?: boolean
+  }
+
+  export type ClientRequestUpsertWithoutProposalsInput = {
+    update: XOR<ClientRequestUpdateWithoutProposalsInput, ClientRequestUncheckedUpdateWithoutProposalsInput>
+    create: XOR<ClientRequestCreateWithoutProposalsInput, ClientRequestUncheckedCreateWithoutProposalsInput>
+    where?: ClientRequestWhereInput
+  }
+
+  export type ClientRequestUpdateToOneWithWhereWithoutProposalsInput = {
+    where?: ClientRequestWhereInput
+    data: XOR<ClientRequestUpdateWithoutProposalsInput, ClientRequestUncheckedUpdateWithoutProposalsInput>
+  }
+
+  export type ClientRequestUpdateWithoutProposalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    request_status?: EnumClientRequestStatusFieldUpdateOperationsInput | $Enums.ClientRequestStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    client?: UserUpdateOneWithoutClientNestedInput
+    service?: ServicesUpdateOneWithoutClientRequestNestedInput
+  }
+
+  export type ClientRequestUncheckedUpdateWithoutProposalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    serviceId?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+    request_status?: EnumClientRequestStatusFieldUpdateOperationsInput | $Enums.ClientRequestStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ServicesUpsertWithoutProposalInput = {
@@ -14146,6 +14429,7 @@ export namespace Prisma {
     pricing: number
     status: $Enums.ProposalStatus
     termsAndConditions: string
+    clientRequest: ClientRequestCreateNestedOneWithoutProposalsInput
     service: ServicesCreateNestedOneWithoutProposalInput
     client: UserCreateNestedOneWithoutProposalInput
     Project?: ProjectCreateNestedManyWithoutProposalInput
@@ -14153,6 +14437,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedCreateWithoutNegotiateInput = {
     id?: string
+    client_request_id: string
     service_id: string
     client_id: string
     contract_id?: string | null
@@ -14278,6 +14563,7 @@ export namespace Prisma {
     pricing?: IntFieldUpdateOperationsInput | number
     status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
+    clientRequest?: ClientRequestUpdateOneRequiredWithoutProposalsNestedInput
     service?: ServicesUpdateOneRequiredWithoutProposalNestedInput
     client?: UserUpdateOneRequiredWithoutProposalNestedInput
     Project?: ProjectUpdateManyWithoutProposalNestedInput
@@ -14285,6 +14571,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedUpdateWithoutNegotiateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    client_request_id?: StringFieldUpdateOperationsInput | string
     service_id?: StringFieldUpdateOperationsInput | string
     client_id?: StringFieldUpdateOperationsInput | string
     contract_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14374,6 +14661,7 @@ export namespace Prisma {
     pricing: number
     status: $Enums.ProposalStatus
     termsAndConditions: string
+    clientRequest: ClientRequestCreateNestedOneWithoutProposalsInput
     service: ServicesCreateNestedOneWithoutProposalInput
     client: UserCreateNestedOneWithoutProposalInput
     Negotiate?: NegotiateCreateNestedManyWithoutProposalInput
@@ -14381,6 +14669,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedCreateWithoutProjectInput = {
     id?: string
+    client_request_id: string
     service_id: string
     client_id: string
     contract_id?: string | null
@@ -14506,6 +14795,7 @@ export namespace Prisma {
     pricing?: IntFieldUpdateOperationsInput | number
     status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
+    clientRequest?: ClientRequestUpdateOneRequiredWithoutProposalsNestedInput
     service?: ServicesUpdateOneRequiredWithoutProposalNestedInput
     client?: UserUpdateOneRequiredWithoutProposalNestedInput
     Negotiate?: NegotiateUpdateManyWithoutProposalNestedInput
@@ -14513,6 +14803,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedUpdateWithoutProjectInput = {
     id?: StringFieldUpdateOperationsInput | string
+    client_request_id?: StringFieldUpdateOperationsInput | string
     service_id?: StringFieldUpdateOperationsInput | string
     client_id?: StringFieldUpdateOperationsInput | string
     contract_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14600,6 +14891,7 @@ export namespace Prisma {
 
   export type ProposalCreateManyClientInput = {
     id?: string
+    client_request_id: string
     service_id: string
     contract_id?: string | null
     scope: string
@@ -14669,6 +14961,7 @@ export namespace Prisma {
     request_status?: EnumClientRequestStatusFieldUpdateOperationsInput | $Enums.ClientRequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     service?: ServicesUpdateOneWithoutClientRequestNestedInput
+    proposals?: ProposalUpdateManyWithoutClientRequestNestedInput
   }
 
   export type ClientRequestUncheckedUpdateWithoutClientInput = {
@@ -14676,6 +14969,7 @@ export namespace Prisma {
     serviceId?: StringFieldUpdateOperationsInput | string
     request_status?: EnumClientRequestStatusFieldUpdateOperationsInput | $Enums.ClientRequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    proposals?: ProposalUncheckedUpdateManyWithoutClientRequestNestedInput
   }
 
   export type ClientRequestUncheckedUpdateManyWithoutClientInput = {
@@ -14694,6 +14988,7 @@ export namespace Prisma {
     pricing?: IntFieldUpdateOperationsInput | number
     status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
+    clientRequest?: ClientRequestUpdateOneRequiredWithoutProposalsNestedInput
     service?: ServicesUpdateOneRequiredWithoutProposalNestedInput
     Negotiate?: NegotiateUpdateManyWithoutProposalNestedInput
     Project?: ProjectUpdateManyWithoutProposalNestedInput
@@ -14701,6 +14996,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
+    client_request_id?: StringFieldUpdateOperationsInput | string
     service_id?: StringFieldUpdateOperationsInput | string
     contract_id?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: StringFieldUpdateOperationsInput | string
@@ -14715,6 +15011,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedUpdateManyWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
+    client_request_id?: StringFieldUpdateOperationsInput | string
     service_id?: StringFieldUpdateOperationsInput | string
     contract_id?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: StringFieldUpdateOperationsInput | string
@@ -14880,6 +15177,7 @@ export namespace Prisma {
 
   export type ProposalCreateManyServiceInput = {
     id?: string
+    client_request_id: string
     client_id: string
     contract_id?: string | null
     scope: string
@@ -14928,6 +15226,7 @@ export namespace Prisma {
     request_status?: EnumClientRequestStatusFieldUpdateOperationsInput | $Enums.ClientRequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: UserUpdateOneWithoutClientNestedInput
+    proposals?: ProposalUpdateManyWithoutClientRequestNestedInput
   }
 
   export type ClientRequestUncheckedUpdateWithoutServiceInput = {
@@ -14935,6 +15234,7 @@ export namespace Prisma {
     clientId?: StringFieldUpdateOperationsInput | string
     request_status?: EnumClientRequestStatusFieldUpdateOperationsInput | $Enums.ClientRequestStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    proposals?: ProposalUncheckedUpdateManyWithoutClientRequestNestedInput
   }
 
   export type ClientRequestUncheckedUpdateManyWithoutServiceInput = {
@@ -14953,6 +15253,7 @@ export namespace Prisma {
     pricing?: IntFieldUpdateOperationsInput | number
     status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
     termsAndConditions?: StringFieldUpdateOperationsInput | string
+    clientRequest?: ClientRequestUpdateOneRequiredWithoutProposalsNestedInput
     client?: UserUpdateOneRequiredWithoutProposalNestedInput
     Negotiate?: NegotiateUpdateManyWithoutProposalNestedInput
     Project?: ProjectUpdateManyWithoutProposalNestedInput
@@ -14960,6 +15261,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedUpdateWithoutServiceInput = {
     id?: StringFieldUpdateOperationsInput | string
+    client_request_id?: StringFieldUpdateOperationsInput | string
     client_id?: StringFieldUpdateOperationsInput | string
     contract_id?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: StringFieldUpdateOperationsInput | string
@@ -14974,6 +15276,7 @@ export namespace Prisma {
 
   export type ProposalUncheckedUpdateManyWithoutServiceInput = {
     id?: StringFieldUpdateOperationsInput | string
+    client_request_id?: StringFieldUpdateOperationsInput | string
     client_id?: StringFieldUpdateOperationsInput | string
     contract_id?: NullableStringFieldUpdateOperationsInput | string | null
     scope?: StringFieldUpdateOperationsInput | string
@@ -15018,6 +15321,62 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProposalCreateManyClientRequestInput = {
+    id?: string
+    service_id: string
+    client_id: string
+    contract_id?: string | null
+    scope: string
+    deliverables: string
+    timeline: string
+    pricing: number
+    status: $Enums.ProposalStatus
+    termsAndConditions: string
+  }
+
+  export type ProposalUpdateWithoutClientRequestInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
+    service?: ServicesUpdateOneRequiredWithoutProposalNestedInput
+    client?: UserUpdateOneRequiredWithoutProposalNestedInput
+    Negotiate?: NegotiateUpdateManyWithoutProposalNestedInput
+    Project?: ProjectUpdateManyWithoutProposalNestedInput
+  }
+
+  export type ProposalUncheckedUpdateWithoutClientRequestInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    service_id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
+    Negotiate?: NegotiateUncheckedUpdateManyWithoutProposalNestedInput
+    Project?: ProjectUncheckedUpdateManyWithoutProposalNestedInput
+  }
+
+  export type ProposalUncheckedUpdateManyWithoutClientRequestInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    service_id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    contract_id?: NullableStringFieldUpdateOperationsInput | string | null
+    scope?: StringFieldUpdateOperationsInput | string
+    deliverables?: StringFieldUpdateOperationsInput | string
+    timeline?: StringFieldUpdateOperationsInput | string
+    pricing?: IntFieldUpdateOperationsInput | number
+    status?: EnumProposalStatusFieldUpdateOperationsInput | $Enums.ProposalStatus
+    termsAndConditions?: StringFieldUpdateOperationsInput | string
   }
 
   export type NegotiateCreateManyProposalInput = {

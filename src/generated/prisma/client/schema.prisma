@@ -67,17 +67,17 @@ enum serviceStatus {
 enum ClientRequestStatus {
   DRAFT
   PENDING
+  ALL
 }
 
 // CLIENTS REQUESTED REVIEW AND PROPOSAL UPDATED STATUS
 enum ProposalStatus {
+  PENDING
   APPROVED
   DECLINED
   NEGOTIATING
   ACCEPTED
 }
-
-// Entry Point Service Models example business advisory, human resource
 
 model Services {
   id String @id @default(uuid())
@@ -114,15 +114,21 @@ model ClientRequest {
 
   service Services? @relation("ServiceProposal", fields: [serviceId], references: [id])
 
+  // proposals
+  proposals Proposal[] @relation("Client Request")
+
   request_status ClientRequestStatus
 
   createdAt DateTime @default(now())
 }
 
-//  Clients to review what proposal Admin sent (IF accepts, becomes a Proposal)
-
 model Proposal {
   id String @id @default(uuid())
+
+  // the clientRequest table
+  client_request_id String
+
+  clientRequest ClientRequest @relation("Client Request", fields: [client_request_id], references: [id])
 
   service_id String
   client_id  String

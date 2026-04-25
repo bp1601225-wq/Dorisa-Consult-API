@@ -5,11 +5,9 @@ import { isHttpError } from "../services/errors";
 export const UserController = {
 async GetAllUsers(req: Request, res: Response) {
 
- const user = (req as any).user
     
   try {
-    const result = await UserService.getAllUsers(user, req.query);
-
+    const result = await UserService.getAllUsers(req.query);
    
        return res.status(200).json({
            message: "Users fetched successfully",
@@ -71,5 +69,25 @@ message: "Failed to update user",
 error: error.message,
 });
 }
-}
+},
+
+async DeleteUser(req: Request, res: Response){
+
+  try {
+  await UserService.deleteUser(req.params.id as string)
+return res.status(200).json({
+  sucess:true,
+  message: "user deleted sucesfully",
+})
+
+  } catch(error:any){
+    console.log(error)
+    return res.status(500).json({
+      message: "failed to delete user",
+      error: error.message
+    })
+  }
+
+  
+  }
 };

@@ -4,3 +4,73 @@ rate limiting
 role-based filtering
 query optimization
 scalable Prisma structure
+
+
+--------------------- user details ---------------------------
+{
+    "id": "2ddbb44e-b9d2-4c84-b75c-0d9a5ab9f5e5",
+  "email": "john.doe@example.com",
+  "phone": "+233123456789",
+  "password": "securePassword123",
+  "country": "Ghana",
+  "companyName": "JD Tech Ltd",
+  "contactPerson": "John Doe",
+  "fullName": "John Doe",
+  "firstName": "John",
+  "middleName": "",
+  "lastName": "Doe",
+  "companyWebsite": "https://jdtech.com",
+  "industry": "Software",
+  "type": "INDIVIDUAL",
+  "roleId": "3fc6d23f-4753-44c1-ac60-1e9e4f51260c"
+}
+
+
+// ----------------------- Service details -------------------------
+{
+    "message": "Service added to catalog",
+    "data": {
+        "id": "919b985b-5df0-42a2-b460-5a7043c114d1",
+        "clientId": null,
+        "ServiceName": "Web Development",
+        "Description": "Full website and backend development service",
+        "status": "ACTIVE",
+        "createdAt": "2026-04-21T03:04:42.430Z",
+        "DateCreated": "2026-04-21T03:04:42.430Z"
+    }
+}
+
+
+
+// ----------------------- client requested a services -------------------------
+
+{
+    "message": "requested sucesfully submitted",
+    "data": {
+        "id": "679f1b97-ed34-4797-8a78-d236024891ab",
+        "serviceId": "919b985b-5df0-42a2-b460-5a7043c114d1",
+        "clientId": "2ddbb44e-b9d2-4c84-b75c-0d9a5ab9f5e5",
+        "request_status": "PENDING",
+        "createdAt": "2026-04-21T03:08:13.677Z"
+    }
+}
+
+
+// ----------------------- a proposal is sent to client  -------------------------
+
+
+{
+    "message": "proposal created succesfuly",
+    "data": {
+        "id": "c1bf73a1-ef92-4d92-b43f-a4ee7df54872",
+        "service_id": "919b985b-5df0-42a2-b460-5a7043c114d1",
+        "client_id": "2ddbb44e-b9d2-4c84-b75c-0d9a5ab9f5e5",
+        "contract_id": null,
+        "scope": "Build a full business website",
+        "deliverables": "Website, Admin Panel, API",
+        "timeline": "2 weeks",
+        "pricing": 1500,
+        "status": "PENDING",
+        "termsAndConditions": "Payment after approval, 50% upfront"
+    }
+}

@@ -1,6 +1,5 @@
 // validations/clientValidation.ts
 import Joi from "joi";
-import { serviceStatus } from "../generated/prisma/client";
 
 // User Schema validations
 

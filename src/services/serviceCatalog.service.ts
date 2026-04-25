@@ -6,7 +6,7 @@ export const ServiceCatalogService = {
     return prisma.services.findMany({
 
       // select: {
-      //   id:true,
+    //   id:true,
       //   ServiceName:true,
       //   Description:true
       // },
@@ -23,13 +23,24 @@ export const ServiceCatalogService = {
     });
   },
 
-  async updateService(id: string, incomingData: any) {
-    const { name, description, status } = incomingData ?? {};
-    return prisma.services.update({
-      where: { id },
-      data: { name, description, status },
-    });
-  },
+ async updateService(id: string, incomingData: any) {
+  const service = await prisma.services.findUnique({
+    where: { id }
+  });
+
+  if (!service) {
+    throw new Error("Service not found");
+  }
+
+  return prisma.services.update({
+    where: { id },
+    data: {
+      ServiceName: incomingData.ServiceName,
+      Description: incomingData.Description,
+      status: incomingData.status
+    }
+  });
+},
 
   async deleteService(id: string) {
     await prisma.services.delete({ where: { id } });
