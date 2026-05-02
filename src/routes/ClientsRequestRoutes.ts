@@ -18,10 +18,6 @@ clientRequestRoute.post(
 );
 
 // Dev-only: seed client requests (requires ALLOW_SEED=true)
-clientRequestRoute.post(
-  "/seed-client-requests",
-  clientRequestController.seedClientRequests
-);
 
 // Update only status
 clientRequestRoute.patch(

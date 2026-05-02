@@ -17,8 +17,17 @@ export const ProposalService = {
   async GetAllProposals(){
 
   return prisma.proposal.findMany({
+
+
+//     where: {
+// status: "PENDING"
+//     },
+
+
 select: {
   id:true,
+  client_request_id:true,
+  client_id:true,
 
   service: {
     select: {
@@ -28,6 +37,8 @@ select: {
     }
   },
 
+
+
   scope:true,
   deliverables:true,
   timeline:true,
@@ -36,9 +47,15 @@ select: {
   termsAndConditions:true
 
 
+},
+
+orderBy: {
+  createdAt: "desc"
 }
   })
 
+
+  
   },  
 
 

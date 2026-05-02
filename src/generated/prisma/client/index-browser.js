@@ -143,7 +143,8 @@ exports.Prisma.RoleScalarFieldEnum = {
   id: 'id',
   name: 'name',
   status: 'status',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  createdAtReadable: 'createdAtReadable'
 };
 
 exports.Prisma.ServicesScalarFieldEnum = {
@@ -175,12 +176,24 @@ exports.Prisma.ProposalScalarFieldEnum = {
   timeline: 'timeline',
   pricing: 'pricing',
   status: 'status',
-  termsAndConditions: 'termsAndConditions'
+  termsAndConditions: 'termsAndConditions',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ProposalVersionScalarFieldEnum = {
+  id: 'id',
+  proposalId: 'proposalId',
+  version: 'version',
+  message: 'message',
+  amount: 'amount',
+  status: 'status',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.NegotiateScalarFieldEnum = {
   id: 'id',
   clientId: 'clientId',
+  client_request_id: 'client_request_id',
   proposal_id: 'proposal_id',
   serviceId: 'serviceId',
   NegotiatingText: 'NegotiatingText'
@@ -188,6 +201,7 @@ exports.Prisma.NegotiateScalarFieldEnum = {
 
 exports.Prisma.ProjectScalarFieldEnum = {
   id: 'id',
+  client_request_id: 'client_request_id',
   service_id: 'service_id',
   proposal_id: 'proposal_id',
   client_id: 'client_id',
@@ -231,7 +245,9 @@ exports.serviceStatus = exports.$Enums.serviceStatus = {
 exports.ClientRequestStatus = exports.$Enums.ClientRequestStatus = {
   DRAFT: 'DRAFT',
   PENDING: 'PENDING',
-  ALL: 'ALL'
+  ONGOING: 'ONGOING',
+  COMPLETED: 'COMPLETED',
+  CHANGES_REQUESTED: 'CHANGES_REQUESTED'
 };
 
 exports.ProposalStatus = exports.$Enums.ProposalStatus = {
@@ -239,6 +255,11 @@ exports.ProposalStatus = exports.$Enums.ProposalStatus = {
   APPROVED: 'APPROVED',
   DECLINED: 'DECLINED',
   NEGOTIATING: 'NEGOTIATING',
+  ACCEPTED: 'ACCEPTED'
+};
+
+exports.VersionStatus = exports.$Enums.VersionStatus = {
+  PENDING: 'PENDING',
   ACCEPTED: 'ACCEPTED'
 };
 
@@ -256,6 +277,7 @@ exports.Prisma.ModelName = {
   Services: 'Services',
   ClientRequest: 'ClientRequest',
   Proposal: 'Proposal',
+  ProposalVersion: 'ProposalVersion',
   Negotiate: 'Negotiate',
   Project: 'Project'
 };

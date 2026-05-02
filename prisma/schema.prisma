@@ -49,7 +49,7 @@ id        String   @id @default(uuid())
 name      String   
 status    Status   @default(Active)
 createdAt DateTime @default(now())
-
+ createdAtReadable  String? 
 users     User[]
 }
 
@@ -70,7 +70,9 @@ INACTIVE
 enum ClientRequestStatus {
   DRAFT
   PENDING
-  ALL
+  ONGOING
+  COMPLETED
+  CHANGES_REQUESTED
 }
 
 
@@ -113,7 +115,7 @@ DateCreated DateTime @default(now())
 //  Client requesting for a service 
 model ClientRequest {
 
-id String @id @default(uuid())
+id String @id @default(uuid())    
 
 serviceId String 
 clientId  String 
@@ -126,6 +128,11 @@ service Services?  @relation("ServiceProposal", fields: [serviceId], references:
 // proposals
 proposals Proposal[] @relation("Client Request")
 
+// Projects
+projects Project[] @relation("Client Request")
+
+// Negotiation 
+Negotiate Negotiate[] @relation("Requested Services")
 request_status ClientRequestStatus
 
 createdAt DateTime @default(now())
@@ -137,13 +144,13 @@ model Proposal {
 id  String @id @default(uuid())
 
 
-// the clientRequest table
-client_request_id String
+// the clientRequest table when updating the status
+client_request_id String 
 
 clientRequest ClientRequest @relation("Client Request", fields: [client_request_id], references: [id])
 
-service_id  String
-client_id   String
+service_id  String  // service details
+client_id   String  // Client details
 
 
 service Services @relation("clientReview", fields: [service_id], references: [id])
@@ -151,7 +158,7 @@ client User @relation(fields: [client_id], references: [id])
 Negotiate Negotiate[] @relation("Proposal Negotiation")
 
 Project Project[] @relation("Derived Proposal")
-
+versions ProposalVersion[]
 contract_id String?
 scope String
 deliverables  String
@@ -159,13 +166,40 @@ timeline    String
 pricing     Int
 status  ProposalStatus
 termsAndConditions   String
+
+createdAt DateTime @default(now())
 }
 
+
+//  Proposal Version
+model ProposalVersion {
+  id          String   @id @default(uuid())
+  proposalId  String
+
+  proposal    Proposal @relation(fields: [proposalId], references: [id])
+
+  version     Int
+  message     String?
+  amount      Float
+
+  status      VersionStatus @default(PENDING)
+
+  createdAt   DateTime @default(now())
+}
+
+
+enum VersionStatus {
+  PENDING
+  ACCEPTED
+}
+// Negotiating model
 
 model Negotiate {
 id   String @id  @default(uuid())
 clientId String 
+client_request_id String
 
+client_request ClientRequest @relation("Requested Services", fields: [client_request_id], references: [id])
 
 client  User @relation( "ClientNegotiation", fields: [clientId], references: [id])
 
@@ -179,15 +213,20 @@ NegotiatingText     String
 }
 
 
+// Proposal Version 
+
+
 model Project {
   id          String @id @default(uuid())
+  client_request_id   String
 
-  service_id  String
-  proposal_id String @unique
-  client_id   String
+  service_id  String // service details
+  proposal_id String @unique // The id of the proposal table
+  client_id   String // client details
 
   title       String? // optional snapshot (recommended for speed)
 
+client_request ClientRequest @relation("Client Request", fields: [client_request_id], references: [id])
   service     Services @relation("Project Services", fields: [service_id], references: [id])
   proposal    Proposal @relation("Derived Proposal", fields: [proposal_id], references: [id])
   client      User @relation("Client Project", fields: [client_id], references: [id])

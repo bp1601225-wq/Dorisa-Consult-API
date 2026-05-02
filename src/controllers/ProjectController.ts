@@ -78,7 +78,7 @@ return res.status(500).json({
 
 const id = req.params.id as string
 
-const returnedData = await projectService.getProject(id)
+const returnedData = await projectService.getProjectId(id)
 
 return res.status(200).json({
     message: "project id fetched succesfully",
@@ -94,6 +94,33 @@ return res.status(200).json({
         })
     }
 
+  }, 
+
+async updateProgressProject(req: Request, res: Response) {
+  try {
+    const projectId = req.params.id as string;
+
+    const { progress } = req.body;
+
+    const returnedProgressData =
+      await projectService.updateProjectProgress(
+        projectId,
+        Number(progress)
+      );
+
+    return res.status(200).json({
+      message: "progress updated",
+      data: returnedProgressData,
+    });
+
+  } catch (error: any) {
+    console.log(error);
+
+    return res.status(500).json({
+      message: "failed to update progress",
+      error: error.message,
+    });
   }
+}
 
 };

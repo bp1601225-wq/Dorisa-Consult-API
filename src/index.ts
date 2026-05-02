@@ -11,7 +11,8 @@ import { userRoutes } from "./routes/userRoutes";
 import { servicesRoute } from "./routes/ServicesRoutes";
 import { clientRequestRoute } from "./routes/ClientsRequestRoutes";
 import {  ProposalRoute } from "./routes/ProposalRoutes";
-
+import { ProjectRoutes } from "./routes/projectRoutes";
+import { NegotiatingRoute } from "./routes/negotiatingRoutes";
 const app = express();
 
 
@@ -47,6 +48,10 @@ app.use(`/${baseRoutes}`, userRoutes)
 app.use(`/${baseRoutes}`, servicesRoute)
 app.use(`/${baseRoutes}`, clientRequestRoute)
 app.use(`/${baseRoutes}`, ProposalRoute)
+app.use(`/${baseRoutes}`, ProjectRoutes)
+app.use(`/${baseRoutes}`, NegotiatingRoute)
+
+
 
 
 //  404 must be after routes

@@ -26,6 +26,7 @@ export const ClientsService = {
           connect: { id: resolvedRoleId },
         },
       },
+      
       include: {
         role: {
           select: {

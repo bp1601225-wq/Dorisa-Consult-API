@@ -15,7 +15,12 @@ import { ClientRequestStatus } from "../generated/prisma/client";
 
 const AllowedStatus: ClientRequestStatus[] = [
   "DRAFT",
-  "PENDING"
+  "PENDING",
+  "COMPLETED",
+  "ONGOING",
+  "CHANGES_REQUESTED",
+
+
 ];
 
 export const clientRequestService = {
@@ -28,8 +33,7 @@ export const clientRequestService = {
       id:true,
       createdAt:true,
       
-      
-request_status:true,
+    request_status:true,
 
       service: {
         select: {
@@ -61,6 +65,10 @@ where: {
 request_status: {
           in: AllowedStatus
         }
+      },
+
+      orderBy: {
+        createdAt: "desc"
       }
 
   })
@@ -73,18 +81,8 @@ async createClientRequest(incomingData: any) {
   return prisma.clientRequest.create({
     data: {
       request_status,
-
-      service: {
-        connect: {
-          id: serviceId
-        }
-      },
-
-      client: {
-        connect: {
-          id: clientId
-        }
-      }
+      serviceId,
+      clientId
     }
   });
 },
@@ -119,6 +117,7 @@ async createClientRequest(incomingData: any) {
     select: {
       id:true,
       createdAt:true,
+
       
       
 request_status:true,

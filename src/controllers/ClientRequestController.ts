@@ -166,6 +166,8 @@ async FilterByStatusController(req: Request, res: Response) {
 
     const requestedData = await clientRequestService.FilterByStatus(status);
 
+
+    
     return res.status(200).json({
       message: "filter operation successful",
       data: requestedData,
@@ -179,38 +181,5 @@ async FilterByStatusController(req: Request, res: Response) {
       error: error.message,
     });
   }
-},
-
-  // Dev helper: seed ~20 client requests for quick testing.
-  async seedClientRequests(req: Request, res: Response) {
-    try {
-      if (process.env.ALLOW_SEED !== "true") {
-        return res.status(403).json({
-          message: "Seeding is disabled. Set ALLOW_SEED=true to enable this endpoint.",
-        });
-      }
-
-      const raw = (req.body?.count ?? req.query?.count ?? 20) as any;
-      const count = Number(raw);
-
-      if (!Number.isFinite(count) || count < 1 || count > 200) {
-        return res.status(400).json({
-          message: "count must be a number between 1 and 200",
-        });
-      }
-
-      const data = await clientRequestService.seedClientRequests(count);
-
-      return res.status(201).json({
-        message: `Seeded ${data.length} client requests`,
-        data,
-      });
-    } catch (error: any) {
-      console.error(error);
-      return res.status(500).json({
-        message: "Failed to seed client requests",
-        error: error?.message ?? error,
-      });
-    }
-  },
+}
 };

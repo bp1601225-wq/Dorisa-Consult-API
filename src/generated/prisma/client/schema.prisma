@@ -44,12 +44,12 @@ enum UserTypeEnum {
 }
 
 model Role {
-  id        String   @id @default(uuid())
-  name      String
-  status    Status   @default(Active)
-  createdAt DateTime @default(now())
-
-  users User[]
+  id                String   @id @default(uuid())
+  name              String
+  status            Status   @default(Active)
+  createdAt         DateTime @default(now())
+  createdAtReadable String?
+  users             User[]
 }
 
 // role status
@@ -67,7 +67,9 @@ enum serviceStatus {
 enum ClientRequestStatus {
   DRAFT
   PENDING
-  ALL
+  ONGOING
+  COMPLETED
+  CHANGES_REQUESTED
 }
 
 // CLIENTS REQUESTED REVIEW AND PROPOSAL UPDATED STATUS
@@ -117,6 +119,11 @@ model ClientRequest {
   // proposals
   proposals Proposal[] @relation("Client Request")
 
+  // Projects
+  projects Project[] @relation("Client Request")
+
+  // Negotiation 
+  Negotiate      Negotiate[]         @relation("Requested Services")
   request_status ClientRequestStatus
 
   createdAt DateTime @default(now())
@@ -125,20 +132,20 @@ model ClientRequest {
 model Proposal {
   id String @id @default(uuid())
 
-  // the clientRequest table
+  // the clientRequest table when updating the status
   client_request_id String
 
   clientRequest ClientRequest @relation("Client Request", fields: [client_request_id], references: [id])
 
-  service_id String
-  client_id  String
+  service_id String // service details
+  client_id  String // Client details
 
   service   Services    @relation("clientReview", fields: [service_id], references: [id])
   client    User        @relation(fields: [client_id], references: [id])
   Negotiate Negotiate[] @relation("Proposal Negotiation")
 
-  Project Project[] @relation("Derived Proposal")
-
+  Project            Project[]         @relation("Derived Proposal")
+  versions           ProposalVersion[]
   contract_id        String?
   scope              String
   deliverables       String
@@ -146,11 +153,39 @@ model Proposal {
   pricing            Int
   status             ProposalStatus
   termsAndConditions String
+
+  createdAt DateTime @default(now())
 }
 
+//  Proposal Version
+model ProposalVersion {
+  id         String @id @default(uuid())
+  proposalId String
+
+  proposal Proposal @relation(fields: [proposalId], references: [id])
+
+  version Int
+  message String?
+  amount  Float
+
+  status VersionStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+}
+
+enum VersionStatus {
+  PENDING
+  ACCEPTED
+}
+
+// Negotiating model
+
 model Negotiate {
-  id       String @id @default(uuid())
-  clientId String
+  id                String @id @default(uuid())
+  clientId          String
+  client_request_id String
+
+  client_request ClientRequest @relation("Requested Services", fields: [client_request_id], references: [id])
 
   client User @relation("ClientNegotiation", fields: [clientId], references: [id])
 
@@ -163,18 +198,22 @@ model Negotiate {
   NegotiatingText String
 }
 
-model Project {
-  id String @id @default(uuid())
+// Proposal Version 
 
-  service_id  String
-  proposal_id String @unique
-  client_id   String
+model Project {
+  id                String @id @default(uuid())
+  client_request_id String
+
+  service_id  String // service details
+  proposal_id String @unique // The id of the proposal table
+  client_id   String // client details
 
   title String? // optional snapshot (recommended for speed)
 
-  service  Services @relation("Project Services", fields: [service_id], references: [id])
-  proposal Proposal @relation("Derived Proposal", fields: [proposal_id], references: [id])
-  client   User     @relation("Client Project", fields: [client_id], references: [id])
+  client_request ClientRequest @relation("Client Request", fields: [client_request_id], references: [id])
+  service        Services      @relation("Project Services", fields: [service_id], references: [id])
+  proposal       Proposal      @relation("Derived Proposal", fields: [proposal_id], references: [id])
+  client         User          @relation("Client Project", fields: [client_id], references: [id])
 
   projectStatus ProjectStatus @default(PLANNING)
 

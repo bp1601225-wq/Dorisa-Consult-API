@@ -4,55 +4,52 @@ import { resolveRoleId } from "../utils/roleHelpers";
 import { HttpError } from "./errors";
 
 export const UserService = {
-  async getAllUsers( query: any) {
-    const page = Number(query?.page) || 1;
-    const PageSize = Number(query?.PageSize) || 100;
+  
+async getAllUsers(query: any) {
+  const page = Number(query?.page) || 1;
+  const pageSize = Number(query?.pageSize) || 100;
 
-    const skip = (page - 1) * PageSize;
-    const take = PageSize;
+  const skip = (page - 1) * pageSize;
+  const take = pageSize;
 
-    const userPayLoad = await prisma.user.findMany({
-      select: {
-        id: true,
-        fullName: true,
-        firstName: true,
-        middleName: true,
-        lastName: true,
-        email: true,
-        phone: true,
-        country: true,
-        companyName: true,
-        companyWebsite: true,
-        industry: true,
-        type: true,
-        roleId: true,
-        role: {
-          select: {
-            name: true,
-          },
-        },
+  const userPayLoad = await prisma.user.findMany({
+    select: {
+      id: true,
+      fullName: true,
+      firstName: true,
+      middleName: true,
+      lastName: true,
+      email: true,
+      phone: true,
+      country: true,
+      companyName: true,
+      companyWebsite: true,
+      industry: true,
+      type: true,
+      roleId: true,
+      role: {
+        select: { name: true },
       },
-      skip,
-      take,
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+    },
+    skip,
+    take,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
-    const flattenedUsers = userPayLoad.map((row) => ({
-      ...row,
-      role: row.role?.name || null,
-    }));
+  const flattenedUsers = userPayLoad.map((row) => ({
+    ...row,
+    role: row.role?.name || null,
+  }));
 
-    const totalUsers = await prisma.user.count();
+  const total = await prisma.user.count();
 
-    return {
-      data: flattenedUsers,
-      total: totalUsers,
-      page,
-      PageSize,
-    };
-  },
+  return {
+    data: flattenedUsers,
+    total,
+  };
+},
 
   async createUser(incomingData: any) {
     const { roleId, password, email, phone, country, type, ...rest } =
