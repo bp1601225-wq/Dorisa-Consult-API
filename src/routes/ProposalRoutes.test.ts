@@ -44,6 +44,10 @@ describe("ProposalRoutes", () => {
         res.status(200).json({ ok: true }),
       ChangeProposalStatus: async (_req: express.Request, res: express.Response) =>
         res.status(200).json({ ok: true }),
+      GetProposalByIdController: async (_req: express.Request, res: express.Response) =>
+        res.status(200).json({ ok: true }),
+      CreateProposalsVersion: async (_req: express.Request, res: express.Response) =>
+        res.status(200).json({ ok: true }),
     };
 
     const app = express();
@@ -90,6 +94,10 @@ describe("ProposalRoutes", () => {
       UpdateProposal: async (_req: express.Request, res: express.Response) =>
         res.status(200).json({ ok: true }),
       ChangeProposalStatus: async (_req: express.Request, res: express.Response) =>
+        res.status(200).json({ ok: true }),
+      GetProposalByIdController: async (_req: express.Request, res: express.Response) =>
+        res.status(200).json({ ok: true }),
+      CreateProposalsVersion: async (_req: express.Request, res: express.Response) =>
         res.status(200).json({ ok: true }),
     };
 

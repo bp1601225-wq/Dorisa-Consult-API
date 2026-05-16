@@ -49,7 +49,7 @@ id        String   @id @default(uuid())
 name      String   
 status    Status   @default(Active)
 createdAt DateTime @default(now())
- createdAtReadable  String? 
+createdAtReadable  String? 
 users     User[]
 }
 
@@ -68,11 +68,11 @@ INACTIVE
 }
 
 enum ClientRequestStatus {
-  DRAFT
-  PENDING
-  ONGOING
-  COMPLETED
-  CHANGES_REQUESTED
+DRAFT
+PENDING
+ONGOING
+COMPLETED
+CHANGES_REQUESTED
 }
 
 
@@ -173,24 +173,25 @@ createdAt DateTime @default(now())
 
 //  Proposal Version
 model ProposalVersion {
-  id          String   @id @default(uuid())
-  proposalId  String
+id          String   @id @default(uuid())
+proposalId  String
 
-  proposal    Proposal @relation(fields: [proposalId], references: [id])
+proposal    Proposal @relation(fields: [proposalId], references: [id])
 
-  version     Int
-  message     String?
-  amount      Float
+version     Int
+message     String?
+amount      Float
 
-  status      VersionStatus @default(PENDING)
+status      VersionStatus @default(PENDING)
 
-  createdAt   DateTime @default(now())
+createdAt   DateTime @default(now())
 }
 
 
 enum VersionStatus {
   PENDING
   ACCEPTED
+  NEGOTIATING
 }
 // Negotiating model
 
@@ -217,36 +218,63 @@ NegotiatingText     String
 
 
 model Project {
-  id          String @id @default(uuid())
-  client_request_id   String
+id          String @id @default(uuid())
+client_request_id   String
 
-  service_id  String // service details
-  proposal_id String @unique // The id of the proposal table
-  client_id   String // client details
+service_id  String // service details
+proposal_id String @unique // The id of the proposal table
+client_id   String // client details
 
-  title       String? // optional snapshot (recommended for speed)
+title       String? // optional snapshot (recommended for speed)
 
 client_request ClientRequest @relation("Client Request", fields: [client_request_id], references: [id])
-  service     Services @relation("Project Services", fields: [service_id], references: [id])
-  proposal    Proposal @relation("Derived Proposal", fields: [proposal_id], references: [id])
-  client      User @relation("Client Project", fields: [client_id], references: [id])
 
-  projectStatus ProjectStatus @default(PLANNING)
+service     Services @relation("Project Services", fields: [service_id], references: [id])
+proposal    Proposal @relation("Derived Proposal", fields: [proposal_id], references: [id])
+client      User @relation("Client Project", fields: [client_id], references: [id])
 
-  endDate     DateTime?
 
-  progress Int @default(0)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+projectStatus ProjectStatus @default(PLANNING)
+
+endDate     DateTime?
+
+progress Int @default(0)
+
+// MileStones
+  MileStone MileStone[] @relation("Project MileStone")
+
+createdAt   DateTime @default(now())
+updatedAt   DateTime @updatedAt
 }
 
 enum ProjectStatus {
-  PLANNING
+PLANNING
+IN_PROGRESS
+ON_HOLD
+COMPLETED
+CANCELLED
+}
+
+
+// MileStone 
+enum MileStoneStatus {
+  PENDING
   IN_PROGRESS
-  ON_HOLD
   COMPLETED
-  CANCELLED
+}
+
+model MileStone {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  projectId   String
+  amount      Int
+  status MileStoneStatus @default(PENDING)
+
+  project     Project @relation("Project MileStone", fields: [projectId], references: [id])
+
+  createdAt   DateTime @default(now())
 }
 
 

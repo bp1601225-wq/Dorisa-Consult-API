@@ -53,6 +53,11 @@ export type Negotiate = $Result.DefaultSelection<Prisma.$NegotiatePayload>
  * 
  */
 export type Project = $Result.DefaultSelection<Prisma.$ProjectPayload>
+/**
+ * Model MileStone
+ * 
+ */
+export type MileStone = $Result.DefaultSelection<Prisma.$MileStonePayload>
 
 /**
  * Enums
@@ -106,7 +111,8 @@ export type ProposalStatus = (typeof ProposalStatus)[keyof typeof ProposalStatus
 
 export const VersionStatus: {
   PENDING: 'PENDING',
-  ACCEPTED: 'ACCEPTED'
+  ACCEPTED: 'ACCEPTED',
+  NEGOTIATING: 'NEGOTIATING'
 };
 
 export type VersionStatus = (typeof VersionStatus)[keyof typeof VersionStatus]
@@ -121,6 +127,15 @@ export const ProjectStatus: {
 };
 
 export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]
+
+
+export const MileStoneStatus: {
+  PENDING: 'PENDING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED'
+};
+
+export type MileStoneStatus = (typeof MileStoneStatus)[keyof typeof MileStoneStatus]
 
 }
 
@@ -151,6 +166,10 @@ export const VersionStatus: typeof $Enums.VersionStatus
 export type ProjectStatus = $Enums.ProjectStatus
 
 export const ProjectStatus: typeof $Enums.ProjectStatus
+
+export type MileStoneStatus = $Enums.MileStoneStatus
+
+export const MileStoneStatus: typeof $Enums.MileStoneStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -352,6 +371,16 @@ export class PrismaClient<
     * ```
     */
   get project(): Prisma.ProjectDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mileStone`: Exposes CRUD operations for the **MileStone** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MileStones
+    * const mileStones = await prisma.mileStone.findMany()
+    * ```
+    */
+  get mileStone(): Prisma.MileStoneDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -793,7 +822,8 @@ export namespace Prisma {
     Proposal: 'Proposal',
     ProposalVersion: 'ProposalVersion',
     Negotiate: 'Negotiate',
-    Project: 'Project'
+    Project: 'Project',
+    MileStone: 'MileStone'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -809,7 +839,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "role" | "services" | "clientRequest" | "proposal" | "proposalVersion" | "negotiate" | "project"
+      modelProps: "user" | "role" | "services" | "clientRequest" | "proposal" | "proposalVersion" | "negotiate" | "project" | "mileStone"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1405,6 +1435,80 @@ export namespace Prisma {
           }
         }
       }
+      MileStone: {
+        payload: Prisma.$MileStonePayload<ExtArgs>
+        fields: Prisma.MileStoneFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MileStoneFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MileStonePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MileStoneFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MileStonePayload>
+          }
+          findFirst: {
+            args: Prisma.MileStoneFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MileStonePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MileStoneFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MileStonePayload>
+          }
+          findMany: {
+            args: Prisma.MileStoneFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MileStonePayload>[]
+          }
+          create: {
+            args: Prisma.MileStoneCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MileStonePayload>
+          }
+          createMany: {
+            args: Prisma.MileStoneCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MileStoneCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MileStonePayload>[]
+          }
+          delete: {
+            args: Prisma.MileStoneDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MileStonePayload>
+          }
+          update: {
+            args: Prisma.MileStoneUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MileStonePayload>
+          }
+          deleteMany: {
+            args: Prisma.MileStoneDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MileStoneUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MileStoneUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MileStonePayload>[]
+          }
+          upsert: {
+            args: Prisma.MileStoneUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MileStonePayload>
+          }
+          aggregate: {
+            args: Prisma.MileStoneAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMileStone>
+          }
+          groupBy: {
+            args: Prisma.MileStoneGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MileStoneGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MileStoneCountArgs<ExtArgs>
+            result: $Utils.Optional<MileStoneCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1521,6 +1625,7 @@ export namespace Prisma {
     proposalVersion?: ProposalVersionOmit
     negotiate?: NegotiateOmit
     project?: ProjectOmit
+    mileStone?: MileStoneOmit
   }
 
   /* Types for Logging */
@@ -1847,6 +1952,37 @@ export namespace Prisma {
    */
   export type ProposalCountOutputTypeCountVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProposalVersionWhereInput
+  }
+
+
+  /**
+   * Count Type ProjectCountOutputType
+   */
+
+  export type ProjectCountOutputType = {
+    MileStone: number
+  }
+
+  export type ProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    MileStone?: boolean | ProjectCountOutputTypeCountMileStoneArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProjectCountOutputType without action
+   */
+  export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectCountOutputType
+     */
+    select?: ProjectCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProjectCountOutputType without action
+   */
+  export type ProjectCountOutputTypeCountMileStoneArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MileStoneWhereInput
   }
 
 
@@ -10461,6 +10597,8 @@ export namespace Prisma {
     service?: boolean | ServicesDefaultArgs<ExtArgs>
     proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
+    MileStone?: boolean | Project$MileStoneArgs<ExtArgs>
+    _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
   export type ProjectSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10519,6 +10657,8 @@ export namespace Prisma {
     service?: boolean | ServicesDefaultArgs<ExtArgs>
     proposal?: boolean | ProposalDefaultArgs<ExtArgs>
     client?: boolean | UserDefaultArgs<ExtArgs>
+    MileStone?: boolean | Project$MileStoneArgs<ExtArgs>
+    _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProjectIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client_request?: boolean | ClientRequestDefaultArgs<ExtArgs>
@@ -10540,6 +10680,7 @@ export namespace Prisma {
       service: Prisma.$ServicesPayload<ExtArgs>
       proposal: Prisma.$ProposalPayload<ExtArgs>
       client: Prisma.$UserPayload<ExtArgs>
+      MileStone: Prisma.$MileStonePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10951,6 +11092,7 @@ export namespace Prisma {
     service<T extends ServicesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ServicesDefaultArgs<ExtArgs>>): Prisma__ServicesClient<$Result.GetResult<Prisma.$ServicesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     proposal<T extends ProposalDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProposalDefaultArgs<ExtArgs>>): Prisma__ProposalClient<$Result.GetResult<Prisma.$ProposalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     client<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    MileStone<T extends Project$MileStoneArgs<ExtArgs> = {}>(args?: Subset<T, Project$MileStoneArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11392,6 +11534,30 @@ export namespace Prisma {
   }
 
   /**
+   * Project.MileStone
+   */
+  export type Project$MileStoneArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneInclude<ExtArgs> | null
+    where?: MileStoneWhereInput
+    orderBy?: MileStoneOrderByWithRelationInput | MileStoneOrderByWithRelationInput[]
+    cursor?: MileStoneWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MileStoneScalarFieldEnum | MileStoneScalarFieldEnum[]
+  }
+
+  /**
    * Project without action
    */
   export type ProjectDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11407,6 +11573,1129 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ProjectInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MileStone
+   */
+
+  export type AggregateMileStone = {
+    _count: MileStoneCountAggregateOutputType | null
+    _avg: MileStoneAvgAggregateOutputType | null
+    _sum: MileStoneSumAggregateOutputType | null
+    _min: MileStoneMinAggregateOutputType | null
+    _max: MileStoneMaxAggregateOutputType | null
+  }
+
+  export type MileStoneAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type MileStoneSumAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type MileStoneMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    projectId: string | null
+    amount: number | null
+    status: $Enums.MileStoneStatus | null
+    createdAt: Date | null
+  }
+
+  export type MileStoneMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    projectId: string | null
+    amount: number | null
+    status: $Enums.MileStoneStatus | null
+    createdAt: Date | null
+  }
+
+  export type MileStoneCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    projectId: number
+    amount: number
+    status: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type MileStoneAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type MileStoneSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type MileStoneMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    projectId?: true
+    amount?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type MileStoneMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    projectId?: true
+    amount?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type MileStoneCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    projectId?: true
+    amount?: true
+    status?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type MileStoneAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MileStone to aggregate.
+     */
+    where?: MileStoneWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MileStones to fetch.
+     */
+    orderBy?: MileStoneOrderByWithRelationInput | MileStoneOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MileStoneWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MileStones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MileStones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MileStones
+    **/
+    _count?: true | MileStoneCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MileStoneAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MileStoneSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MileStoneMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MileStoneMaxAggregateInputType
+  }
+
+  export type GetMileStoneAggregateType<T extends MileStoneAggregateArgs> = {
+        [P in keyof T & keyof AggregateMileStone]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMileStone[P]>
+      : GetScalarType<T[P], AggregateMileStone[P]>
+  }
+
+
+
+
+  export type MileStoneGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MileStoneWhereInput
+    orderBy?: MileStoneOrderByWithAggregationInput | MileStoneOrderByWithAggregationInput[]
+    by: MileStoneScalarFieldEnum[] | MileStoneScalarFieldEnum
+    having?: MileStoneScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MileStoneCountAggregateInputType | true
+    _avg?: MileStoneAvgAggregateInputType
+    _sum?: MileStoneSumAggregateInputType
+    _min?: MileStoneMinAggregateInputType
+    _max?: MileStoneMaxAggregateInputType
+  }
+
+  export type MileStoneGroupByOutputType = {
+    id: string
+    title: string
+    description: string
+    projectId: string
+    amount: number
+    status: $Enums.MileStoneStatus
+    createdAt: Date
+    _count: MileStoneCountAggregateOutputType | null
+    _avg: MileStoneAvgAggregateOutputType | null
+    _sum: MileStoneSumAggregateOutputType | null
+    _min: MileStoneMinAggregateOutputType | null
+    _max: MileStoneMaxAggregateOutputType | null
+  }
+
+  type GetMileStoneGroupByPayload<T extends MileStoneGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MileStoneGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MileStoneGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MileStoneGroupByOutputType[P]>
+            : GetScalarType<T[P], MileStoneGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MileStoneSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    projectId?: boolean
+    amount?: boolean
+    status?: boolean
+    createdAt?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mileStone"]>
+
+  export type MileStoneSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    projectId?: boolean
+    amount?: boolean
+    status?: boolean
+    createdAt?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mileStone"]>
+
+  export type MileStoneSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    projectId?: boolean
+    amount?: boolean
+    status?: boolean
+    createdAt?: boolean
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mileStone"]>
+
+  export type MileStoneSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    projectId?: boolean
+    amount?: boolean
+    status?: boolean
+    createdAt?: boolean
+  }
+
+  export type MileStoneOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "projectId" | "amount" | "status" | "createdAt", ExtArgs["result"]["mileStone"]>
+  export type MileStoneInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }
+  export type MileStoneIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }
+  export type MileStoneIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    project?: boolean | ProjectDefaultArgs<ExtArgs>
+  }
+
+  export type $MileStonePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MileStone"
+    objects: {
+      project: Prisma.$ProjectPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      description: string
+      projectId: string
+      amount: number
+      status: $Enums.MileStoneStatus
+      createdAt: Date
+    }, ExtArgs["result"]["mileStone"]>
+    composites: {}
+  }
+
+  type MileStoneGetPayload<S extends boolean | null | undefined | MileStoneDefaultArgs> = $Result.GetResult<Prisma.$MileStonePayload, S>
+
+  type MileStoneCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MileStoneFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MileStoneCountAggregateInputType | true
+    }
+
+  export interface MileStoneDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MileStone'], meta: { name: 'MileStone' } }
+    /**
+     * Find zero or one MileStone that matches the filter.
+     * @param {MileStoneFindUniqueArgs} args - Arguments to find a MileStone
+     * @example
+     * // Get one MileStone
+     * const mileStone = await prisma.mileStone.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MileStoneFindUniqueArgs>(args: SelectSubset<T, MileStoneFindUniqueArgs<ExtArgs>>): Prisma__MileStoneClient<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MileStone that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MileStoneFindUniqueOrThrowArgs} args - Arguments to find a MileStone
+     * @example
+     * // Get one MileStone
+     * const mileStone = await prisma.mileStone.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MileStoneFindUniqueOrThrowArgs>(args: SelectSubset<T, MileStoneFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MileStoneClient<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MileStone that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MileStoneFindFirstArgs} args - Arguments to find a MileStone
+     * @example
+     * // Get one MileStone
+     * const mileStone = await prisma.mileStone.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MileStoneFindFirstArgs>(args?: SelectSubset<T, MileStoneFindFirstArgs<ExtArgs>>): Prisma__MileStoneClient<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MileStone that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MileStoneFindFirstOrThrowArgs} args - Arguments to find a MileStone
+     * @example
+     * // Get one MileStone
+     * const mileStone = await prisma.mileStone.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MileStoneFindFirstOrThrowArgs>(args?: SelectSubset<T, MileStoneFindFirstOrThrowArgs<ExtArgs>>): Prisma__MileStoneClient<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MileStones that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MileStoneFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MileStones
+     * const mileStones = await prisma.mileStone.findMany()
+     * 
+     * // Get first 10 MileStones
+     * const mileStones = await prisma.mileStone.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mileStoneWithIdOnly = await prisma.mileStone.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MileStoneFindManyArgs>(args?: SelectSubset<T, MileStoneFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MileStone.
+     * @param {MileStoneCreateArgs} args - Arguments to create a MileStone.
+     * @example
+     * // Create one MileStone
+     * const MileStone = await prisma.mileStone.create({
+     *   data: {
+     *     // ... data to create a MileStone
+     *   }
+     * })
+     * 
+     */
+    create<T extends MileStoneCreateArgs>(args: SelectSubset<T, MileStoneCreateArgs<ExtArgs>>): Prisma__MileStoneClient<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MileStones.
+     * @param {MileStoneCreateManyArgs} args - Arguments to create many MileStones.
+     * @example
+     * // Create many MileStones
+     * const mileStone = await prisma.mileStone.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MileStoneCreateManyArgs>(args?: SelectSubset<T, MileStoneCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MileStones and returns the data saved in the database.
+     * @param {MileStoneCreateManyAndReturnArgs} args - Arguments to create many MileStones.
+     * @example
+     * // Create many MileStones
+     * const mileStone = await prisma.mileStone.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MileStones and only return the `id`
+     * const mileStoneWithIdOnly = await prisma.mileStone.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MileStoneCreateManyAndReturnArgs>(args?: SelectSubset<T, MileStoneCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MileStone.
+     * @param {MileStoneDeleteArgs} args - Arguments to delete one MileStone.
+     * @example
+     * // Delete one MileStone
+     * const MileStone = await prisma.mileStone.delete({
+     *   where: {
+     *     // ... filter to delete one MileStone
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MileStoneDeleteArgs>(args: SelectSubset<T, MileStoneDeleteArgs<ExtArgs>>): Prisma__MileStoneClient<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MileStone.
+     * @param {MileStoneUpdateArgs} args - Arguments to update one MileStone.
+     * @example
+     * // Update one MileStone
+     * const mileStone = await prisma.mileStone.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MileStoneUpdateArgs>(args: SelectSubset<T, MileStoneUpdateArgs<ExtArgs>>): Prisma__MileStoneClient<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MileStones.
+     * @param {MileStoneDeleteManyArgs} args - Arguments to filter MileStones to delete.
+     * @example
+     * // Delete a few MileStones
+     * const { count } = await prisma.mileStone.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MileStoneDeleteManyArgs>(args?: SelectSubset<T, MileStoneDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MileStones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MileStoneUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MileStones
+     * const mileStone = await prisma.mileStone.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MileStoneUpdateManyArgs>(args: SelectSubset<T, MileStoneUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MileStones and returns the data updated in the database.
+     * @param {MileStoneUpdateManyAndReturnArgs} args - Arguments to update many MileStones.
+     * @example
+     * // Update many MileStones
+     * const mileStone = await prisma.mileStone.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MileStones and only return the `id`
+     * const mileStoneWithIdOnly = await prisma.mileStone.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MileStoneUpdateManyAndReturnArgs>(args: SelectSubset<T, MileStoneUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MileStone.
+     * @param {MileStoneUpsertArgs} args - Arguments to update or create a MileStone.
+     * @example
+     * // Update or create a MileStone
+     * const mileStone = await prisma.mileStone.upsert({
+     *   create: {
+     *     // ... data to create a MileStone
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MileStone we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MileStoneUpsertArgs>(args: SelectSubset<T, MileStoneUpsertArgs<ExtArgs>>): Prisma__MileStoneClient<$Result.GetResult<Prisma.$MileStonePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MileStones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MileStoneCountArgs} args - Arguments to filter MileStones to count.
+     * @example
+     * // Count the number of MileStones
+     * const count = await prisma.mileStone.count({
+     *   where: {
+     *     // ... the filter for the MileStones we want to count
+     *   }
+     * })
+    **/
+    count<T extends MileStoneCountArgs>(
+      args?: Subset<T, MileStoneCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MileStoneCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MileStone.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MileStoneAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MileStoneAggregateArgs>(args: Subset<T, MileStoneAggregateArgs>): Prisma.PrismaPromise<GetMileStoneAggregateType<T>>
+
+    /**
+     * Group by MileStone.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MileStoneGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MileStoneGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MileStoneGroupByArgs['orderBy'] }
+        : { orderBy?: MileStoneGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MileStoneGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMileStoneGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MileStone model
+   */
+  readonly fields: MileStoneFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MileStone.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MileStoneClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    project<T extends ProjectDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectDefaultArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MileStone model
+   */
+  interface MileStoneFieldRefs {
+    readonly id: FieldRef<"MileStone", 'String'>
+    readonly title: FieldRef<"MileStone", 'String'>
+    readonly description: FieldRef<"MileStone", 'String'>
+    readonly projectId: FieldRef<"MileStone", 'String'>
+    readonly amount: FieldRef<"MileStone", 'Int'>
+    readonly status: FieldRef<"MileStone", 'MileStoneStatus'>
+    readonly createdAt: FieldRef<"MileStone", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MileStone findUnique
+   */
+  export type MileStoneFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneInclude<ExtArgs> | null
+    /**
+     * Filter, which MileStone to fetch.
+     */
+    where: MileStoneWhereUniqueInput
+  }
+
+  /**
+   * MileStone findUniqueOrThrow
+   */
+  export type MileStoneFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneInclude<ExtArgs> | null
+    /**
+     * Filter, which MileStone to fetch.
+     */
+    where: MileStoneWhereUniqueInput
+  }
+
+  /**
+   * MileStone findFirst
+   */
+  export type MileStoneFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneInclude<ExtArgs> | null
+    /**
+     * Filter, which MileStone to fetch.
+     */
+    where?: MileStoneWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MileStones to fetch.
+     */
+    orderBy?: MileStoneOrderByWithRelationInput | MileStoneOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MileStones.
+     */
+    cursor?: MileStoneWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MileStones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MileStones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MileStones.
+     */
+    distinct?: MileStoneScalarFieldEnum | MileStoneScalarFieldEnum[]
+  }
+
+  /**
+   * MileStone findFirstOrThrow
+   */
+  export type MileStoneFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneInclude<ExtArgs> | null
+    /**
+     * Filter, which MileStone to fetch.
+     */
+    where?: MileStoneWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MileStones to fetch.
+     */
+    orderBy?: MileStoneOrderByWithRelationInput | MileStoneOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MileStones.
+     */
+    cursor?: MileStoneWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MileStones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MileStones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MileStones.
+     */
+    distinct?: MileStoneScalarFieldEnum | MileStoneScalarFieldEnum[]
+  }
+
+  /**
+   * MileStone findMany
+   */
+  export type MileStoneFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneInclude<ExtArgs> | null
+    /**
+     * Filter, which MileStones to fetch.
+     */
+    where?: MileStoneWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MileStones to fetch.
+     */
+    orderBy?: MileStoneOrderByWithRelationInput | MileStoneOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MileStones.
+     */
+    cursor?: MileStoneWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MileStones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MileStones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MileStones.
+     */
+    distinct?: MileStoneScalarFieldEnum | MileStoneScalarFieldEnum[]
+  }
+
+  /**
+   * MileStone create
+   */
+  export type MileStoneCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MileStone.
+     */
+    data: XOR<MileStoneCreateInput, MileStoneUncheckedCreateInput>
+  }
+
+  /**
+   * MileStone createMany
+   */
+  export type MileStoneCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MileStones.
+     */
+    data: MileStoneCreateManyInput | MileStoneCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MileStone createManyAndReturn
+   */
+  export type MileStoneCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * The data used to create many MileStones.
+     */
+    data: MileStoneCreateManyInput | MileStoneCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MileStone update
+   */
+  export type MileStoneUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MileStone.
+     */
+    data: XOR<MileStoneUpdateInput, MileStoneUncheckedUpdateInput>
+    /**
+     * Choose, which MileStone to update.
+     */
+    where: MileStoneWhereUniqueInput
+  }
+
+  /**
+   * MileStone updateMany
+   */
+  export type MileStoneUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MileStones.
+     */
+    data: XOR<MileStoneUpdateManyMutationInput, MileStoneUncheckedUpdateManyInput>
+    /**
+     * Filter which MileStones to update
+     */
+    where?: MileStoneWhereInput
+    /**
+     * Limit how many MileStones to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MileStone updateManyAndReturn
+   */
+  export type MileStoneUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * The data used to update MileStones.
+     */
+    data: XOR<MileStoneUpdateManyMutationInput, MileStoneUncheckedUpdateManyInput>
+    /**
+     * Filter which MileStones to update
+     */
+    where?: MileStoneWhereInput
+    /**
+     * Limit how many MileStones to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MileStone upsert
+   */
+  export type MileStoneUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MileStone to update in case it exists.
+     */
+    where: MileStoneWhereUniqueInput
+    /**
+     * In case the MileStone found by the `where` argument doesn't exist, create a new MileStone with this data.
+     */
+    create: XOR<MileStoneCreateInput, MileStoneUncheckedCreateInput>
+    /**
+     * In case the MileStone was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MileStoneUpdateInput, MileStoneUncheckedUpdateInput>
+  }
+
+  /**
+   * MileStone delete
+   */
+  export type MileStoneDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneInclude<ExtArgs> | null
+    /**
+     * Filter which MileStone to delete.
+     */
+    where: MileStoneWhereUniqueInput
+  }
+
+  /**
+   * MileStone deleteMany
+   */
+  export type MileStoneDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MileStones to delete
+     */
+    where?: MileStoneWhereInput
+    /**
+     * Limit how many MileStones to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MileStone without action
+   */
+  export type MileStoneDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MileStone
+     */
+    select?: MileStoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MileStone
+     */
+    omit?: MileStoneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MileStoneInclude<ExtArgs> | null
   }
 
 
@@ -11539,6 +12828,19 @@ export namespace Prisma {
   };
 
   export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+  export const MileStoneScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    projectId: 'projectId',
+    amount: 'amount',
+    status: 'status',
+    createdAt: 'createdAt'
+  };
+
+  export type MileStoneScalarFieldEnum = (typeof MileStoneScalarFieldEnum)[keyof typeof MileStoneScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -11721,6 +13023,20 @@ export namespace Prisma {
    * Reference to a field of type 'ProjectStatus[]'
    */
   export type ListEnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'MileStoneStatus'
+   */
+  export type EnumMileStoneStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MileStoneStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'MileStoneStatus[]'
+   */
+  export type ListEnumMileStoneStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MileStoneStatus[]'>
     
   /**
    * Deep Input Types
@@ -12313,6 +13629,7 @@ export namespace Prisma {
     service?: XOR<ServicesScalarRelationFilter, ServicesWhereInput>
     proposal?: XOR<ProposalScalarRelationFilter, ProposalWhereInput>
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
+    MileStone?: MileStoneListRelationFilter
   }
 
   export type ProjectOrderByWithRelationInput = {
@@ -12331,6 +13648,7 @@ export namespace Prisma {
     service?: ServicesOrderByWithRelationInput
     proposal?: ProposalOrderByWithRelationInput
     client?: UserOrderByWithRelationInput
+    MileStone?: MileStoneOrderByRelationAggregateInput
   }
 
   export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -12352,6 +13670,7 @@ export namespace Prisma {
     service?: XOR<ServicesScalarRelationFilter, ServicesWhereInput>
     proposal?: XOR<ProposalScalarRelationFilter, ProposalWhereInput>
     client?: XOR<UserScalarRelationFilter, UserWhereInput>
+    MileStone?: MileStoneListRelationFilter
   }, "id" | "proposal_id">
 
   export type ProjectOrderByWithAggregationInput = {
@@ -12388,6 +13707,73 @@ export namespace Prisma {
     progress?: IntWithAggregatesFilter<"Project"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Project"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Project"> | Date | string
+  }
+
+  export type MileStoneWhereInput = {
+    AND?: MileStoneWhereInput | MileStoneWhereInput[]
+    OR?: MileStoneWhereInput[]
+    NOT?: MileStoneWhereInput | MileStoneWhereInput[]
+    id?: StringFilter<"MileStone"> | string
+    title?: StringFilter<"MileStone"> | string
+    description?: StringFilter<"MileStone"> | string
+    projectId?: StringFilter<"MileStone"> | string
+    amount?: IntFilter<"MileStone"> | number
+    status?: EnumMileStoneStatusFilter<"MileStone"> | $Enums.MileStoneStatus
+    createdAt?: DateTimeFilter<"MileStone"> | Date | string
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+  }
+
+  export type MileStoneOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    projectId?: SortOrder
+    amount?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    project?: ProjectOrderByWithRelationInput
+  }
+
+  export type MileStoneWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MileStoneWhereInput | MileStoneWhereInput[]
+    OR?: MileStoneWhereInput[]
+    NOT?: MileStoneWhereInput | MileStoneWhereInput[]
+    title?: StringFilter<"MileStone"> | string
+    description?: StringFilter<"MileStone"> | string
+    projectId?: StringFilter<"MileStone"> | string
+    amount?: IntFilter<"MileStone"> | number
+    status?: EnumMileStoneStatusFilter<"MileStone"> | $Enums.MileStoneStatus
+    createdAt?: DateTimeFilter<"MileStone"> | Date | string
+    project?: XOR<ProjectScalarRelationFilter, ProjectWhereInput>
+  }, "id">
+
+  export type MileStoneOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    projectId?: SortOrder
+    amount?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    _count?: MileStoneCountOrderByAggregateInput
+    _avg?: MileStoneAvgOrderByAggregateInput
+    _max?: MileStoneMaxOrderByAggregateInput
+    _min?: MileStoneMinOrderByAggregateInput
+    _sum?: MileStoneSumOrderByAggregateInput
+  }
+
+  export type MileStoneScalarWhereWithAggregatesInput = {
+    AND?: MileStoneScalarWhereWithAggregatesInput | MileStoneScalarWhereWithAggregatesInput[]
+    OR?: MileStoneScalarWhereWithAggregatesInput[]
+    NOT?: MileStoneScalarWhereWithAggregatesInput | MileStoneScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MileStone"> | string
+    title?: StringWithAggregatesFilter<"MileStone"> | string
+    description?: StringWithAggregatesFilter<"MileStone"> | string
+    projectId?: StringWithAggregatesFilter<"MileStone"> | string
+    amount?: IntWithAggregatesFilter<"MileStone"> | number
+    status?: EnumMileStoneStatusWithAggregatesFilter<"MileStone"> | $Enums.MileStoneStatus
+    createdAt?: DateTimeWithAggregatesFilter<"MileStone"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -13007,6 +14393,7 @@ export namespace Prisma {
     service: ServicesCreateNestedOneWithoutProjectInput
     proposal: ProposalCreateNestedOneWithoutProjectInput
     client: UserCreateNestedOneWithoutProjectInput
+    MileStone?: MileStoneCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateInput = {
@@ -13021,6 +14408,7 @@ export namespace Prisma {
     progress?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    MileStone?: MileStoneUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUpdateInput = {
@@ -13035,6 +14423,7 @@ export namespace Prisma {
     service?: ServicesUpdateOneRequiredWithoutProjectNestedInput
     proposal?: ProposalUpdateOneRequiredWithoutProjectNestedInput
     client?: UserUpdateOneRequiredWithoutProjectNestedInput
+    MileStone?: MileStoneUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateInput = {
@@ -13049,6 +14438,7 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MileStone?: MileStoneUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectCreateManyInput = {
@@ -13087,6 +14477,75 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MileStoneCreateInput = {
+    id?: string
+    title: string
+    description: string
+    amount: number
+    status?: $Enums.MileStoneStatus
+    createdAt?: Date | string
+    project: ProjectCreateNestedOneWithoutMileStoneInput
+  }
+
+  export type MileStoneUncheckedCreateInput = {
+    id?: string
+    title: string
+    description: string
+    projectId: string
+    amount: number
+    status?: $Enums.MileStoneStatus
+    createdAt?: Date | string
+  }
+
+  export type MileStoneUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    status?: EnumMileStoneStatusFieldUpdateOperationsInput | $Enums.MileStoneStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    project?: ProjectUpdateOneRequiredWithoutMileStoneNestedInput
+  }
+
+  export type MileStoneUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    status?: EnumMileStoneStatusFieldUpdateOperationsInput | $Enums.MileStoneStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MileStoneCreateManyInput = {
+    id?: string
+    title: string
+    description: string
+    projectId: string
+    amount: number
+    status?: $Enums.MileStoneStatus
+    createdAt?: Date | string
+  }
+
+  export type MileStoneUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    status?: EnumMileStoneStatusFieldUpdateOperationsInput | $Enums.MileStoneStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MileStoneUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    projectId?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    status?: EnumMileStoneStatusFieldUpdateOperationsInput | $Enums.MileStoneStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -13719,6 +15178,16 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type MileStoneListRelationFilter = {
+    every?: MileStoneWhereInput
+    some?: MileStoneWhereInput
+    none?: MileStoneWhereInput
+  }
+
+  export type MileStoneOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ProjectCountOrderByAggregateInput = {
     id?: SortOrder
     client_request_id?: SortOrder
@@ -13791,6 +15260,66 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type EnumMileStoneStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.MileStoneStatus | EnumMileStoneStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MileStoneStatus[] | ListEnumMileStoneStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MileStoneStatus[] | ListEnumMileStoneStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMileStoneStatusFilter<$PrismaModel> | $Enums.MileStoneStatus
+  }
+
+  export type ProjectScalarRelationFilter = {
+    is?: ProjectWhereInput
+    isNot?: ProjectWhereInput
+  }
+
+  export type MileStoneCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    projectId?: SortOrder
+    amount?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MileStoneAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type MileStoneMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    projectId?: SortOrder
+    amount?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MileStoneMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    projectId?: SortOrder
+    amount?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MileStoneSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type EnumMileStoneStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MileStoneStatus | EnumMileStoneStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MileStoneStatus[] | ListEnumMileStoneStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MileStoneStatus[] | ListEnumMileStoneStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMileStoneStatusWithAggregatesFilter<$PrismaModel> | $Enums.MileStoneStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMileStoneStatusFilter<$PrismaModel>
+    _max?: NestedEnumMileStoneStatusFilter<$PrismaModel>
   }
 
   export type RoleCreateNestedOneWithoutUsersInput = {
@@ -14715,6 +16244,20 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type MileStoneCreateNestedManyWithoutProjectInput = {
+    create?: XOR<MileStoneCreateWithoutProjectInput, MileStoneUncheckedCreateWithoutProjectInput> | MileStoneCreateWithoutProjectInput[] | MileStoneUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: MileStoneCreateOrConnectWithoutProjectInput | MileStoneCreateOrConnectWithoutProjectInput[]
+    createMany?: MileStoneCreateManyProjectInputEnvelope
+    connect?: MileStoneWhereUniqueInput | MileStoneWhereUniqueInput[]
+  }
+
+  export type MileStoneUncheckedCreateNestedManyWithoutProjectInput = {
+    create?: XOR<MileStoneCreateWithoutProjectInput, MileStoneUncheckedCreateWithoutProjectInput> | MileStoneCreateWithoutProjectInput[] | MileStoneUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: MileStoneCreateOrConnectWithoutProjectInput | MileStoneCreateOrConnectWithoutProjectInput[]
+    createMany?: MileStoneCreateManyProjectInputEnvelope
+    connect?: MileStoneWhereUniqueInput | MileStoneWhereUniqueInput[]
+  }
+
   export type EnumProjectStatusFieldUpdateOperationsInput = {
     set?: $Enums.ProjectStatus
   }
@@ -14753,6 +16296,52 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutProjectInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProjectInput, UserUpdateWithoutProjectInput>, UserUncheckedUpdateWithoutProjectInput>
+  }
+
+  export type MileStoneUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<MileStoneCreateWithoutProjectInput, MileStoneUncheckedCreateWithoutProjectInput> | MileStoneCreateWithoutProjectInput[] | MileStoneUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: MileStoneCreateOrConnectWithoutProjectInput | MileStoneCreateOrConnectWithoutProjectInput[]
+    upsert?: MileStoneUpsertWithWhereUniqueWithoutProjectInput | MileStoneUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: MileStoneCreateManyProjectInputEnvelope
+    set?: MileStoneWhereUniqueInput | MileStoneWhereUniqueInput[]
+    disconnect?: MileStoneWhereUniqueInput | MileStoneWhereUniqueInput[]
+    delete?: MileStoneWhereUniqueInput | MileStoneWhereUniqueInput[]
+    connect?: MileStoneWhereUniqueInput | MileStoneWhereUniqueInput[]
+    update?: MileStoneUpdateWithWhereUniqueWithoutProjectInput | MileStoneUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: MileStoneUpdateManyWithWhereWithoutProjectInput | MileStoneUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: MileStoneScalarWhereInput | MileStoneScalarWhereInput[]
+  }
+
+  export type MileStoneUncheckedUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<MileStoneCreateWithoutProjectInput, MileStoneUncheckedCreateWithoutProjectInput> | MileStoneCreateWithoutProjectInput[] | MileStoneUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: MileStoneCreateOrConnectWithoutProjectInput | MileStoneCreateOrConnectWithoutProjectInput[]
+    upsert?: MileStoneUpsertWithWhereUniqueWithoutProjectInput | MileStoneUpsertWithWhereUniqueWithoutProjectInput[]
+    createMany?: MileStoneCreateManyProjectInputEnvelope
+    set?: MileStoneWhereUniqueInput | MileStoneWhereUniqueInput[]
+    disconnect?: MileStoneWhereUniqueInput | MileStoneWhereUniqueInput[]
+    delete?: MileStoneWhereUniqueInput | MileStoneWhereUniqueInput[]
+    connect?: MileStoneWhereUniqueInput | MileStoneWhereUniqueInput[]
+    update?: MileStoneUpdateWithWhereUniqueWithoutProjectInput | MileStoneUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: MileStoneUpdateManyWithWhereWithoutProjectInput | MileStoneUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: MileStoneScalarWhereInput | MileStoneScalarWhereInput[]
+  }
+
+  export type ProjectCreateNestedOneWithoutMileStoneInput = {
+    create?: XOR<ProjectCreateWithoutMileStoneInput, ProjectUncheckedCreateWithoutMileStoneInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutMileStoneInput
+    connect?: ProjectWhereUniqueInput
+  }
+
+  export type EnumMileStoneStatusFieldUpdateOperationsInput = {
+    set?: $Enums.MileStoneStatus
+  }
+
+  export type ProjectUpdateOneRequiredWithoutMileStoneNestedInput = {
+    create?: XOR<ProjectCreateWithoutMileStoneInput, ProjectUncheckedCreateWithoutMileStoneInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutMileStoneInput
+    upsert?: ProjectUpsertWithoutMileStoneInput
+    connect?: ProjectWhereUniqueInput
+    update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutMileStoneInput, ProjectUpdateWithoutMileStoneInput>, ProjectUncheckedUpdateWithoutMileStoneInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -15051,6 +16640,23 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumMileStoneStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.MileStoneStatus | EnumMileStoneStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MileStoneStatus[] | ListEnumMileStoneStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MileStoneStatus[] | ListEnumMileStoneStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMileStoneStatusFilter<$PrismaModel> | $Enums.MileStoneStatus
+  }
+
+  export type NestedEnumMileStoneStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MileStoneStatus | EnumMileStoneStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.MileStoneStatus[] | ListEnumMileStoneStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MileStoneStatus[] | ListEnumMileStoneStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumMileStoneStatusWithAggregatesFilter<$PrismaModel> | $Enums.MileStoneStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMileStoneStatusFilter<$PrismaModel>
+    _max?: NestedEnumMileStoneStatusFilter<$PrismaModel>
+  }
+
   export type RoleCreateWithoutUsersInput = {
     id?: string
     name: string
@@ -15219,6 +16825,7 @@ export namespace Prisma {
     client_request: ClientRequestCreateNestedOneWithoutProjectsInput
     service: ServicesCreateNestedOneWithoutProjectInput
     proposal: ProposalCreateNestedOneWithoutProjectInput
+    MileStone?: MileStoneCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutClientInput = {
@@ -15232,6 +16839,7 @@ export namespace Prisma {
     progress?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    MileStone?: MileStoneUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutClientInput = {
@@ -15678,6 +17286,7 @@ export namespace Prisma {
     client_request: ClientRequestCreateNestedOneWithoutProjectsInput
     proposal: ProposalCreateNestedOneWithoutProjectInput
     client: UserCreateNestedOneWithoutProjectInput
+    MileStone?: MileStoneCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutServiceInput = {
@@ -15691,6 +17300,7 @@ export namespace Prisma {
     progress?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    MileStone?: MileStoneUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutServiceInput = {
@@ -15961,6 +17571,7 @@ export namespace Prisma {
     service: ServicesCreateNestedOneWithoutProjectInput
     proposal: ProposalCreateNestedOneWithoutProjectInput
     client: UserCreateNestedOneWithoutProjectInput
+    MileStone?: MileStoneCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutClient_requestInput = {
@@ -15974,6 +17585,7 @@ export namespace Prisma {
     progress?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    MileStone?: MileStoneUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutClient_requestInput = {
@@ -16298,6 +17910,7 @@ export namespace Prisma {
     client_request: ClientRequestCreateNestedOneWithoutProjectsInput
     service: ServicesCreateNestedOneWithoutProjectInput
     client: UserCreateNestedOneWithoutProjectInput
+    MileStone?: MileStoneCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateWithoutProposalInput = {
@@ -16311,6 +17924,7 @@ export namespace Prisma {
     progress?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    MileStone?: MileStoneUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectCreateOrConnectWithoutProposalInput = {
@@ -17083,6 +18697,34 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutProjectInput, UserUncheckedCreateWithoutProjectInput>
   }
 
+  export type MileStoneCreateWithoutProjectInput = {
+    id?: string
+    title: string
+    description: string
+    amount: number
+    status?: $Enums.MileStoneStatus
+    createdAt?: Date | string
+  }
+
+  export type MileStoneUncheckedCreateWithoutProjectInput = {
+    id?: string
+    title: string
+    description: string
+    amount: number
+    status?: $Enums.MileStoneStatus
+    createdAt?: Date | string
+  }
+
+  export type MileStoneCreateOrConnectWithoutProjectInput = {
+    where: MileStoneWhereUniqueInput
+    create: XOR<MileStoneCreateWithoutProjectInput, MileStoneUncheckedCreateWithoutProjectInput>
+  }
+
+  export type MileStoneCreateManyProjectInputEnvelope = {
+    data: MileStoneCreateManyProjectInput | MileStoneCreateManyProjectInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ClientRequestUpsertWithoutProjectsInput = {
     update: XOR<ClientRequestUpdateWithoutProjectsInput, ClientRequestUncheckedUpdateWithoutProjectsInput>
     create: XOR<ClientRequestCreateWithoutProjectsInput, ClientRequestUncheckedCreateWithoutProjectsInput>
@@ -17251,6 +18893,107 @@ export namespace Prisma {
     client?: ClientRequestUncheckedUpdateManyWithoutClientNestedInput
     Proposal?: ProposalUncheckedUpdateManyWithoutClientNestedInput
     Negotiation?: NegotiateUncheckedUpdateManyWithoutClientNestedInput
+  }
+
+  export type MileStoneUpsertWithWhereUniqueWithoutProjectInput = {
+    where: MileStoneWhereUniqueInput
+    update: XOR<MileStoneUpdateWithoutProjectInput, MileStoneUncheckedUpdateWithoutProjectInput>
+    create: XOR<MileStoneCreateWithoutProjectInput, MileStoneUncheckedCreateWithoutProjectInput>
+  }
+
+  export type MileStoneUpdateWithWhereUniqueWithoutProjectInput = {
+    where: MileStoneWhereUniqueInput
+    data: XOR<MileStoneUpdateWithoutProjectInput, MileStoneUncheckedUpdateWithoutProjectInput>
+  }
+
+  export type MileStoneUpdateManyWithWhereWithoutProjectInput = {
+    where: MileStoneScalarWhereInput
+    data: XOR<MileStoneUpdateManyMutationInput, MileStoneUncheckedUpdateManyWithoutProjectInput>
+  }
+
+  export type MileStoneScalarWhereInput = {
+    AND?: MileStoneScalarWhereInput | MileStoneScalarWhereInput[]
+    OR?: MileStoneScalarWhereInput[]
+    NOT?: MileStoneScalarWhereInput | MileStoneScalarWhereInput[]
+    id?: StringFilter<"MileStone"> | string
+    title?: StringFilter<"MileStone"> | string
+    description?: StringFilter<"MileStone"> | string
+    projectId?: StringFilter<"MileStone"> | string
+    amount?: IntFilter<"MileStone"> | number
+    status?: EnumMileStoneStatusFilter<"MileStone"> | $Enums.MileStoneStatus
+    createdAt?: DateTimeFilter<"MileStone"> | Date | string
+  }
+
+  export type ProjectCreateWithoutMileStoneInput = {
+    id?: string
+    title?: string | null
+    projectStatus?: $Enums.ProjectStatus
+    endDate?: Date | string | null
+    progress?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    client_request: ClientRequestCreateNestedOneWithoutProjectsInput
+    service: ServicesCreateNestedOneWithoutProjectInput
+    proposal: ProposalCreateNestedOneWithoutProjectInput
+    client: UserCreateNestedOneWithoutProjectInput
+  }
+
+  export type ProjectUncheckedCreateWithoutMileStoneInput = {
+    id?: string
+    client_request_id: string
+    service_id: string
+    proposal_id: string
+    client_id: string
+    title?: string | null
+    projectStatus?: $Enums.ProjectStatus
+    endDate?: Date | string | null
+    progress?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProjectCreateOrConnectWithoutMileStoneInput = {
+    where: ProjectWhereUniqueInput
+    create: XOR<ProjectCreateWithoutMileStoneInput, ProjectUncheckedCreateWithoutMileStoneInput>
+  }
+
+  export type ProjectUpsertWithoutMileStoneInput = {
+    update: XOR<ProjectUpdateWithoutMileStoneInput, ProjectUncheckedUpdateWithoutMileStoneInput>
+    create: XOR<ProjectCreateWithoutMileStoneInput, ProjectUncheckedCreateWithoutMileStoneInput>
+    where?: ProjectWhereInput
+  }
+
+  export type ProjectUpdateToOneWithWhereWithoutMileStoneInput = {
+    where?: ProjectWhereInput
+    data: XOR<ProjectUpdateWithoutMileStoneInput, ProjectUncheckedUpdateWithoutMileStoneInput>
+  }
+
+  export type ProjectUpdateWithoutMileStoneInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    projectStatus?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    client_request?: ClientRequestUpdateOneRequiredWithoutProjectsNestedInput
+    service?: ServicesUpdateOneRequiredWithoutProjectNestedInput
+    proposal?: ProposalUpdateOneRequiredWithoutProjectNestedInput
+    client?: UserUpdateOneRequiredWithoutProjectNestedInput
+  }
+
+  export type ProjectUncheckedUpdateWithoutMileStoneInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    client_request_id?: StringFieldUpdateOperationsInput | string
+    service_id?: StringFieldUpdateOperationsInput | string
+    proposal_id?: StringFieldUpdateOperationsInput | string
+    client_id?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    projectStatus?: EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    progress?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ServicesCreateManyClientInput = {
@@ -17449,6 +19192,7 @@ export namespace Prisma {
     client_request?: ClientRequestUpdateOneRequiredWithoutProjectsNestedInput
     service?: ServicesUpdateOneRequiredWithoutProjectNestedInput
     proposal?: ProposalUpdateOneRequiredWithoutProjectNestedInput
+    MileStone?: MileStoneUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutClientInput = {
@@ -17462,6 +19206,7 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MileStone?: MileStoneUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateManyWithoutClientInput = {
@@ -17711,6 +19456,7 @@ export namespace Prisma {
     client_request?: ClientRequestUpdateOneRequiredWithoutProjectsNestedInput
     proposal?: ProposalUpdateOneRequiredWithoutProjectNestedInput
     client?: UserUpdateOneRequiredWithoutProjectNestedInput
+    MileStone?: MileStoneUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutServiceInput = {
@@ -17724,6 +19470,7 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MileStone?: MileStoneUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateManyWithoutServiceInput = {
@@ -17833,6 +19580,7 @@ export namespace Prisma {
     service?: ServicesUpdateOneRequiredWithoutProjectNestedInput
     proposal?: ProposalUpdateOneRequiredWithoutProjectNestedInput
     client?: UserUpdateOneRequiredWithoutProjectNestedInput
+    MileStone?: MileStoneUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutClient_requestInput = {
@@ -17846,6 +19594,7 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MileStone?: MileStoneUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateManyWithoutClient_requestInput = {
@@ -17950,6 +19699,7 @@ export namespace Prisma {
     client_request?: ClientRequestUpdateOneRequiredWithoutProjectsNestedInput
     service?: ServicesUpdateOneRequiredWithoutProjectNestedInput
     client?: UserUpdateOneRequiredWithoutProjectNestedInput
+    MileStone?: MileStoneUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateWithoutProposalInput = {
@@ -17963,6 +19713,7 @@ export namespace Prisma {
     progress?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    MileStone?: MileStoneUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateManyWithoutProposalInput = {
@@ -18002,6 +19753,42 @@ export namespace Prisma {
     message?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: FloatFieldUpdateOperationsInput | number
     status?: EnumVersionStatusFieldUpdateOperationsInput | $Enums.VersionStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MileStoneCreateManyProjectInput = {
+    id?: string
+    title: string
+    description: string
+    amount: number
+    status?: $Enums.MileStoneStatus
+    createdAt?: Date | string
+  }
+
+  export type MileStoneUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    status?: EnumMileStoneStatusFieldUpdateOperationsInput | $Enums.MileStoneStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MileStoneUncheckedUpdateWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    status?: EnumMileStoneStatusFieldUpdateOperationsInput | $Enums.MileStoneStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MileStoneUncheckedUpdateManyWithoutProjectInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    status?: EnumMileStoneStatusFieldUpdateOperationsInput | $Enums.MileStoneStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

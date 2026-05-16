@@ -121,6 +121,87 @@ async updateProgressProject(req: Request, res: Response) {
       error: error.message,
     });
   }
+},
+
+
+
+async GetALLMileStoneController(_req:Request, res:Response){
+
+
+try {
+
+const fetchedData = await projectService.GetAllMileStones()
+
+  return res.status(200).json({
+  message: "mileStones fetched succesfully",
+  data:fetchedData
+})
+
+
+} catch (error:any){
+  console.log(error)
+  return res.status(500).json({
+message:"failed to fetch project milestone",
+error:error.message
+  })
+}
+},
+
+async AttainMileStoneController(req:Request, res:Response){
+
+  try {
+  const incomingData = req.body
+
+  const data = await projectService.AttainMileStone(incomingData)
+
+  return res.status(200).json({
+    message: "Milestone created succesfully",
+    data
+  })
+  
+  } catch (error:any){
+    console.log(error)
+
+    return res.status(500).json({
+      message:"failed to create milestone",
+      error:error.message
+    })
+
+  }
+
+// update milestone status
+
+},
+
+async UpdateMileStoneStatus(req: Request, res: Response){
+
+  try {
+
+    const milestoneId = req.params.id as string;
+
+    const { status } = req.body;
+
+    const returnedData =
+      await projectService.updateMileStoneStatus(
+        milestoneId,
+        status
+      );
+
+    return res.status(200).json({
+      message: "mile stone updated successfully",
+      data: returnedData
+    });
+
+  } catch (error: any){
+
+    console.log(error);
+
+    return res.status(500).json({
+      message: "failed to update milestone status",
+      error: error.message
+    });
+
+  }
 }
 
 };

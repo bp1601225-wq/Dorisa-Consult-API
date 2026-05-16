@@ -7,28 +7,31 @@ export type ProposalControllerLike = {
   CreateProposals: RequestHandler;
   UpdateProposal: RequestHandler;
   ChangeProposalStatus: RequestHandler;
+  GetProposalByIdController: RequestHandler;
+  CreateProposalsVersion: RequestHandler;
 };
 
 export const registerProposalRoutes = (
   router: ReturnType<typeof Router>,
   controller: ProposalControllerLike
 ) => {
-  router.get("/test", (_req, res) => {
-    res.send("Proposal route working");
-  });
-
   router.get("/get-all-proposals", controller.fetchProposals);
+  router.get("/get-proposals-by-id/:id", controller.GetProposalByIdController);
 
-  // Canonical endpoint (use this in your frontend)
   router.post("/create-proposal", controller.CreateProposals);
-
-  // Backwards-compat alias (older frontend used this path)
   router.post("/create-new-proposals", controller.CreateProposals);
+  router.post("/create-proposal-version", controller.CreateProposalsVersion);
 
   router.put("/update-proposal/:id", controller.UpdateProposal);
-
   router.patch("/proposal/:id/status", controller.ChangeProposalStatus);
 };
 
 export const ProposalRoute = Router();
-registerProposalRoutes(ProposalRoute, ProposalController);
+registerProposalRoutes(ProposalRoute, {
+  fetchProposals: ProposalController.fetchProposals,
+  CreateProposals: ProposalController.CreateProposals,
+  UpdateProposal: ProposalController.UpdateProposal,
+  ChangeProposalStatus: ProposalController.ChangeProposalStatus,
+  GetProposalByIdController: ProposalController.GetProposalByIdController,
+  CreateProposalsVersion: ProposalController.CreateProposalsVersion,
+});

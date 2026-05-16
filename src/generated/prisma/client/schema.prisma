@@ -176,6 +176,7 @@ model ProposalVersion {
 enum VersionStatus {
   PENDING
   ACCEPTED
+  NEGOTIATING
 }
 
 // Negotiating model
@@ -211,15 +212,19 @@ model Project {
   title String? // optional snapshot (recommended for speed)
 
   client_request ClientRequest @relation("Client Request", fields: [client_request_id], references: [id])
-  service        Services      @relation("Project Services", fields: [service_id], references: [id])
-  proposal       Proposal      @relation("Derived Proposal", fields: [proposal_id], references: [id])
-  client         User          @relation("Client Project", fields: [client_id], references: [id])
+
+  service  Services @relation("Project Services", fields: [service_id], references: [id])
+  proposal Proposal @relation("Derived Proposal", fields: [proposal_id], references: [id])
+  client   User     @relation("Client Project", fields: [client_id], references: [id])
 
   projectStatus ProjectStatus @default(PLANNING)
 
   endDate DateTime?
 
   progress Int @default(0)
+
+  // MileStones
+  MileStone MileStone[] @relation("Project MileStone")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -231,4 +236,24 @@ enum ProjectStatus {
   ON_HOLD
   COMPLETED
   CANCELLED
+}
+
+// MileStone 
+enum MileStoneStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+model MileStone {
+  id          String          @id @default(uuid())
+  title       String
+  description String
+  projectId   String
+  amount      Int
+  status      MileStoneStatus @default(PENDING)
+
+  project Project @relation("Project MileStone", fields: [projectId], references: [id])
+
+  createdAt DateTime @default(now())
 }

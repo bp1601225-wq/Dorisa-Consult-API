@@ -11,6 +11,7 @@ id: true,
 client_request_id:true,
 clientId:true,
 proposal_id:true,
+NegotiatingText:true,
 
 client: {
 select: {

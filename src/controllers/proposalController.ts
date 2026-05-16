@@ -116,6 +116,54 @@ return res.status(500).json({
 
     }
 
+  },
+
+  async GetProposalByIdController(req:Request, res:Response){
+
+    try {
+      const id = req.params.id as string
+
+      if (!id){
+        console.log()
+        res.send("No id found")
+
+      }
+
+      const response = await ProposalService.GetProposalById(id)
+
+      return res.status(200).json({
+        message: "proposal fetched with request id",
+        data:response
+      })
+
+
+
+    } catch (error:any){
+      console.log(error)
+      return res.status(500).json({
+        message: "failed to fetch proposal by id",
+
+      })
+    }
+
+  },
+
+  async CreateProposalsVersion(req: Request, res: Response) {
+    try {
+      const incomingData = req.body;
+      const createdVersion = await ProposalService.CreateProposalsVersion(incomingData);
+
+      return res.status(200).json({
+        message: "proposal version created successfully",
+        data: createdVersion,
+      });
+    } catch (error: any) {
+      console.log(error);
+      return res.status(500).json({
+        message: "failed to create proposal version",
+        error: error?.message ?? error,
+      });
+    }
   }
 
 

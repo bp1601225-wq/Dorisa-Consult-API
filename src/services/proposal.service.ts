@@ -37,6 +37,12 @@ select: {
     }
   },
 
+  
+      versions:{
+        orderBy:{
+          createdAt:"desc"
+        }},
+
 
 
   scope:true,
@@ -51,7 +57,9 @@ select: {
 
 orderBy: {
   createdAt: "desc"
-}
+},
+
+
   })
 
 
@@ -124,6 +132,98 @@ const { id, ...rest } = data;
 
 },
 
+
+
+
+// get ProposalById
+async GetProposalById(id: string) {
+  return prisma.proposal.findUnique({
+    where: { id },
+
+    select: {
+      id:true,
+
+      scope: true,
+      deliverables: true,
+      timeline: true,
+      pricing: true,
+      status: true,
+      termsAndConditions: true,
+
+      service: {
+        select: {
+          id: true,
+          ServiceName: true,
+        },
+      },
+
+      client: {   // ✅ proposal client relation
+        select: {
+          id:true,
+          email: true,
+          phone: true,
+        },
+      },
+
+      versions:{
+        orderBy:{
+          createdAt:"desc"
+        }
+      },
+
+     clientRequest:{
+      select:{
+        id:true
+      }
+     },
+
+     Negotiate: {
+      select:{
+        NegotiatingText:true
+      }
+
+     }
+
+      
+      
+    },
+  });
+},
+
+
+//  Create Proposal versions
+async CreateProposalsVersion(data: any) {
+
+  const {
+    proposalId,
+    amount,
+    message,
+  } = data;
+
+  // get latest version
+  const latestVersion = await prisma.proposalVersion.findFirst({
+    where: {
+      proposalId,
+    },
+    orderBy: {
+      version: "desc",
+    },
+  });
+
+  // increment version
+  const nextVersion = latestVersion
+    ? latestVersion.version + 1
+    : 1;
+
+  return prisma.proposalVersion.create({
+    data: {
+      proposalId,
+      amount,
+      message,
+      version: nextVersion,
+    },
+  });
+}
 
 
 };

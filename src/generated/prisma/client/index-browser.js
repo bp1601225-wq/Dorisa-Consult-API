@@ -213,6 +213,16 @@ exports.Prisma.ProjectScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.MileStoneScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  projectId: 'projectId',
+  amount: 'amount',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -260,7 +270,8 @@ exports.ProposalStatus = exports.$Enums.ProposalStatus = {
 
 exports.VersionStatus = exports.$Enums.VersionStatus = {
   PENDING: 'PENDING',
-  ACCEPTED: 'ACCEPTED'
+  ACCEPTED: 'ACCEPTED',
+  NEGOTIATING: 'NEGOTIATING'
 };
 
 exports.ProjectStatus = exports.$Enums.ProjectStatus = {
@@ -271,6 +282,12 @@ exports.ProjectStatus = exports.$Enums.ProjectStatus = {
   CANCELLED: 'CANCELLED'
 };
 
+exports.MileStoneStatus = exports.$Enums.MileStoneStatus = {
+  PENDING: 'PENDING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Role: 'Role',
@@ -279,7 +296,8 @@ exports.Prisma.ModelName = {
   Proposal: 'Proposal',
   ProposalVersion: 'ProposalVersion',
   Negotiate: 'Negotiate',
-  Project: 'Project'
+  Project: 'Project',
+  MileStone: 'MileStone'
 };
 
 /**
